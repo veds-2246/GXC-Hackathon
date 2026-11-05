@@ -13,11 +13,11 @@ export default async function AuthPage({
     : "/checkout";
 
   return (
-    <main className="grid min-h-screen place-items-center bg-[#fafaf7] px-5 py-12">
+    <main className="grid min-h-screen place-items-center bg-[#fcfaff] px-5 py-12">
       <section className="surface-glass-panel card-hover w-full max-w-md rounded-[2rem] p-8 text-center sm:p-10">
         <BrandLockup className="mx-auto mb-8 items-center" />
         <h1 className="editorial text-5xl leading-none">Your next chapter.</h1>
-        <p className="mt-4 mb-9 text-sm leading-6 text-[#697386]">
+        <p className="mt-4 mb-9 text-sm leading-6 text-[#76678a]">
           Continue with your Google account to access the GenXCode Hackathon.
         </p>
         <GoogleAuthButton nextPath={nextPath} />
