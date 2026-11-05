@@ -66,7 +66,7 @@ export function DashboardUpdates({
 
   return (
     <div className="mt-8 space-y-6">
-      <section className="rounded-2xl border border-[#e4e4dd] bg-white p-7 sm:p-8">
+      {workshop && <section className="rounded-2xl border border-[#e4e4dd] bg-white p-7 sm:p-8">
         <div className="flex items-start gap-4">
           <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-[#fff4d6] text-[#a66a00]">
             <CalendarDays size={21} />
@@ -97,7 +97,7 @@ export function DashboardUpdates({
             {workshop?.pre_instructions?.trim() || "Pre-workshop instructions will be shared here. Please check this section again before Day 1."}
           </p>
         </div>
-      </section>
+      </section>}
 
       <section className="rounded-2xl border border-[#e4e4dd] bg-white p-7 sm:p-8">
         <p className="eyebrow">HACKATHON</p>
