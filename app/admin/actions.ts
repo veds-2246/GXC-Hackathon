@@ -15,26 +15,82 @@ async function requireAdmin() {
   return { supabase, user };
 }
 
-export async function saveWorkshopSettings(formData: FormData) {
+export async function saveEventDayCount(formData: FormData) {
   const { supabase, user } = await requireAdmin();
-  const venue = String(formData.get("venue") ?? "").trim();
-  const timing = String(formData.get("timing") ?? "").trim();
-  const preInstructions = String(formData.get("pre_instructions") ?? "").trim();
+  const dayCount = Number.parseInt(String(formData.get("day_count") ?? ""), 10);
 
-  const { error } = await supabase.from("event_workshop_settings").upsert({
+  if (!Number.isInteger(dayCount) || dayCount < 1 || dayCount > 31) {
+    redirect("/admin?error=day-count");
+  }
+
+  const { count, error: lookupError } = await supabase
+    .from("event_details")
+    .select("id", { count: "exact", head: true })
+    .gt("day_number", dayCount);
+
+  if (lookupError) redirect("/admin?error=day-count");
+  if ((count ?? 0) > 0) redirect("/admin?error=days-in-use");
+
+  const { error } = await supabase.from("event_schedule_settings").upsert({
     id: 1,
-    title: "Day 1 AI Workshop",
-    venue: venue || null,
-    timing: timing || null,
-    pre_instructions: preInstructions || null,
+    day_count: dayCount,
     updated_at: new Date().toISOString(),
     updated_by: user.id,
   }, { onConflict: "id" });
 
-  if (error) redirect("/admin?error=workshop");
+  if (error) redirect("/admin?error=day-count");
   revalidatePath("/admin");
   revalidatePath("/dashboard");
-  redirect("/admin?saved=workshop");
+  redirect("/admin?saved=day-count");
+}
+
+export async function saveEventDetail(formData: FormData) {
+  const { supabase, user } = await requireAdmin();
+  const id = String(formData.get("id") ?? "").trim();
+  const title = String(formData.get("title") ?? "").trim();
+  const dayNumber = Number.parseInt(String(formData.get("day_number") ?? ""), 10);
+  const displayOrder = Number.parseInt(String(formData.get("display_order") ?? "0"), 10);
+
+  const { data: settings } = await supabase.from("event_schedule_settings")
+    .select("day_count").eq("id", 1).maybeSingle();
+
+  if (!title || !settings || !Number.isInteger(dayNumber) || dayNumber < 1 || dayNumber > settings.day_count) {
+    redirect("/admin?error=event-detail");
+  }
+
+  const payload = {
+    day_number: dayNumber,
+    title,
+    venue: String(formData.get("venue") ?? "").trim() || null,
+    timing: String(formData.get("timing") ?? "").trim() || null,
+    pre_instructions: String(formData.get("pre_instructions") ?? "").trim() || null,
+    display_order: Number.isFinite(displayOrder) ? displayOrder : 0,
+    is_published: formData.get("is_published") === "on",
+    updated_at: new Date().toISOString(),
+    updated_by: user.id,
+  };
+
+  const result = id
+    ? await supabase.from("event_details").update(payload).eq("id", id)
+    : await supabase.from("event_details").insert(payload);
+
+  if (result.error) redirect("/admin?error=event-detail");
+  revalidatePath("/admin");
+  revalidatePath("/dashboard");
+  redirect("/admin?saved=event-detail");
+}
+
+export async function deleteEventDetail(formData: FormData) {
+  const { supabase } = await requireAdmin();
+  const id = String(formData.get("id") ?? "").trim();
+  if (!id) redirect("/admin?error=event-delete");
+
+  const { error } = await supabase.from("event_details").delete().eq("id", id);
+  if (error) redirect("/admin?error=event-delete");
+
+  revalidatePath("/admin");
+  revalidatePath("/dashboard");
+  redirect("/admin?saved=event-delete");
 }
 
 export async function saveProblemStatement(formData: FormData) {
@@ -71,16 +127,6 @@ export async function saveProblemStatement(formData: FormData) {
   revalidatePath("/admin");
   revalidatePath("/dashboard");
   redirect("/admin?saved=problem");
-}
-
-export async function deleteWorkshopSettings(_formData: FormData) {
-  const { supabase } = await requireAdmin();
-  const { error } = await supabase.from("event_workshop_settings").delete().eq("id", 1);
-
-  if (error) redirect("/admin?error=workshop-delete");
-  revalidatePath("/admin");
-  revalidatePath("/dashboard");
-  redirect("/admin?saved=workshop-delete");
 }
 
 export async function deleteProblemStatement(formData: FormData) {
