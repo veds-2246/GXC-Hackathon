@@ -5,9 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
-type AuthFormProps = { mode: "login" | "signup" };
+type AuthFormProps = { mode: "login" | "signup"; nextPath?: string };
 
-export function AuthForm({ mode }: AuthFormProps) {
+export function AuthForm({ mode, nextPath = "/checkout" }: AuthFormProps) {
   const router = useRouter();
   const supabase = createClient();
   const [email, setEmail] = useState("");
@@ -46,7 +46,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       return;
     }
 
-    router.replace("/checkout");
+    router.replace(isSignup ? "/checkout" : nextPath);
     router.refresh();
   }
 
@@ -55,7 +55,7 @@ export function AuthForm({ mode }: AuthFormProps) {
     setError("");
     const { error: oauthError } = await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/auth/callback?next=/checkout` },
+      options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(isSignup ? "/checkout" : nextPath)}` },
     });
     if (oauthError) {
       setBusy(null);
