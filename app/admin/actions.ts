@@ -32,6 +32,39 @@ export async function saveEventDayCount(formData: FormData) {
   redirect("/admin?saved=day-count");
 }
 
+export async function saveWhatsappChannelLink(formData: FormData) {
+  const { supabase, user } = await requireAdmin();
+  const rawUrl = String(formData.get("whatsapp_channel_url") ?? "").trim();
+  let channelUrl: string | null = null;
+
+  if (rawUrl) {
+    let parsed: URL;
+    try {
+      parsed = new URL(rawUrl);
+    } catch {
+      redirect("/admin?error=whatsapp-channel");
+    }
+
+    const allowedHost = parsed.hostname === "whatsapp.com" || parsed.hostname === "www.whatsapp.com";
+    const pathParts = parsed.pathname.split("/").filter(Boolean);
+    if (parsed.protocol !== "https:" || !allowedHost || pathParts[0] !== "channel" || !pathParts[1]) {
+      redirect("/admin?error=whatsapp-channel");
+    }
+    channelUrl = parsed.toString();
+  }
+
+  const { error } = await supabase.from("event_schedule_settings").update({
+    whatsapp_channel_url: channelUrl,
+    updated_at: new Date().toISOString(),
+    updated_by: user.id,
+  }).eq("id", 1);
+
+  if (error) redirect("/admin?error=whatsapp-channel");
+  revalidatePath("/admin");
+  revalidatePath("/dashboard");
+  redirect("/admin?saved=whatsapp-channel");
+}
+
 export async function saveEventDetail(formData: FormData) {
   const { supabase, user } = await requireAdmin();
   const id = String(formData.get("id") ?? "").trim();
