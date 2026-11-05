@@ -552,3 +552,224 @@
     transform: none;
   }
 }
+
+/* =========================================
+   LANDING HERO — TWO-COLUMN EDITORIAL CARD
+========================================= */
+
+.hero-shell {
+  width: min(1440px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+.hero-layout {
+  overflow: hidden;
+  border: 1px solid rgba(134, 56, 205, 0.25);
+  border-radius: 2.1rem;
+  background:
+    radial-gradient(circle at 76% 47%, rgba(199, 166, 243, 0.12), transparent 27rem),
+    linear-gradient(112deg, rgba(255, 255, 255, 0.98) 0%, rgba(253, 249, 255, 0.96) 58%, rgba(248, 240, 255, 0.94) 100%);
+  box-shadow:
+    0 24px 70px rgba(95, 34, 149, 0.10),
+    0 3px 12px rgba(34, 4, 75, 0.035);
+}
+
+.hero-art-wrap {
+  isolation: isolate;
+}
+
+.hero-art-glow {
+  position: absolute;
+  z-index: 0;
+  width: 76%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(199, 166, 243, 0.62) 0%,
+    rgba(199, 166, 243, 0.40) 34%,
+    rgba(134, 56, 205, 0.16) 58%,
+    transparent 74%
+  );
+  filter: blur(22px);
+  pointer-events: none;
+}
+
+.hero-art-orbit {
+  position: absolute;
+  z-index: 0;
+  width: 96%;
+  height: 52%;
+  border: 1.5px solid rgba(134, 56, 205, 0.32);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero-art-orbit-one {
+  transform: rotate(-19deg);
+}
+
+.hero-art-orbit-two {
+  width: 78%;
+  height: 72%;
+  border-color: rgba(199, 166, 243, 0.52);
+  transform: rotate(26deg);
+}
+
+.hero-art {
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(0 22px 24px rgba(95, 34, 149, 0.17));
+  transform-origin: center;
+  animation: float-slow 7.5s ease-in-out infinite;
+}
+
+.hero-art-sparkle {
+  position: absolute;
+  z-index: 2;
+  color: #8638cd;
+  font-size: 2rem;
+  line-height: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 10px rgba(134, 56, 205, 0.20));
+  animation: sparkle-float 4.8s ease-in-out infinite;
+}
+
+.hero-art-sparkle-one {
+  top: 16%;
+  left: 8%;
+}
+
+.hero-art-sparkle-two {
+  right: 5%;
+  bottom: 25%;
+  font-size: 2.35rem;
+  animation-delay: -2.2s;
+}
+
+@keyframes sparkle-float {
+  0%, 100% { opacity: 0.72; transform: translateY(0) rotate(0deg) scale(1); }
+  50% { opacity: 1; transform: translateY(-9px) rotate(14deg) scale(1.12); }
+}
+
+/* =========================================
+   YOUR MOVE — LIGHT LAVENDER PANEL
+   Keep text visible even while hovered.
+========================================= */
+
+.cta-panel.card-hover {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(134, 56, 205, 0.25);
+  border-radius: 2rem;
+  color: #220749;
+  background:
+    radial-gradient(ellipse at 88% 46%, rgba(222, 190, 255, 0.55), transparent 25rem),
+    linear-gradient(112deg, #ffffff 0%, #fbf5ff 55%, #f1e2ff 100%);
+  box-shadow:
+    0 20px 55px rgba(95, 34, 149, 0.11),
+    0 3px 12px rgba(34, 4, 75, 0.035);
+}
+
+.cta-panel.card-hover:hover {
+  background:
+    radial-gradient(ellipse at 88% 46%, rgba(222, 190, 255, 0.62), transparent 25rem),
+    linear-gradient(112deg, #ffffff 0%, #fbf5ff 55%, #f1e2ff 100%);
+  border-color: rgba(134, 56, 205, 0.38);
+  box-shadow:
+    0 24px 60px rgba(95, 34, 149, 0.15),
+    0 3px 12px rgba(34, 4, 75, 0.04);
+}
+
+.cta-panel.card-hover h1,
+.cta-panel.card-hover h2,
+.cta-panel.card-hover h3 {
+  color: #220749;
+}
+
+.cta-panel.card-hover .cta-label {
+  color: #5f2295;
+}
+
+.cta-panel.card-hover .cta-muted {
+  color: #76678a;
+}
+
+.cta-panel.card-hover::before {
+  width: 27rem;
+  height: 27rem;
+  top: -18rem;
+  right: 2%;
+  border-color: rgba(134, 56, 205, 0.10);
+  background: rgba(199, 166, 243, 0.10);
+}
+
+.cta-panel.card-hover::after {
+  width: 32rem;
+  height: 32rem;
+  right: -12rem;
+  bottom: -26rem;
+  border-color: rgba(134, 56, 205, 0.12);
+  background: rgba(199, 166, 243, 0.14);
+}
+
+.cta-button {
+  min-width: 132px;
+  box-shadow: 0 12px 25px rgba(34, 4, 75, 0.12);
+}
+
+.cta-button:hover {
+  color: #4b1877;
+  box-shadow: 0 16px 32px rgba(95, 34, 149, 0.18);
+}
+
+/* Keep the new two-column hero balanced on narrow screens. */
+@media (max-width: 1023px) {
+  .hero-layout {
+    text-align: left;
+  }
+
+  .hero-art-wrap {
+    min-height: clamp(250px, 62vw, 420px);
+  }
+
+  .hero-art {
+    max-width: 490px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-shell {
+    width: min(100% - 28px, 1440px);
+  }
+
+  .hero-layout {
+    border-radius: 1.5rem;
+  }
+
+  .hero-art-wrap {
+    min-height: 235px;
+  }
+
+  .hero-art-sparkle-one {
+    left: 1%;
+  }
+
+  .hero-art-sparkle-two {
+    right: 0;
+    bottom: 18%;
+  }
+
+  .cta-panel.card-hover {
+    border-radius: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-art,
+  .hero-art-sparkle {
+    animation: none !important;
+  }
+}
+
