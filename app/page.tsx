@@ -58,7 +58,7 @@ export default function Home() {
         <div className="pointer-events-none absolute -left-36 top-8 size-[440px] rounded-full bg-[#c7a6f3]/25 blur-[115px]" />
         <div className="pointer-events-none absolute -right-28 bottom-0 size-[420px] rounded-full bg-[#8638cd]/14 blur-[120px]" />
 
-        <div className="hero-layout card-hover reveal-on-scroll relative z-10 grid items-center gap-7 px-6 py-10 sm:gap-10 sm:px-10 sm:py-12 lg:min-h-[560px] lg:grid-cols-[1.02fr_.98fr] lg:gap-4 lg:px-16 lg:py-12">
+        <div className="hero-layout reveal-on-scroll relative z-10 grid items-center gap-7 px-6 py-10 sm:gap-10 sm:px-10 sm:py-12 lg:min-h-[560px] lg:grid-cols-[1.02fr_.98fr] lg:gap-4 lg:px-16 lg:py-12">
           <div className="relative z-10">
             <p className="eyebrow mb-6">GENXCODE HACKATHON 2026</p>
             <h1 className="editorial max-w-[730px] text-[clamp(3.55rem,6.8vw,7rem)] leading-[.86] text-[#220749]">
