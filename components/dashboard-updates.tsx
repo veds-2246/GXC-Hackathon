@@ -70,35 +70,35 @@ export function DashboardUpdates({
 
   return (
     <div className="mt-8 space-y-6">
-      <section className="rounded-2xl border border-[#e4e4dd] bg-white p-7 sm:p-8">
+      <section className="card-hover reveal-on-scroll rounded-2xl border border-[#eadff5] bg-white p-7 sm:p-8">
         <div className="flex items-center gap-3">
-          <span className="grid size-11 place-items-center rounded-xl bg-[#edf3ff] text-[#1a56db]"><CalendarDays size={21}/></span>
+          <span className="grid size-11 place-items-center rounded-xl bg-[#f4effc] text-[#5f2295]"><CalendarDays size={21}/></span>
           <div><p className="eyebrow">IMPORTANT INFORMATION</p><h2 className="editorial mt-1 text-3xl">Event schedule</h2></div>
         </div>
 
         {days.length === 0 ? (
-          <p className="mt-6 rounded-xl bg-[#f7f8fa] p-4 text-sm leading-6 text-[#697386]">
+          <p className="mt-6 rounded-xl bg-[#f8f3ff] p-4 text-sm leading-6 text-[#76678a]">
             Event details will appear here once the organizers publish them.
           </p>
         ) : (
           <div className="mt-7 space-y-6">
             {days.map((day) => (
-              <section key={day} className="border-l-2 border-[#1a56db] pl-5">
+              <section key={day} className="card-hover rounded-2xl border border-[#eadff5] bg-[#fcfaff] p-5">
                 <p className="eyebrow">DAY {day}</p>
                 <div className="mt-3 space-y-4">
                   {groupedEvents[day].map((event) => (
-                    <article key={event.id} className="rounded-xl bg-[#f7f8fa] p-5">
-                      <h3 className="text-base font-semibold text-[#111827]">{event.title}</h3>
+                    <article key={event.id} className="card-hover rounded-xl bg-[#f8f3ff] p-5">
+                      <h3 className="text-base font-semibold text-[#220749]">{event.title}</h3>
                       {(event.venue || event.timing) && (
                         <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                          {event.venue && <div className="flex items-start gap-2 text-sm leading-6 text-[#374151]"><MapPin size={16} className="mt-1 shrink-0 text-[#697386]"/><span>{event.venue}</span></div>}
-                          {event.timing && <div className="flex items-start gap-2 whitespace-pre-wrap text-sm leading-6 text-[#374151]"><Clock3 size={16} className="mt-1 shrink-0 text-[#697386]"/><span>{event.timing}</span></div>}
+                          {event.venue && <div className="flex items-start gap-2 text-sm leading-6 text-[#57436d]"><MapPin size={16} className="mt-1 shrink-0 text-[#76678a]"/><span>{event.venue}</span></div>}
+                          {event.timing && <div className="flex items-start gap-2 whitespace-pre-wrap text-sm leading-6 text-[#57436d]"><Clock3 size={16} className="mt-1 shrink-0 text-[#76678a]"/><span>{event.timing}</span></div>}
                         </div>
                       )}
                       {event.pre_instructions && (
-                        <div className="mt-4 border-t border-[#e4e4dd] pt-4">
-                          <div className="flex items-center gap-2 text-[10px] font-bold tracking-[.15em] text-[#697386]"><ClipboardList size={14}/> PRE-INSTRUCTIONS</div>
-                          <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-[#374151]">{event.pre_instructions}</p>
+                        <div className="mt-4 border-t border-[#eadff5] pt-4">
+                          <div className="flex items-center gap-2 text-[10px] font-bold tracking-[.15em] text-[#76678a]"><ClipboardList size={14}/> PRE-INSTRUCTIONS</div>
+                          <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-[#57436d]">{event.pre_instructions}</p>
                         </div>
                       )}
                     </article>
@@ -110,23 +110,23 @@ export function DashboardUpdates({
         )}
       </section>
 
-      <section className="rounded-2xl border border-[#e4e4dd] bg-white p-7 sm:p-8">
+      <section className="card-hover reveal-on-scroll rounded-2xl border border-[#eadff5] bg-white p-7 sm:p-8">
         <p className="eyebrow">HACKATHON</p>
         <h2 className="editorial mt-2 text-3xl">Choose your problem statement</h2>
-        <p className="mt-2 max-w-2xl text-sm leading-6 text-[#697386]">
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-[#76678a]">
           Select one problem statement published by the GenXCode organizers. You can update your selection while it remains available.
         </p>
 
         {problems.length === 0 ? (
-          <p className="mt-6 rounded-xl bg-[#f7f8fa] p-4 text-sm text-[#697386]">
+          <p className="mt-6 rounded-xl bg-[#f8f3ff] p-4 text-sm text-[#76678a]">
             Problem statements have not been published yet. They will appear here once the organizers make them available.
           </p>
         ) : (
           <>
-            <label className="mt-6 block text-xs font-semibold text-[#374151]">
+            <label className="mt-6 block text-xs font-semibold text-[#57436d]">
               Problem statement
               <select value={selectedId} onChange={(event) => { setSelectedId(event.target.value); setSaved(false); setError(""); }}
-                className="mt-2 w-full rounded-xl border border-[#dfe3ea] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#1a56db] focus:ring-2 focus:ring-blue-100">
+                className="mt-2 w-full rounded-xl border border-[#eadff5] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#5f2295] focus:ring-2 focus:ring-purple-100">
                 <option value="">Select a problem statement</option>
                 {problems.map((problem) => {
                   const full = problem.max_slots !== null && problem.filled_slots >= problem.max_slots;
@@ -137,14 +137,14 @@ export function DashboardUpdates({
               </select>
             </label>
 
-            {selectedProblem && <div className="mt-4 rounded-xl bg-[#f7f8fa] p-4"><p className="text-sm font-semibold text-[#111827]">{selectedProblem.title}</p><p className="mt-2 text-sm leading-6 text-[#697386]">{selectedProblem.summary}</p></div>}
+            {selectedProblem && <div className="mt-4 rounded-xl bg-[#f8f3ff] p-4"><p className="text-sm font-semibold text-[#220749]">{selectedProblem.title}</p><p className="mt-2 text-sm leading-6 text-[#76678a]">{selectedProblem.summary}</p></div>}
             {error && <p role="alert" className="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
             {saved && <p role="status" className="mt-4 flex items-center gap-2 text-sm font-medium text-[#1e8e3e]"><CheckCircle2 size={16}/> Your problem statement selection is saved.</p>}
             <button type="button" onClick={saveSelection} disabled={!selectedId || saving || selectedId === selectedProblemStatementId}
-              className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-[#1a56db] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#1649bd] disabled:cursor-not-allowed disabled:opacity-50">
+              className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-[#5f2295] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#4b1877] disabled:cursor-not-allowed disabled:opacity-50">
               {saving ? <><LoaderCircle className="animate-spin" size={16}/> Saving…</> : "Save selection"}
             </button>
-            {selectedProblemStatementId && <p className="mt-3 text-xs text-[#8992a1]">Your current selection is saved. Choose a different option and save to change it.</p>}
+            {selectedProblemStatementId && <p className="mt-3 text-xs text-[#8d7ba3]">Your current selection is saved. Choose a different option and save to change it.</p>}
           </>
         )}
       </section>
