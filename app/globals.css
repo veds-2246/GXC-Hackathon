@@ -563,15 +563,11 @@
 }
 
 .hero-layout {
-  overflow: hidden;
-  border: 1px solid rgba(134, 56, 205, 0.25);
-  border-radius: 2.1rem;
-  background:
-    radial-gradient(circle at 76% 47%, rgba(199, 166, 243, 0.12), transparent 27rem),
-    linear-gradient(112deg, rgba(255, 255, 255, 0.98) 0%, rgba(253, 249, 255, 0.96) 58%, rgba(248, 240, 255, 0.94) 100%);
-  box-shadow:
-    0 24px 70px rgba(95, 34, 149, 0.10),
-    0 3px 12px rgba(34, 4, 75, 0.035);
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .hero-art-wrap {
@@ -742,10 +738,6 @@
 @media (max-width: 640px) {
   .hero-shell {
     width: min(100% - 28px, 1440px);
-  }
-
-  .hero-layout {
-    border-radius: 1.5rem;
   }
 
   .hero-art-wrap {
