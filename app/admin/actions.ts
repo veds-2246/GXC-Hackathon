@@ -21,13 +21,15 @@ export async function saveWorkshopSettings(formData: FormData) {
   const timing = String(formData.get("timing") ?? "").trim();
   const preInstructions = String(formData.get("pre_instructions") ?? "").trim();
 
-  const { error } = await supabase.from("event_workshop_settings").update({
+  const { error } = await supabase.from("event_workshop_settings").upsert({
+    id: 1,
+    title: "Day 1 AI Workshop",
     venue: venue || null,
     timing: timing || null,
     pre_instructions: preInstructions || null,
     updated_at: new Date().toISOString(),
     updated_by: user.id,
-  }).eq("id", 1);
+  }, { onConflict: "id" });
 
   if (error) redirect("/admin?error=workshop");
   revalidatePath("/admin");
@@ -69,4 +71,35 @@ export async function saveProblemStatement(formData: FormData) {
   revalidatePath("/admin");
   revalidatePath("/dashboard");
   redirect("/admin?saved=problem");
+}
+
+export async function deleteWorkshopSettings(_formData: FormData) {
+  const { supabase } = await requireAdmin();
+  const { error } = await supabase.from("event_workshop_settings").delete().eq("id", 1);
+
+  if (error) redirect("/admin?error=workshop-delete");
+  revalidatePath("/admin");
+  revalidatePath("/dashboard");
+  redirect("/admin?saved=workshop-delete");
+}
+
+export async function deleteProblemStatement(formData: FormData) {
+  const { supabase } = await requireAdmin();
+  const id = String(formData.get("id") ?? "").trim();
+  if (!id) redirect("/admin?error=problem");
+
+  const { count, error: usageError } = await supabase
+    .from("registration_problem_statements")
+    .select("registration_id", { count: "exact", head: true })
+    .eq("problem_statement_id", id);
+
+  if (usageError) redirect("/admin?error=problem");
+  if ((count ?? 0) > 0) redirect("/admin?error=problem-in-use");
+
+  const { error } = await supabase.from("problem_statements").delete().eq("id", id);
+  if (error) redirect("/admin?error=problem-delete");
+
+  revalidatePath("/admin");
+  revalidatePath("/dashboard");
+  redirect("/admin?saved=problem-delete");
 }
