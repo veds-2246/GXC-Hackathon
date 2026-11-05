@@ -42,7 +42,7 @@ export default async function DashboardPage() {
           <article className="rounded-2xl bg-[#0b0f19] p-7 text-white">
             <p className="text-[10px] font-bold tracking-[.18em] text-[#8db2ff]">UP NEXT</p>
             <h2 className="editorial mt-5 text-3xl">Your registration journey starts here.</h2>
-            <p className="mt-3 text-sm leading-6 text-[#a4adbd]">Complete your profile, choose a problem statement and submit your hackathon idea.</p>
+            <p className="mt-3 text-sm leading-6 text-[#a4adbd]">Complete your participant profile and select an organizer-published problem statement to register.</p>
             <Link href="/register" className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-xs font-bold text-[#111827] transition hover:bg-[#dce7ff]">Start registration <ArrowUpRight size={14}/></Link>
           </article>
         </div>
