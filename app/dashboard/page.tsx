@@ -22,7 +22,7 @@ export default async function DashboardPage() {
   if (!registration) redirect("/register");
 
   const [{ data: events }, { data: problems }, { data: selection }] = await Promise.all([
-    supabase.from("event_details").select("id,day_number,title,venue,timing,pre_instructions").eq("is_published", true).order("day_number").order("display_order"),
+    supabase.from("event_details").select("id,day_number,title,venue,timing,pre_instructions").eq("is_published", true).order("day_number").order("created_at"),
     supabase.from("problem_statements").select("id,title,summary,domain,difficulty,max_slots,filled_slots").eq("is_active", true).order("display_order"),
     supabase.from("registration_problem_statements").select("problem_statement_id").eq("registration_id", registration.id).maybeSingle(),
   ]);
