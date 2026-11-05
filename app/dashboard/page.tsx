@@ -4,6 +4,7 @@ import { ArrowUpRight, Code2, LogOut, UserRound, CheckCircle2 } from "lucide-rea
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/dashboard/actions";
 import { DashboardUpdates } from "@/components/dashboard-updates";
+import { WhatsAppChannelFloat } from "@/components/whatsapp-channel-float";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -21,10 +22,11 @@ export default async function DashboardPage() {
   ]);
   if (!registration) redirect("/register");
 
-  const [{ data: events }, { data: problems }, { data: selection }] = await Promise.all([
+  const [{ data: events }, { data: problems }, { data: selection }, { data: scheduleSettings }] = await Promise.all([
     supabase.from("event_details").select("id,day_number,title,venue,timing,pre_instructions").eq("is_published", true).order("day_number").order("created_at"),
     supabase.from("problem_statements").select("id,title,summary,domain,difficulty,max_slots,filled_slots").eq("is_active", true).order("display_order"),
     supabase.from("registration_problem_statements").select("problem_statement_id").eq("registration_id", registration.id).maybeSingle(),
+    supabase.from("event_schedule_settings").select("whatsapp_channel_url").eq("id", 1).maybeSingle(),
   ]);
 
   const name = profile?.full_name || "Participant";
@@ -49,5 +51,6 @@ export default async function DashboardPage() {
       </div>
       <DashboardUpdates events={events ?? []} problems={problems ?? []} selectedProblemStatementId={selection?.problem_statement_id ?? null}/>
     </section>
+    <WhatsAppChannelFloat url={scheduleSettings?.whatsapp_channel_url ?? null}/>
   </main>;
 }
