@@ -23,7 +23,7 @@ const days = [
     day: "02",
     label: "Build",
     title: "Turn ideas into impact.",
-    description: "An intense 8–12 hour hackathon. Collaborate, experiment and ship something that matters.",
+    description: "An intense 8–12 hour hackathon. Experiment and ship something that matters.",
     icon: Code2,
   },
   {
@@ -67,7 +67,7 @@ export default function Home() {
           <a className="transition hover:text-[#1a56db]" href="#about">About</a>
         </nav>
         <a href="/signup" className="inline-flex items-center gap-2 rounded-full bg-[#1a56db] px-5 py-3 text-xs font-semibold text-white shadow-lg shadow-blue-900/15 transition hover:-translate-y-0.5 hover:bg-[#1649bd]">
-          Register <ArrowUpRight size={14} />
+          Get your Pass <ArrowUpRight size={14} />
         </a>
       </header>
 
@@ -84,7 +84,7 @@ export default function Home() {
             beginning<span className="text-[#f9ab00]">.</span>
           </h1>
           <p className="mt-8 max-w-[470px] text-[15px] leading-7 text-[#5b6472]">
-            Three days to learn, build and pitch. Bring your curiosity, find your team and turn a bold idea into something real.
+            Three days to learn, build and pitch. Bring your curiosity, meet fellow builders and turn a bold idea into something real.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-4" id="register">
             <a href="#schedule" className="inline-flex items-center gap-3 rounded-full bg-[#1a56db] px-7 py-4 text-sm font-semibold text-white shadow-xl shadow-blue-900/15 transition hover:-translate-y-1 hover:bg-[#1649bd]">
