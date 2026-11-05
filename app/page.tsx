@@ -2,11 +2,9 @@ import {
   ArrowDownRight,
   ArrowRight,
   ArrowUpRight,
-  CalendarDays,
   Code2,
   Cpu,
   GraduationCap,
-  Sparkles,
   Trophy,
   Users,
 } from "lucide-react";
@@ -44,13 +42,6 @@ const highlights = [
 export default function Home() {
   return (
     <main className="overflow-hidden">
-      <div className="border-b border-[#e4e4dd] bg-[#f4f4ef]">
-        <div className="container-shell flex min-h-9 items-center justify-between gap-4 text-[11px] text-[#5b6472]">
-          <span>GENXCODE PRESENTS <span className="mx-2 text-[#1a56db]">✳</span> TECH FEST 2026</span>
-          <span className="hidden sm:block">LEARN. BUILD. PITCH.</span>
-        </div>
-      </div>
-
       <header className="container-shell flex h-[76px] items-center justify-between">
         <a href="#" className="flex items-center gap-3" aria-label="GenXCode home">
           <span className="grid size-10 place-items-center rounded-xl bg-[#1a56db] text-white shadow-lg shadow-blue-900/15">
@@ -71,13 +62,9 @@ export default function Home() {
         </a>
       </header>
 
-      <section className="container-shell relative grid min-h-[650px] items-center gap-12 py-20 lg:grid-cols-[1.1fr_.9fr] lg:py-24">
+      <section className="container-shell relative flex min-h-[560px] items-center py-20 lg:py-24">
         <div className="pointer-events-none absolute -left-48 top-20 size-[440px] rounded-full bg-blue-200/30 blur-[100px]" />
         <div className="relative z-10">
-          <div className="eyebrow mb-7 flex items-center gap-2">
-            <span className="size-2 rounded-full bg-[#1e8e3e]" />
-            A three-day celebration of building
-          </div>
           <h1 className="editorial max-w-[720px] text-[clamp(4rem,8vw,7.4rem)] leading-[.88] text-[#111827]">
             Ideas are<br />
             <span className="italic text-[#1a56db]">only the</span><br />
@@ -93,39 +80,6 @@ export default function Home() {
             <a href="#schedule" className="inline-flex items-center gap-2 px-3 py-4 text-sm font-semibold text-[#374151] transition hover:text-[#1a56db]">
               Explore the event <ArrowDownRight size={16} />
             </a>
-          </div>
-          <div className="mt-14 flex flex-wrap gap-x-8 gap-y-4 border-t border-[#e4e4dd] pt-7">
-            <div><p className="editorial text-3xl">03</p><p className="mt-1 text-[10px] uppercase tracking-[.15em] text-[#7b8492]">Days</p></div>
-            <div><p className="editorial text-3xl">60</p><p className="mt-1 text-[10px] uppercase tracking-[.15em] text-[#7b8492]">Finalists</p></div>
-            <div><p className="editorial text-3xl">∞</p><p className="mt-1 text-[10px] uppercase tracking-[.15em] text-[#7b8492]">Possibilities</p></div>
-          </div>
-        </div>
-
-        <div className="relative mx-auto w-full max-w-[490px]">
-          <div className="grid-paper relative aspect-[.88] overflow-hidden rounded-[28px] border border-[#dce3ef] bg-[#edf2fb] p-6 sm:p-8">
-            <div className="absolute -right-20 -top-16 size-72 rounded-full border border-[#1a56db]/15" />
-            <div className="absolute -right-5 -top-1 size-52 rounded-full border border-[#1a56db]/20" />
-            <div className="absolute -right-12 top-12 size-36 rounded-full bg-[#f9ab00]/80 blur-[1px]" />
-            <div className="absolute bottom-8 left-8 right-8 top-8 flex flex-col justify-between">
-              <div className="flex items-start justify-between">
-                <span className="rounded-full border border-[#1a56db]/20 bg-white/70 px-3 py-2 text-[10px] font-semibold tracking-[.14em] text-[#1a56db]">GXC / 2026</span>
-                <Sparkles className="text-[#1a56db]" size={22} />
-              </div>
-              <div className="relative">
-                <div className="editorial text-[clamp(5rem,12vw,9rem)] leading-[.78] text-[#1a56db]">G<span className="italic text-[#111827]">X</span></div>
-                <p className="mt-5 max-w-[250px] text-sm leading-6 text-[#4b5563]">A meeting point for curious minds and fearless makers.</p>
-              </div>
-              <div className="flex items-end justify-between border-t border-[#1a56db]/20 pt-4">
-                <span className="text-[10px] font-semibold tracking-[.16em] text-[#52617a]">LEARN / BUILD / PITCH</span>
-                <span className="grid size-11 place-items-center rounded-full bg-[#1a56db] text-white"><ArrowUpRight size={19}/></span>
-              </div>
-            </div>
-          </div>
-          <div className="absolute -bottom-5 -left-5 hidden rounded-2xl border border-[#e4e4dd] bg-white p-4 shadow-xl shadow-slate-900/5 sm:block">
-            <div className="flex items-center gap-3">
-              <span className="grid size-9 place-items-center rounded-xl bg-[#fff5d9] text-[#b77900]"><CalendarDays size={17}/></span>
-              <div><p className="text-xs font-bold">Three days. One big idea.</p><p className="mt-1 text-[10px] text-[#7b8492]">Your next chapter starts here.</p></div>
-            </div>
           </div>
         </div>
       </section>
