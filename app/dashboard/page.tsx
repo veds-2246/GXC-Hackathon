@@ -18,7 +18,8 @@ export default async function DashboardPage() {
     .maybeSingle();
 
   const email = typeof data.claims.email === "string" ? data.claims.email : profile?.email ?? "";
-  const name = profile?.full_name || (typeof data.claims.user_metadata?.full_name === "string" ? data.claims.user_metadata.full_name : "Participant");
+  const metadata = data.claims.user_metadata as { full_name?: string } | undefined;
+  const name = profile?.full_name || metadata?.full_name || "Participant";
 
   return (
     <main className="min-h-screen bg-[#fafaf7]">
