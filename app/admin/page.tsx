@@ -67,7 +67,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
           <p className="mt-3 text-xs text-[#8d7ba3]">Current schedule: {dayCount} {dayCount === 1 ? "day" : "days"}. You cannot reduce the count below a day that already contains an event entry.</p>
         </section>
 
-        <section className="mt-8 rounded-2xl border border-[#eadff5] bg-white p-6 sm:p-8">
+        <section className="admin-section card-hover reveal-on-scroll mt-8 rounded-2xl border border-[#eadff5] bg-white/85 p-6 sm:p-8">
           <div className="mb-5 flex items-start gap-3">
             <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-[#e8f8ee] text-[#168a45]"><MessageCircle size={21}/></span>
             <div><p className="eyebrow">COMMUNITY & ANNOUNCEMENTS</p><h2 className="editorial mt-2 text-3xl">WhatsApp Channel</h2><p className="mt-2 text-sm text-[#76678a]">Add the official channel link. A floating Join button will appear on participant dashboards only after a link is saved.</p></div>
@@ -80,7 +80,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
           </form>
           <p className="mt-3 text-xs text-[#8d7ba3]">Leave the field empty and save to hide the floating button. Only WhatsApp Channel links are accepted.</p>
         </section>
-        <section className="mt-8 rounded-2xl border border-[#eadff5] bg-white p-6 sm:p-8">
+        <section className="admin-section card-hover reveal-on-scroll mt-8 rounded-2xl border border-[#eadff5] bg-white/85 p-6 sm:p-8">
           <div className="mb-6"><p className="eyebrow">EVENT DETAILS</p><h2 className="editorial mt-2 text-3xl">Add an event entry</h2><p className="mt-2 text-sm text-[#76678a]">Event titles are fully editable. Add one or more entries under any configured day.</p></div>
           <form action={saveEventDetail} className="space-y-4 rounded-xl bg-[#f8f3ff] p-5">
             <div className="grid gap-4 sm:grid-cols-2">
@@ -123,9 +123,9 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
           </div>
         </section>
 
-        <section className="mt-8 rounded-2xl border border-[#eadff5] bg-white p-6 sm:p-8">
+        <section className="admin-section card-hover reveal-on-scroll mt-8 rounded-2xl border border-[#eadff5] bg-white/85 p-6 sm:p-8">
           <div className="mb-6"><p className="eyebrow">HACKATHON CONTENT</p><h2 className="editorial mt-2 text-3xl">Problem statements</h2><p className="mt-2 text-sm text-[#76678a]">Create, edit or unpublish organizer-defined statements. Only active statements appear in the participant dropdown.</p></div>
-          <div className="mb-8 rounded-xl bg-[#f8f3ff] p-5">
+          <div className="card-hover mb-8 rounded-xl bg-[#f8f3ff] p-5">
             <h3 className="font-semibold">Add a problem statement</h3>
             <form action={saveProblemStatement} className="mt-4 space-y-4">
               <div className="grid gap-4 sm:grid-cols-2">
@@ -145,7 +145,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
           </div>
           <div className="space-y-5">
             {(problems ?? []).map((problem) => (
-              <article key={problem.id} className="rounded-xl border border-[#eadff5] p-5">
+              <article key={problem.id} className="card-hover rounded-xl border border-[#eadff5] bg-white p-5">
                 <form action={saveProblemStatement}>
                   <input type="hidden" name="id" value={problem.id}/>
                   <div className="mb-4 flex flex-wrap items-center justify-between gap-2"><h3 className="font-semibold">{problem.title}</h3><span className={problem.is_active ? "rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700" : "rounded-full bg-[#f1f2f4] px-3 py-1 text-xs font-semibold text-[#76678a]"}>{problem.is_active ? "Published" : "Unpublished"} · {problem.filled_slots} selected</span></div>
