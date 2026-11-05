@@ -1,4 +1,5 @@
 import { BrandLockup } from "@/components/brand-lockup";
+import { HackathonTeamIllustration } from "@/components/hackathon-team-illustration";
 import {
   Code2,
   Cpu,
@@ -52,27 +53,39 @@ export default function Home() {
         </a>
       </header>
 
-      <section className="container-shell relative py-16 sm:py-20 lg:py-24">
-        <div className="pointer-events-none absolute -left-48 top-8 size-[440px] rounded-full bg-[#c7a6f3]/20 blur-[110px]" />
-        <div className="pointer-events-none absolute -right-40 bottom-0 size-[380px] rounded-full bg-[#8638cd]/10 blur-[110px]" />
+      {/* Main hero: editorial copy on the left, team illustration on the right */}
+      <section className="hero-shell relative py-7 sm:py-9 lg:py-11">
+        <div className="pointer-events-none absolute -left-36 top-8 size-[440px] rounded-full bg-[#c7a6f3]/25 blur-[115px]" />
+        <div className="pointer-events-none absolute -right-28 bottom-0 size-[420px] rounded-full bg-[#8638cd]/14 blur-[120px]" />
 
-        <div className="hero-copy-card card-hover reveal-on-scroll relative z-10 mx-auto max-w-5xl px-7 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
-          <p className="eyebrow mb-7">GENXCODE HACKATHON 2026</p>
-          <h1 className="editorial max-w-[820px] text-[clamp(3.8rem,8vw,7.6rem)] leading-[.88] text-[#220749]">
-            Ideas are<br />
-            <span className="text-purple-gradient italic">only the</span><br />
-            beginning<span className="text-[#8638cd]">.</span>
-          </h1>
-          <p className="mt-8 max-w-[650px] text-[15px] leading-7 text-[#76678a] sm:text-base">
-            Three days to learn, build and pitch. Bring your curiosity, meet fellow builders and turn a bold idea into something real.
-          </p>
-          <div className="mt-9 flex flex-wrap items-center gap-4" id="register">
-            <a href="/auth" className="btn-primary px-7 py-4 text-sm">
-              Get your Pass
-            </a>
-            <a href="#schedule" className="purple-hover rounded-full px-4 py-4 text-sm font-semibold text-[#57436d]">
-              Explore the event
-            </a>
+        <div className="hero-layout card-hover reveal-on-scroll relative z-10 grid items-center gap-7 px-6 py-10 sm:gap-10 sm:px-10 sm:py-12 lg:min-h-[560px] lg:grid-cols-[1.02fr_.98fr] lg:gap-4 lg:px-16 lg:py-12">
+          <div className="relative z-10">
+            <p className="eyebrow mb-6">GENXCODE HACKATHON 2026</p>
+            <h1 className="editorial max-w-[730px] text-[clamp(3.55rem,6.8vw,7rem)] leading-[.86] text-[#220749]">
+              Ideas are<br />
+              <span className="text-purple-gradient italic">only the</span><br />
+              beginning<span className="text-[#8638cd]">.</span>
+            </h1>
+            <p className="mt-7 max-w-[620px] text-[15px] leading-7 text-[#76678a] sm:text-base sm:leading-8">
+              Three days to learn, build and pitch. Bring your curiosity, meet fellow builders and turn a bold idea into something real.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-4" id="register">
+              <a href="/auth" className="btn-primary px-7 py-4 text-sm">
+                Get your Pass
+              </a>
+              <a href="#schedule" className="purple-hover rounded-full px-4 py-4 text-sm font-semibold text-[#57436d]">
+                Explore the event
+              </a>
+            </div>
+          </div>
+
+          <div className="hero-art-wrap relative mx-auto flex min-h-[300px] w-full max-w-[640px] items-center justify-center sm:min-h-[390px] lg:min-h-[470px]">
+            <span className="hero-art-glow" aria-hidden="true" />
+            <span className="hero-art-orbit hero-art-orbit-one" aria-hidden="true" />
+            <span className="hero-art-orbit hero-art-orbit-two" aria-hidden="true" />
+            <span className="hero-art-sparkle hero-art-sparkle-one" aria-hidden="true">✦</span>
+            <span className="hero-art-sparkle hero-art-sparkle-two" aria-hidden="true">✦</span>
+            <HackathonTeamIllustration className="hero-art relative z-10 h-auto w-full max-w-[590px]" />
           </div>
         </div>
       </section>
@@ -140,19 +153,19 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" className="container-shell py-12 sm:py-20">
-        <div className="cta-panel card-hover reveal-on-scroll grid gap-10 p-8 sm:p-12 md:grid-cols-[1fr_auto] md:items-end lg:p-16">
-          <div>
-            <p className="mb-5 text-[11px] font-bold tracking-[.2em] text-[#e2d1fe]">YOUR MOVE</p>
-            <h2 className="editorial max-w-[700px] text-5xl leading-[.98] sm:text-7xl">
-              The next big thing<br />
-              <span className="italic text-[#e2d1fe]">could start with you.</span>
+      {/* Separate light lavender CTA panel; all text stays high-contrast */}
+      <section id="about" className="hero-shell py-5 sm:py-8">
+        <div className="cta-panel card-hover reveal-on-scroll grid items-center gap-7 px-7 py-8 sm:px-10 sm:py-10 lg:grid-cols-[1fr_auto] lg:px-12 lg:py-11">
+          <div className="relative z-10">
+            <p className="cta-label eyebrow mb-3">YOUR MOVE</p>
+            <h2 className="editorial max-w-[1120px] text-[clamp(2.55rem,4.2vw,4rem)] leading-[1.02] text-[#220749]">
+              The next big thing <span className="text-purple-gradient italic">could start with you.</span>
             </h2>
-            <p className="cta-muted mt-6 max-w-[480px] text-sm leading-6 sm:text-base">
+            <p className="cta-muted mt-4 max-w-[600px] text-sm leading-6 sm:text-base">
               Bring a question. Leave with a prototype, a new perspective or a team that keeps building.
             </p>
           </div>
-          <a href="/auth" className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-bold text-[#5f2295] shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+          <a href="/auth" className="cta-button relative z-10 inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-bold text-[#5f2295] shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl">
             I&apos;m in
           </a>
         </div>
