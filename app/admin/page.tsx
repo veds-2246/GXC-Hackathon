@@ -3,7 +3,8 @@ import { redirect } from "next/navigation";
 import { Code2, LogOut, Save, Plus, ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/dashboard/actions";
-import { saveProblemStatement, saveWorkshopSettings } from "@/app/admin/actions";
+import { deleteProblemStatement, deleteWorkshopSettings, saveProblemStatement, saveWorkshopSettings } from "@/app/admin/actions";
+import { AdminDeleteButton } from "@/components/admin-delete-button";
 
 const fieldClass = "mt-2 w-full rounded-xl border border-[#dfe3ea] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#1a56db] focus:ring-2 focus:ring-blue-100";
 const labelClass = "block text-xs font-semibold text-[#374151]";
@@ -44,7 +45,7 @@ export default async function AdminPage({
         <p className="mt-4 max-w-2xl text-sm leading-6 text-[#697386]">Manage the Day 1 AI workshop invitation and publish the problem statements participants can choose from their dashboards.</p>
 
         {params.saved && <p role="status" className="mt-6 rounded-xl bg-green-50 px-4 py-3 text-sm text-green-800">Changes saved successfully.</p>}
-        {params.error && <p role="alert" className="mt-6 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">We couldn’t save those changes. Check the fields and try again.</p>}
+        {params.error && <p role="alert" className="mt-6 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{params.error === "problem-in-use" ? "This problem statement has participant selections. Unpublish it instead so existing registrations remain intact." : params.error === "workshop-delete" ? "The workshop invitation could not be deleted. Please try again." : params.error === "problem-delete" ? "The problem statement could not be deleted. It may already be in use." : "We couldn’t save those changes. Check the fields and try again."}</p>}
 
         <section className="mt-8 rounded-2xl border border-[#e4e4dd] bg-white p-6 sm:p-8">
           <div className="mb-6"><p className="eyebrow">DAY 1 · AI WORKSHOP</p><h2 className="editorial mt-2 text-3xl">Workshop invitation</h2><p className="mt-2 text-sm text-[#697386]">These details appear below the account information on every participant dashboard.</p></div>
@@ -52,8 +53,9 @@ export default async function AdminPage({
             <label className={labelClass}>Venue<input name="venue" defaultValue={workshop?.venue ?? ""} className={fieldClass} placeholder="Enter workshop venue"/></label>
             <label className={labelClass}>Timing<input name="timing" defaultValue={workshop?.timing ?? ""} className={fieldClass} placeholder="e.g. 9:00 AM – 12:30 PM"/></label>
             <label className={labelClass}>Pre-instructions<textarea name="pre_instructions" rows={5} defaultValue={workshop?.pre_instructions ?? ""} className={fieldClass} placeholder="What should participants bring, install or complete before arriving?"/></label>
-            <button className="inline-flex items-center gap-2 rounded-full bg-[#1a56db] px-6 py-3 text-sm font-semibold text-white"><Save size={16}/> Save workshop invitation</button>
+            <button className="inline-flex items-center gap-2 rounded-full bg-[#1a56db] px-6 py-3 text-sm font-semibold text-white"><Save size={16}/> {workshop ? "Save workshop invitation" : "Publish workshop invitation"}</button>
           </form>
+          {workshop && <div className="mt-4 flex justify-end"><AdminDeleteButton action={deleteWorkshopSettings} confirmMessage="Delete the Day 1 workshop invitation? It will disappear from every student dashboard. You can create it again later." label="Delete invitation"/></div>}
         </section>
 
         <section className="mt-8 rounded-2xl border border-[#e4e4dd] bg-white p-6 sm:p-8">
@@ -80,8 +82,9 @@ export default async function AdminPage({
 
           <div className="space-y-5">
             {(problems ?? []).map((problem) => (
-              <form key={problem.id} action={saveProblemStatement} className="rounded-xl border border-[#e4e4dd] p-5">
-                <input type="hidden" name="id" value={problem.id}/>
+              <article key={problem.id} className="rounded-xl border border-[#e4e4dd] p-5">
+                <form action={saveProblemStatement}>
+                  <input type="hidden" name="id" value={problem.id}/>
                 <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
                   <h3 className="font-semibold">{problem.title}</h3>
                   <span className={problem.is_active ? "rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700" : "rounded-full bg-[#f1f2f4] px-3 py-1 text-xs font-semibold text-[#697386]"}>{problem.is_active ? "Published" : "Unpublished"} · {problem.filled_slots} selected</span>
@@ -98,8 +101,18 @@ export default async function AdminPage({
                 <label className={labelClass + " mt-4"}>Full description<textarea name="description" rows={3} defaultValue={problem.description ?? ""} className={fieldClass}/></label>
                 <label className={labelClass + " mt-4"}>Technology hints<textarea name="tech_hints" rows={2} defaultValue={problem.tech_hints ?? ""} className={fieldClass}/></label>
                 <label className="mt-4 flex items-center gap-2 text-sm font-medium text-[#374151]"><input type="checkbox" name="is_active" defaultChecked={problem.is_active} className="size-4 accent-[#1a56db]"/> Published and visible to participants</label>
-                <button className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#1a56db] px-5 py-2.5 text-sm font-semibold text-[#1a56db]"><Save size={15}/> Save changes</button>
-              </form>
+                  <button className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#1a56db] px-5 py-2.5 text-sm font-semibold text-[#1a56db]"><Save size={15}/> Save changes</button>
+                </form>
+                <div className="mt-4 flex justify-end">
+                  <AdminDeleteButton
+                    action={deleteProblemStatement}
+                    confirmMessage={`Delete "${problem.title}"? This is allowed only when no participant has selected it.`}
+                    label="Delete problem statement"
+                  >
+                    <input type="hidden" name="id" value={problem.id}/>
+                  </AdminDeleteButton>
+                </div>
+              </article>
             ))}
             {(!problems || problems.length === 0) && <p className="rounded-xl bg-[#f7f8fa] p-5 text-sm text-[#697386]">No problem statements have been added yet.</p>}
           </div>
