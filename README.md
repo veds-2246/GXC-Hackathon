@@ -8,27 +8,28 @@ Registration and event management platform for the GenXCode Tech Fest.
 - Tailwind CSS v4
 - Supabase (PostgreSQL and Auth)
 - Vercel deployment
+- npm for package management
 
 ## Getting started
 
 Use Node.js 22. Run:
 
 ```bash
-pnpm install
+npm install
 cp .env.example .env.local
-pnpm dev
+npm run dev
 ```
 
 Open http://localhost:3000.
 
 ## Environment variables
 
-Set the following values in `.env.local`:
+Set the following values in `.env.local` when connecting Supabase:
 
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
 
-Never expose Supabase secret or service-role keys through `NEXT_PUBLIC_*` variables.
+The static landing page can run before these values are configured. Never expose Supabase secret or service-role keys through `NEXT_PUBLIC_*` variables.
 
 ## Current milestone
 
