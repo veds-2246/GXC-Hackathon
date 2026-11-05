@@ -876,3 +876,19 @@ main > section:not(.hero-shell) {
     content-visibility: visible;
   }
 }
+
+
+/* MOBILE HARDENING — 320px TO 767px */
+html { -webkit-text-size-adjust: 100%; }
+body { overflow-x: clip; }
+.container-shell, .hero-shell { min-width: 0; }
+.brand-lockup, .brand-type { min-width: 0; }
+input, select, textarea { max-width: 100%; min-width: 0; }
+@media (max-width: 380px) {
+  .container-shell, .hero-shell { width: calc(100% - 24px); }
+  .brand-mark { width: 2.25rem; height: 2.25rem; }
+  .brand-name { font-size: 1.3rem; }
+  .surface-glass-nav { border-radius: 1rem; }
+  .hero-layout { padding-inline: 1rem; }
+}
+@media (max-width: 350px) { .btn-primary { padding-inline: 0.85rem; } }

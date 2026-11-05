@@ -40,7 +40,7 @@ export function AdminDeleteButton({
             aria-modal="true"
             aria-labelledby="admin-delete-title"
             aria-describedby="admin-delete-description"
-            className="surface-glass-panel card-hover w-full max-w-md rounded-2xl border border-[#eadff5] bg-white p-6 shadow-2xl shadow-purple-950/10 sm:p-7"
+            className="surface-glass-panel card-hover max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-2xl border border-[#eadff5] bg-white p-5 shadow-2xl shadow-purple-950/10 sm:p-7"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex items-start justify-between gap-4">
@@ -57,7 +57,7 @@ export function AdminDeleteButton({
               </button>
             </div>
 
-            <h2 id="admin-delete-title" className="editorial mt-5 text-3xl text-[#220749]">
+            <h2 id="admin-delete-title" className="editorial mt-5 text-2xl text-[#220749] sm:text-3xl">
               Confirm deletion
             </h2>
             <p id="admin-delete-description" className="mt-3 text-sm leading-6 text-[#76678a]">

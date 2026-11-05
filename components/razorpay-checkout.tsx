@@ -59,9 +59,9 @@ export function RazorpayCheckout() {
 
   return <>
     <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="afterInteractive" />
-    <div className="card-hover reveal-on-scroll rounded-2xl border border-[#eadff5] bg-white p-7">
+    <div className="card-hover reveal-on-scroll min-w-0 rounded-2xl border border-[#eadff5] bg-white p-5 sm:p-7">
       <p className="eyebrow">GENXCODE HACKATHON 2026</p>
-      <div className="mt-5 flex items-end gap-2"><span className="editorial text-6xl">₹79</span><span className="pb-2 text-sm text-[#76678a]">one-time participant pass</span></div>
+      <div className="mt-5 flex flex-wrap items-baseline gap-x-2 gap-y-1"><span className="editorial text-5xl sm:text-6xl">₹79</span><span className="pb-2 text-sm text-[#76678a]">one-time participant pass</span></div>
       <p className="mt-4 text-sm leading-6 text-[#76678a]">Complete your pass payment to unlock the participant dashboard and continue with your hackathon registration.</p>
       {error && <p role="alert" className="mt-5 rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</p>}
       <button onClick={startPayment} disabled={loading} className="mt-7 flex w-full items-center justify-center gap-2 rounded-full bg-[#5f2295] px-6 py-4 text-sm font-semibold text-white transition hover:bg-[#4b1877] disabled:opacity-60">

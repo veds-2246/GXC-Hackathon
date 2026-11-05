@@ -29,7 +29,7 @@ export function GoogleAuthButton({ nextPath }: { nextPath: string }) {
         type="button"
         onClick={continueWithGoogle}
         disabled={loading}
-        className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#eadff5] bg-white px-5 py-4 text-sm font-semibold text-[#220749] shadow-sm transition hover:bg-[#f8f3ff] disabled:cursor-not-allowed disabled:opacity-60"
+        className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-[#eadff5] bg-white px-3 py-3 text-xs font-semibold sm:gap-3 sm:px-5 sm:py-4 sm:text-sm text-[#220749] shadow-sm transition hover:bg-[#f8f3ff] disabled:cursor-not-allowed disabled:opacity-60"
       >
         <svg aria-hidden="true" viewBox="0 0 48 48" className="size-5">
           <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5Z"/>

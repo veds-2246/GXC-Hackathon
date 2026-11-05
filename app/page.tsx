@@ -41,7 +41,7 @@ const highlights = [
 export default function Home() {
   return (
     <main className="overflow-hidden">
-      <header className="container-shell surface-glass-nav sticky top-3 z-50 mt-3 flex h-[76px] items-center justify-between rounded-2xl px-4 sm:px-6">
+      <header className="container-shell surface-glass-nav sticky top-2 z-50 mt-2 flex min-h-[68px] items-center justify-between gap-2 rounded-2xl px-3 py-3 sm:top-3 sm:mt-3 sm:h-[76px] sm:px-6">
         <BrandLockup priority />
         <nav className="hidden items-center gap-8 text-[13px] font-medium text-[#57436d] md:flex">
           <a className="purple-hover" href="#experience">The experience</a>
@@ -58,10 +58,10 @@ export default function Home() {
         <div className="pointer-events-none absolute -left-36 top-8 size-[440px] rounded-full bg-[#c7a6f3]/25 blur-[115px]" />
         <div className="pointer-events-none absolute -right-28 bottom-0 size-[420px] rounded-full bg-[#8638cd]/14 blur-[120px]" />
 
-        <div className="hero-layout reveal-on-scroll relative z-10 grid items-center gap-7 px-6 py-10 sm:gap-10 sm:px-10 sm:py-12 lg:min-h-[560px] lg:grid-cols-[1.02fr_.98fr] lg:gap-4 lg:px-16 lg:py-12">
+        <div className="hero-layout reveal-on-scroll relative z-10 grid min-w-0 items-center gap-6 px-4 py-8 sm:gap-10 sm:px-8 sm:py-10 lg:min-h-[560px] lg:grid-cols-[1.02fr_.98fr] lg:gap-4 lg:px-16 lg:py-12">
           <div className="relative z-10">
             <p className="eyebrow mb-6">GENXCODE HACKATHON 2026</p>
-            <h1 className="editorial max-w-[730px] text-[clamp(3.55rem,6.8vw,7rem)] leading-[.86] text-[#220749]">
+            <h1 className="editorial max-w-[730px] text-[clamp(2.8rem,10.5vw,4.5rem)] sm:text-[clamp(3.55rem,6.8vw,7rem)] leading-[.86] text-[#220749]">
               Ideas are<br />
               <span className="text-purple-gradient italic">only the</span><br />
               beginning<span className="text-[#8638cd]">.</span>
@@ -109,7 +109,7 @@ export default function Home() {
             {highlights.map((item, index) => {
               const Icon = item.icon;
               return (
-                <article key={item.title} className="card-hover reveal-on-scroll p-7 sm:p-8">
+                <article key={item.title} className="card-hover reveal-on-scroll p-5 sm:p-8">
                   <div className="mb-12 flex items-center justify-between">
                     <span className="text-xs font-semibold tracking-[.12em] text-[#a18db8]">0{index + 1}</span>
                     <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-2xl bg-[#f4effc] text-[#5f2295] [&>svg]:block [&>svg]:shrink-0">
@@ -137,7 +137,7 @@ export default function Home() {
           {days.map((item) => {
             const Icon = item.icon;
             return (
-              <article key={item.day} className="card-hover reveal-on-scroll flex min-h-[340px] flex-col p-7 sm:p-8">
+              <article key={item.day} className="card-hover reveal-on-scroll flex min-h-[300px] flex-col p-5 sm:min-h-[340px] sm:p-8">
                 <div className="mb-10 flex items-center justify-between">
                   <span className="editorial text-6xl text-[#d8c5ee]">{item.day}</span>
                   <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-[#f4effc] text-[#5f2295] [&>svg]:block [&>svg]:shrink-0">
@@ -155,10 +155,10 @@ export default function Home() {
 
       {/* Separate light lavender CTA panel; all text stays high-contrast */}
       <section id="about" className="hero-shell py-5 sm:py-8">
-        <div className="cta-panel card-hover reveal-on-scroll grid items-center gap-7 px-7 py-8 sm:px-10 sm:py-10 lg:grid-cols-[1fr_auto] lg:px-12 lg:py-11">
+        <div className="cta-panel card-hover reveal-on-scroll grid items-center gap-6 px-5 py-7 sm:gap-7 sm:px-10 sm:py-10 lg:grid-cols-[1fr_auto] lg:px-12 lg:py-11">
           <div className="relative z-10">
             <p className="cta-label eyebrow mb-3">YOUR MOVE</p>
-            <h2 className="editorial max-w-[1120px] text-[clamp(2.55rem,4.2vw,4rem)] leading-[1.02] text-[#220749]">
+            <h2 className="editorial max-w-[1120px] text-[clamp(2.2rem,7vw,4rem)] leading-[1.02] text-[#220749]">
               The next big thing <span className="text-purple-gradient italic">could start with you.</span>
             </h2>
             <p className="cta-muted mt-4 max-w-[600px] text-sm leading-6 sm:text-base">

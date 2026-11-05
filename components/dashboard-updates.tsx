@@ -70,7 +70,7 @@ export function DashboardUpdates({
 
   return (
     <div className="mt-8 space-y-6">
-      <section className="card-hover reveal-on-scroll rounded-2xl border border-[#eadff5] bg-white p-7 sm:p-8">
+      <section className="card-hover reveal-on-scroll min-w-0 rounded-2xl border border-[#eadff5] bg-white p-5 sm:p-8">
         <div className="flex items-center gap-3">
           <span className="grid size-11 place-items-center rounded-xl bg-[#f4effc] text-[#5f2295]"><CalendarDays size={21}/></span>
           <div><p className="eyebrow">IMPORTANT INFORMATION</p><h2 className="editorial mt-1 text-3xl">Event schedule</h2></div>
@@ -83,22 +83,22 @@ export function DashboardUpdates({
         ) : (
           <div className="mt-7 space-y-6">
             {days.map((day) => (
-              <section key={day} className="card-hover rounded-2xl border border-[#eadff5] bg-[#fcfaff] p-5">
+              <section key={day} className="card-hover min-w-0 rounded-2xl border border-[#eadff5] bg-[#fcfaff] p-4 sm:p-5">
                 <p className="eyebrow">DAY {day}</p>
                 <div className="mt-3 space-y-4">
                   {groupedEvents[day].map((event) => (
-                    <article key={event.id} className="card-hover rounded-xl bg-[#f8f3ff] p-5">
-                      <h3 className="text-base font-semibold text-[#220749]">{event.title}</h3>
+                    <article key={event.id} className="card-hover min-w-0 rounded-xl bg-[#f8f3ff] p-4 sm:p-5">
+                      <h3 className="break-words text-base font-semibold text-[#220749]">{event.title}</h3>
                       {(event.venue || event.timing) && (
                         <div className="mt-4 grid gap-3 sm:grid-cols-2">
                           {event.venue && <div className="flex items-start gap-2 text-sm leading-6 text-[#57436d]"><MapPin size={16} className="mt-1 shrink-0 text-[#76678a]"/><span>{event.venue}</span></div>}
-                          {event.timing && <div className="flex items-start gap-2 whitespace-pre-wrap text-sm leading-6 text-[#57436d]"><Clock3 size={16} className="mt-1 shrink-0 text-[#76678a]"/><span>{event.timing}</span></div>}
+                          {event.timing && <div className="flex items-start gap-2 whitespace-pre-wrap break-words text-sm leading-6 text-[#57436d]"><Clock3 size={16} className="mt-1 shrink-0 text-[#76678a]"/><span>{event.timing}</span></div>}
                         </div>
                       )}
                       {event.pre_instructions && (
                         <div className="mt-4 border-t border-[#eadff5] pt-4">
                           <div className="flex items-center gap-2 text-[10px] font-bold tracking-[.15em] text-[#76678a]"><ClipboardList size={14}/> PRE-INSTRUCTIONS</div>
-                          <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-[#57436d]">{event.pre_instructions}</p>
+                          <p className="mt-2 whitespace-pre-wrap break-words text-sm leading-6 text-[#57436d]">{event.pre_instructions}</p>
                         </div>
                       )}
                     </article>
