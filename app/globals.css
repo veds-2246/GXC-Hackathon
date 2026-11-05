@@ -307,6 +307,12 @@
   -webkit-backdrop-filter: blur(22px);
 }
 
+/* Keep the closing CTA balanced and narrower than the full content rail. */
+#about .cta-panel {
+  width: min(100%, 1180px);
+  margin-inline: auto;
+}
+
 .cta-panel {
   position: relative;
   isolation: isolate;
