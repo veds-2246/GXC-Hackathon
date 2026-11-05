@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { GoogleAuthButton } from "@/components/google-auth-button";
 
 export default async function AuthPage({
@@ -5,6 +6,7 @@ export default async function AuthPage({
 }: {
   searchParams: Promise<{ next?: string }>;
 }) {
+  if (process.env.LOCAL_DEV_BYPASS === "true") redirect("/register");
   const params = await searchParams;
   const requested = params.next ?? "/checkout";
   const nextPath = requested.startsWith("/") && !requested.startsWith("//")
