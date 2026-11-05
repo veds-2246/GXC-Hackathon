@@ -21,7 +21,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
 
   const [{ data: scheduleSettings }, { data: events }, { data: problems }] = await Promise.all([
     supabase.from("event_schedule_settings").select("day_count").eq("id", 1).maybeSingle(),
-    supabase.from("event_details").select("id,day_number,title,venue,timing,pre_instructions,display_order,is_published").order("day_number").order("display_order"),
+    supabase.from("event_details").select("id,day_number,title,venue,timing,pre_instructions,is_published,created_at").order("day_number").order("created_at"),
     supabase.from("problem_statements").select("id,title,summary,description,domain,difficulty,tech_hints,sponsor,max_slots,filled_slots,display_order,is_active").order("display_order"),
   ]);
   const dayCount = scheduleSettings?.day_count ?? 1;
@@ -76,7 +76,6 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
               <label className={labelClass}>Event title *<input required name="title" className={fieldClass} placeholder="Enter event name"/></label>
               <label className={labelClass}>Venue<input name="venue" className={fieldClass} placeholder="Enter venue or location"/></label>
               <label className={labelClass}>Timing<input name="timing" className={fieldClass} placeholder="Enter date and time"/></label>
-              <label className={labelClass}>Display order<input name="display_order" type="number" defaultValue="0" className={fieldClass}/></label>
             </div>
             <label className={labelClass}>Pre-instructions<textarea name="pre_instructions" rows={4} className={fieldClass} placeholder="Add instructions participants should know before arriving."/></label>
             <label className="flex items-center gap-2 text-sm font-medium text-[#374151]"><input type="checkbox" name="is_published" defaultChecked className="size-4 accent-[#1a56db]"/> Publish on participant dashboards</label>
@@ -94,7 +93,6 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
                     <label className={labelClass}>Event title *<input required name="title" defaultValue={event.title} className={fieldClass}/></label>
                     <label className={labelClass}>Venue<input name="venue" defaultValue={event.venue ?? ""} className={fieldClass}/></label>
                     <label className={labelClass}>Timing<input name="timing" defaultValue={event.timing ?? ""} className={fieldClass}/></label>
-                    <label className={labelClass}>Display order<input name="display_order" type="number" defaultValue={event.display_order} className={fieldClass}/></label>
                   </div>
                   <label className={labelClass}>Pre-instructions<textarea name="pre_instructions" rows={3} defaultValue={event.pre_instructions ?? ""} className={fieldClass}/></label>
                   <label className="flex items-center gap-2 text-sm font-medium text-[#374151]"><input type="checkbox" name="is_published" defaultChecked={event.is_published} className="size-4 accent-[#1a56db]"/> Published on participant dashboards</label>
