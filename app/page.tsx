@@ -6,7 +6,6 @@ import {
   Code2,
   Cpu,
   GraduationCap,
-  Menu,
   Sparkles,
   Trophy,
   Users,
@@ -88,8 +87,8 @@ export default function Home() {
             Three days to learn, build and pitch. Bring your curiosity, find your team and turn a bold idea into something real.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-4" id="register">
-            <a href="mailto:genxcode@example.com" className="inline-flex items-center gap-3 rounded-full bg-[#1a56db] px-7 py-4 text-sm font-semibold text-white shadow-xl shadow-blue-900/15 transition hover:-translate-y-1 hover:bg-[#1649bd]">
-              Get started <ArrowRight size={16} />
+            <a href="#schedule" className="inline-flex items-center gap-3 rounded-full bg-[#1a56db] px-7 py-4 text-sm font-semibold text-white shadow-xl shadow-blue-900/15 transition hover:-translate-y-1 hover:bg-[#1649bd]">
+              Explore the event <ArrowRight size={16} />
             </a>
             <a href="#schedule" className="inline-flex items-center gap-2 px-3 py-4 text-sm font-semibold text-[#374151] transition hover:text-[#1a56db]">
               Explore the event <ArrowDownRight size={16} />
