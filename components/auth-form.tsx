@@ -30,7 +30,7 @@ export function AuthForm({ mode }: AuthFormProps) {
           password,
           options: {
             data: { full_name: fullName.trim() },
-            emailRedirectTo: `${window.location.origin}/auth/callback?next=/dashboard`,
+            emailRedirectTo: `${window.location.origin}/auth/callback?next=/checkout`,
           },
         })
       : await supabase.auth.signInWithPassword({ email, password });
@@ -46,7 +46,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       return;
     }
 
-    router.replace("/dashboard");
+    router.replace("/checkout");
     router.refresh();
   }
 
@@ -55,7 +55,7 @@ export function AuthForm({ mode }: AuthFormProps) {
     setError("");
     const { error: oauthError } = await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/auth/callback?next=/dashboard` },
+      options: { redirectTo: `${window.location.origin}/auth/callback?next=/checkout` },
     });
     if (oauthError) {
       setBusy(null);
