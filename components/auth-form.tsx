@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
+import { BrandLockup } from "@/components/brand-lockup";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
@@ -66,7 +67,7 @@ export function AuthForm({ mode, nextPath = "/checkout" }: AuthFormProps) {
   return (
     <div className="w-full max-w-md">
       <div className="mb-8">
-        <p className="eyebrow mb-3">GENXCODE TECH FEST 2026</p>
+        <BrandLockup className="mb-6" />
         <h1 className="editorial text-5xl leading-none">{isSignup ? "Your next chapter." : "Welcome back."}</h1>
         <p className="mt-3 text-sm leading-6 text-[#697386]">
           {isSignup ? "Create your account to get started with the event." : "Sign in to continue to your event dashboard."}
@@ -95,7 +96,7 @@ export function AuthForm({ mode, nextPath = "/checkout" }: AuthFormProps) {
         {isSignup ? "Already registered?" : "New to GenXCode?"}{" "}
         <Link className="font-semibold text-[#1a56db] hover:underline" href={isSignup ? "/login" : "/signup"}>{isSignup ? "Sign in" : "Create an account"}</Link>
       </p>
-      <p className="mt-8 text-center text-xs text-[#9aa1ad]"><Link href="/" className="hover:text-[#1a56db]">← Back to event website</Link></p>
+      <p className="mt-8 text-center text-xs text-[#9aa1ad]"><Link href="/" className="hover:text-[#1a56db]">Back to event website</Link></p>
     </div>
   );
 }
