@@ -31,7 +31,7 @@ export function AdminDeleteButton({
 
       {open && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#0b0f19]/55 px-4 py-6 backdrop-blur-[3px]"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#220749]/55 px-4 py-6 backdrop-blur-[3px]"
           role="presentation"
           onClick={() => setOpen(false)}
         >
@@ -40,7 +40,7 @@ export function AdminDeleteButton({
             aria-modal="true"
             aria-labelledby="admin-delete-title"
             aria-describedby="admin-delete-description"
-            className="w-full max-w-md rounded-2xl border border-[#e4e4dd] bg-white p-6 shadow-2xl shadow-black/20 sm:p-7"
+            className="surface-glass-panel card-hover w-full max-w-md rounded-2xl border border-[#eadff5] bg-white p-6 shadow-2xl shadow-purple-950/10 sm:p-7"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex items-start justify-between gap-4">
@@ -51,7 +51,7 @@ export function AdminDeleteButton({
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Close confirmation"
-                className="rounded-full p-2 text-[#697386] transition hover:bg-[#f3f4f6] hover:text-[#111827]"
+                className="rounded-full p-2 text-[#76678a] transition hover:bg-[#f3f4f6] hover:text-[#220749]"
               >
                 <X size={18} />
               </button>
@@ -60,7 +60,7 @@ export function AdminDeleteButton({
             <h2 id="admin-delete-title" className="editorial mt-5 text-3xl text-[#111827]">
               Confirm deletion
             </h2>
-            <p id="admin-delete-description" className="mt-3 text-sm leading-6 text-[#697386]">
+            <p id="admin-delete-description" className="mt-3 text-sm leading-6 text-[#76678a]">
               {confirmMessage}
             </p>
 
@@ -68,7 +68,7 @@ export function AdminDeleteButton({
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="rounded-full border border-[#dfe3ea] px-5 py-3 text-sm font-semibold text-[#374151] transition hover:bg-[#f7f8fa]"
+                className="rounded-full border border-[#eadff5] px-5 py-3 text-sm font-semibold text-[#57436d] transition hover:bg-[#f8f3ff]"
               >
                 Cancel
               </button>
