@@ -33,7 +33,7 @@ export function RazorpayCheckout() {
         name: "GenXCode Hackathon",
         description: "Participant pass",
         order_id: order.orderId,
-        theme: { color: "#1a56db" },
+        theme: { color: "#5f2295" },
         retry: { enabled: true },
         modal: { ondismiss: () => setLoading(false) },
         handler: async (result: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string }) => {
@@ -59,15 +59,15 @@ export function RazorpayCheckout() {
 
   return <>
     <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="afterInteractive" />
-    <div className="rounded-2xl border border-[#e4e4dd] bg-white p-7">
+    <div className="card-hover reveal-on-scroll rounded-2xl border border-[#eadff5] bg-white p-7">
       <p className="eyebrow">GENXCODE HACKATHON 2026</p>
-      <div className="mt-5 flex items-end gap-2"><span className="editorial text-6xl">₹79</span><span className="pb-2 text-sm text-[#697386]">one-time participant pass</span></div>
-      <p className="mt-4 text-sm leading-6 text-[#697386]">Complete your pass payment to unlock the participant dashboard and continue with your hackathon registration.</p>
+      <div className="mt-5 flex items-end gap-2"><span className="editorial text-6xl">₹79</span><span className="pb-2 text-sm text-[#76678a]">one-time participant pass</span></div>
+      <p className="mt-4 text-sm leading-6 text-[#76678a]">Complete your pass payment to unlock the participant dashboard and continue with your hackathon registration.</p>
       {error && <p role="alert" className="mt-5 rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</p>}
-      <button onClick={startPayment} disabled={loading} className="mt-7 flex w-full items-center justify-center gap-2 rounded-full bg-[#1a56db] px-6 py-4 text-sm font-semibold text-white transition hover:bg-[#1649bd] disabled:opacity-60">
+      <button onClick={startPayment} disabled={loading} className="mt-7 flex w-full items-center justify-center gap-2 rounded-full bg-[#5f2295] px-6 py-4 text-sm font-semibold text-white transition hover:bg-[#4b1877] disabled:opacity-60">
         {loading ? <><LoaderCircle className="animate-spin" size={17}/>Please wait…</> : "Pay ₹79 and get your pass"}
       </button>
-      <p className="mt-4 flex items-center justify-center gap-2 text-xs text-[#8992a1]"><ShieldCheck size={14}/> Secure payment powered by Razorpay</p>
+      <p className="mt-4 flex items-center justify-center gap-2 text-xs text-[#8d7ba3]"><ShieldCheck size={14}/> Secure payment powered by Razorpay</p>
     </div>
   </>;
 }
