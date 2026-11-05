@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Code2, LogOut, Save, Plus, ArrowLeft, CalendarDays } from "lucide-react";
+import { Code2, LogOut, Save, Plus, ArrowLeft, CalendarDays, MessageCircle } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/dashboard/actions";
 import {
-  deleteEventDetail, deleteProblemStatement, saveEventDayCount, saveEventDetail, saveProblemStatement,
+  deleteEventDetail, deleteProblemStatement, saveEventDayCount, saveEventDetail, saveProblemStatement, saveWhatsappChannelLink,
 } from "@/app/admin/actions";
 import { AdminDeleteButton } from "@/components/admin-delete-button";
 
@@ -20,20 +20,20 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   if (profile?.role !== "admin") redirect("/");
 
   const [{ data: scheduleSettings }, { data: events }, { data: problems }] = await Promise.all([
-    supabase.from("event_schedule_settings").select("day_count").eq("id", 1).maybeSingle(),
+    supabase.from("event_schedule_settings").select("day_count,whatsapp_channel_url").eq("id", 1).maybeSingle(),
     supabase.from("event_details").select("id,day_number,title,venue,timing,pre_instructions,is_published,created_at").order("day_number").order("created_at"),
     supabase.from("problem_statements").select("id,title,summary,description,domain,difficulty,tech_hints,sponsor,max_slots,filled_slots,display_order,is_active").order("display_order"),
   ]);
   const dayCount = scheduleSettings?.day_count ?? 1;
   const params = await searchParams;
   const savedMessages: Record<string, string> = {
-    "day-count": "Event day count saved.", "event-detail": "Event details saved.",
+    "day-count": "Event day count saved.", "event-detail": "Event details saved.", "whatsapp-channel": "WhatsApp Channel link saved.",
     "event-delete": "Event entry deleted.", problem: "Problem statement saved.",
     "problem-delete": "Problem statement deleted.",
   };
   const errorMessages: Record<string, string> = {
     "days-in-use": "The day count cannot be reduced because event entries already exist on later days. Move or delete those entries first.",
-    "day-count": "Could not update the day count. Choose a valid number of days.",
+    "day-count": "Could not update the day count. Choose a valid number of days.", "whatsapp-channel": "Enter a valid WhatsApp Channel URL beginning with https://whatsapp.com/channel/.",
     "event-detail": "Could not save this event. Check its title and selected day.",
     "event-delete": "Could not delete this event. Please try again.",
     "problem-in-use": "This problem statement has participant selections. Unpublish it instead so existing participant records remain intact.",
@@ -66,6 +66,19 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
           <p className="mt-3 text-xs text-[#8992a1]">Current schedule: {dayCount} {dayCount === 1 ? "day" : "days"}. You cannot reduce the count below a day that already contains an event entry.</p>
         </section>
 
+        <section className="mt-8 rounded-2xl border border-[#e4e4dd] bg-white p-6 sm:p-8">
+          <div className="mb-5 flex items-start gap-3">
+            <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-[#e8f8ee] text-[#168a45]"><MessageCircle size={21}/></span>
+            <div><p className="eyebrow">COMMUNITY & ANNOUNCEMENTS</p><h2 className="editorial mt-2 text-3xl">WhatsApp Channel</h2><p className="mt-2 text-sm text-[#697386]">Add the official channel link. A floating Join button will appear on participant dashboards only after a link is saved.</p></div>
+          </div>
+          <form action={saveWhatsappChannelLink} className="flex flex-col gap-4 sm:flex-row sm:items-end">
+            <label className={labelClass + " flex-1"}>WhatsApp Channel URL
+              <input name="whatsapp_channel_url" type="url" defaultValue={scheduleSettings?.whatsapp_channel_url ?? ""} className={fieldClass} placeholder="https://whatsapp.com/channel/..." />
+            </label>
+            <button className="inline-flex items-center justify-center gap-2 rounded-full bg-[#168a45] px-6 py-3 text-sm font-semibold text-white"><Save size={16}/> Save channel link</button>
+          </form>
+          <p className="mt-3 text-xs text-[#8992a1]">Leave the field empty and save to hide the floating button. Only WhatsApp Channel links are accepted.</p>
+        </section>
         <section className="mt-8 rounded-2xl border border-[#e4e4dd] bg-white p-6 sm:p-8">
           <div className="mb-6"><p className="eyebrow">EVENT DETAILS</p><h2 className="editorial mt-2 text-3xl">Add an event entry</h2><p className="mt-2 text-sm text-[#697386]">Event titles are fully editable. Add one or more entries under any configured day.</p></div>
           <form action={saveEventDetail} className="space-y-4 rounded-xl bg-[#f7f8fa] p-5">
