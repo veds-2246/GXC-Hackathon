@@ -25,7 +25,7 @@ export function RegistrationWorkflow({initialProfile,existing,paymentOrderId}:{i
   if(registrationError){setError(registrationError.message);return;}
   const result=Array.isArray(data)?data[0]:data;
   if(!result?.application_number){setError("Application submitted but the application number could not be retrieved. Refresh the page.");return;}
-  setApplication(result.application_number);router.refresh();
+  router.replace("/dashboard");
  }
  const applicationNumber=application??existing?.application_number;
  if(applicationNumber)return <section className="rounded-2xl border border-[#cfe7d5] bg-white p-7"><div className="flex items-center gap-3 text-[#1e8e3e]"><CheckCircle2 size={22}/><p className="text-sm font-bold">Hackathon application submitted</p></div><p className="editorial mt-5 text-4xl">{applicationNumber}</p><p className="mt-3 text-sm leading-6 text-[#697386]">Your application number has been generated. Your individual hackathon registration is complete. Prompt Wars registration will be configured after the MVP.</p><button onClick={()=>router.push("/dashboard")} className="mt-7 rounded-full bg-[#1a56db] px-6 py-3 text-sm font-semibold text-white">Go to dashboard</button></section>;
@@ -41,6 +41,6 @@ export function RegistrationWorkflow({initialProfile,existing,paymentOrderId}:{i
    <label className="text-xs font-semibold text-[#374151]">LinkedIn profile<input type="url" value={profile.linkedin_url??""} onChange={e=>update("linkedin_url",e.target.value)} className={fieldClass} placeholder="https://linkedin.com/in/..."/></label>
   </div>{!profileComplete&&<p className="mt-4 text-xs text-[#a16207]">Required fields: name, phone, college, branch and year of study.</p>}</section>
   {error&&<p role="alert" className="rounded-xl bg-red-50 p-4 text-sm text-red-700">{error}</p>}
-  <button type="submit" disabled={saving||!profileComplete} className="flex w-full items-center justify-center gap-2 rounded-full bg-[#1a56db] px-7 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-900/15 transition hover:bg-[#1649bd] disabled:cursor-not-allowed disabled:opacity-50">{saving?<><LoaderCircle className="animate-spin" size={17}/>Saving…</>:<>Complete registration <ChevronRight size={17}/></>}</button>
+  <button type="submit" disabled={saving||!profileComplete} className="flex w-full items-center justify-center gap-2 rounded-full bg-[#1a56db] px-7 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-900/15 transition hover:bg-[#1649bd] disabled:cursor-not-allowed disabled:opacity-50">{saving?<><LoaderCircle className="animate-spin" size={17}/>Saving…</>:<>Register <ChevronRight size={17}/></>}</button>
  </form>;
 }
