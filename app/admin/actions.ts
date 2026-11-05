@@ -37,7 +37,6 @@ export async function saveEventDetail(formData: FormData) {
   const id = String(formData.get("id") ?? "").trim();
   const title = String(formData.get("title") ?? "").trim();
   const dayNumber = Number.parseInt(String(formData.get("day_number") ?? ""), 10);
-  const displayOrder = Number.parseInt(String(formData.get("display_order") ?? "0"), 10);
   const { data: settings } = await supabase.from("event_schedule_settings").select("day_count").eq("id", 1).maybeSingle();
   if (!title || !settings || !Number.isInteger(dayNumber) || dayNumber < 1 || dayNumber > settings.day_count) {
     redirect("/admin?error=event-detail");
@@ -49,7 +48,6 @@ export async function saveEventDetail(formData: FormData) {
     venue: String(formData.get("venue") ?? "").trim() || null,
     timing: String(formData.get("timing") ?? "").trim() || null,
     pre_instructions: String(formData.get("pre_instructions") ?? "").trim() || null,
-    display_order: Number.isFinite(displayOrder) ? displayOrder : 0,
     is_published: formData.get("is_published") === "on",
     updated_at: new Date().toISOString(),
     updated_by: user.id,
