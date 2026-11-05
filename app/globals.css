@@ -773,3 +773,108 @@
   }
 }
 
+
+
+/* =========================================
+   GLOBAL SCROLL REVEAL + POLISH
+========================================= */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  overscroll-behavior-y: contain;
+}
+
+.scroll-reveal {
+  opacity: 0;
+  filter: blur(16px);
+  transform: translate3d(0, 34px, 0) scale(.985);
+  transition:
+    opacity 760ms cubic-bezier(.16, 1, .3, 1),
+    filter 900ms cubic-bezier(.16, 1, .3, 1),
+    transform 900ms cubic-bezier(.16, 1, .3, 1);
+  will-change: opacity, filter, transform;
+}
+
+.scroll-reveal.is-revealed {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* Let browser defer rendering of long below-the-fold content. */
+main > section:not(.hero-shell) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 620px;
+}
+
+/* Consistent card geometry across landing, participant and admin areas. */
+#experience .grid,
+#schedule .grid {
+  align-items: stretch;
+}
+
+#experience article.card-hover,
+#schedule article.card-hover {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+#experience article.card-hover p:last-child,
+#schedule article.card-hover p:last-child {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.card-hover {
+  backface-visibility: hidden;
+}
+
+/* The registration status panel is light lavender: force readable purple copy.
+   This also protects it from legacy white/blue utility classes on the dashboard. */
+.cta-panel.card-hover > p:not(.cta-label),
+.cta-panel.card-hover .cta-muted,
+.cta-panel.card-hover .text-white\/80 {
+  color: #76678a !important;
+}
+
+.cta-panel.card-hover > p:first-child,
+.cta-panel.card-hover .cta-label {
+  color: #5f2295 !important;
+}
+
+.cta-panel.card-hover > p:last-child {
+  color: #5f2295 !important;
+  font-weight: 700;
+}
+
+/* Soft purple glow on hover, without changing card dimensions. */
+.card-hover:hover {
+  box-shadow:
+    0 22px 54px rgba(95, 34, 149, .14),
+    0 0 0 1px rgba(134, 56, 205, .08);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card-hover:hover {
+    transform: translateY(-5px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  .scroll-reveal,
+  .scroll-reveal.is-revealed {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  main > section:not(.hero-shell) {
+    content-visibility: visible;
+  }
+}
