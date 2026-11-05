@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { GoogleAuthButton } from "@/components/google-auth-button";
 
 export default async function AuthPage({
@@ -11,11 +10,6 @@ export default async function AuthPage({
   const nextPath = requested.startsWith("/") && !requested.startsWith("//")
     ? requested
     : "/checkout";
-
-  const supabaseOrigin = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  if (!supabaseOrigin) {
-    // The OAuth button will surface a useful error if Supabase is not configured.
-  }
 
   return (
     <main className="grid min-h-screen place-items-center bg-[#fafaf7] px-5 py-12">
