@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ScrollEffects } from "@/components/scroll-effects";
 
 export const metadata: Metadata = {
   title: "GenXCode Hackathon | Build What Matters",
@@ -15,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body><ScrollEffects />{children}</body>
     </html>
   );
 }
