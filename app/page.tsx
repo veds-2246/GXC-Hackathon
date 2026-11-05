@@ -66,7 +66,7 @@ export default function Home() {
           <a className="transition hover:text-[#1a56db]" href="#schedule">Schedule</a>
           <a className="transition hover:text-[#1a56db]" href="#about">About</a>
         </nav>
-        <a href="/signup" className="inline-flex items-center gap-2 rounded-full bg-[#1a56db] px-5 py-3 text-xs font-semibold text-white shadow-lg shadow-blue-900/15 transition hover:-translate-y-0.5 hover:bg-[#1649bd]">
+        <a href="/auth" className="inline-flex items-center gap-2 rounded-full bg-[#1a56db] px-5 py-3 text-xs font-semibold text-white shadow-lg shadow-blue-900/15 transition hover:-translate-y-0.5 hover:bg-[#1649bd]">
           Get your Pass <ArrowUpRight size={14} />
         </a>
       </header>
@@ -87,7 +87,7 @@ export default function Home() {
             Three days to learn, build and pitch. Bring your curiosity, meet fellow builders and turn a bold idea into something real.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-4" id="register">
-            <a href="/signup" className="inline-flex items-center gap-3 rounded-full bg-[#1a56db] px-7 py-4 text-sm font-semibold text-white shadow-xl shadow-blue-900/15 transition hover:-translate-y-1 hover:bg-[#1649bd]">
+            <a href="/auth" className="inline-flex items-center gap-3 rounded-full bg-[#1a56db] px-7 py-4 text-sm font-semibold text-white shadow-xl shadow-blue-900/15 transition hover:-translate-y-1 hover:bg-[#1649bd]">
               Get your Pass <ArrowRight size={16} />
             </a>
             <a href="#schedule" className="inline-flex items-center gap-2 px-3 py-4 text-sm font-semibold text-[#374151] transition hover:text-[#1a56db]">
@@ -168,7 +168,7 @@ export default function Home() {
       <section id="about" className="bg-[#0b0f19] py-20 text-white">
         <div className="container-shell grid gap-10 md:grid-cols-[1fr_auto] md:items-end">
           <div><p className="mb-5 text-[11px] font-bold tracking-[.18em] text-[#8db2ff]">YOUR MOVE</p><h2 className="editorial max-w-[650px] text-5xl leading-[.98] sm:text-7xl">The next big thing<br/><span className="italic text-[#8db2ff]">could start with you.</span></h2><p className="mt-6 max-w-[440px] text-sm leading-6 text-[#a4adbd]">Bring a question. Leave with a prototype, a new perspective or a team that keeps building.</p></div>
-          <a href="/signup" className="inline-flex items-center justify-center gap-3 rounded-full bg-white px-7 py-4 text-sm font-semibold text-[#111827] transition hover:bg-[#dce7ff]">I&apos;m in <ArrowUpRight size={16}/></a>
+          <a href="/auth" className="inline-flex items-center justify-center gap-3 rounded-full bg-white px-7 py-4 text-sm font-semibold text-[#111827] transition hover:bg-[#dce7ff]">I&apos;m in <ArrowUpRight size={16}/></a>
         </div>
       </section>
 
