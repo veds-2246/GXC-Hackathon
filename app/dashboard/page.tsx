@@ -21,8 +21,8 @@ export default async function DashboardPage() {
   ]);
   if (!registration) redirect("/register");
 
-  const [{ data: workshop }, { data: problems }, { data: selection }] = await Promise.all([
-    supabase.from("event_workshop_settings").select("title,venue,timing,pre_instructions").eq("id", 1).maybeSingle(),
+  const [{ data: events }, { data: problems }, { data: selection }] = await Promise.all([
+    supabase.from("event_details").select("id,day_number,title,venue,timing,pre_instructions").eq("is_published", true).order("day_number").order("display_order"),
     supabase.from("problem_statements").select("id,title,summary,domain,difficulty,max_slots,filled_slots").eq("is_active", true).order("display_order"),
     supabase.from("registration_problem_statements").select("problem_statement_id").eq("registration_id", registration.id).maybeSingle(),
   ]);
@@ -47,11 +47,7 @@ export default async function DashboardPage() {
         </article>
         <article className="rounded-2xl bg-[#0b0f19] p-7 text-white"><p className="text-[10px] font-bold tracking-[.18em] text-[#8db2ff]">REGISTRATION STATUS</p><h2 className="editorial mt-5 text-3xl">You’re on the list.</h2><p className="mt-3 text-sm leading-6 text-[#a4adbd]">Your individual hackathon registration has been submitted. Prompt Wars setup will be added after the MVP.</p><p className="mt-8 text-xs font-semibold capitalize text-[#8db2ff]">{registration.status}</p></article>
       </div>
-      <DashboardUpdates
-        workshop={workshop ?? null}
-        problems={problems ?? []}
-        selectedProblemStatementId={selection?.problem_statement_id ?? null}
-      />
+      <DashboardUpdates events={events ?? []} problems={problems ?? []} selectedProblemStatementId={selection?.problem_statement_id ?? null}/>
     </section>
   </main>;
 }
