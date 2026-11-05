@@ -112,7 +112,7 @@ export default function Home() {
                 <article key={item.title} className="card-hover reveal-on-scroll p-7 sm:p-8">
                   <div className="mb-12 flex items-center justify-between">
                     <span className="text-xs font-semibold tracking-[.12em] text-[#a18db8]">0{index + 1}</span>
-                    <span className="grid size-12 place-items-center rounded-2xl bg-[#f4effc] text-[#5f2295]">
+                    <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-2xl bg-[#f4effc] text-[#5f2295] [&>svg]:block [&>svg]:shrink-0">
                       <Icon size={21} strokeWidth={1.8} />
                     </span>
                   </div>
@@ -140,7 +140,7 @@ export default function Home() {
               <article key={item.day} className="card-hover reveal-on-scroll flex min-h-[340px] flex-col p-7 sm:p-8">
                 <div className="mb-10 flex items-center justify-between">
                   <span className="editorial text-6xl text-[#d8c5ee]">{item.day}</span>
-                  <span className="grid size-11 place-items-center rounded-xl bg-[#f4effc] text-[#5f2295]">
+                  <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-[#f4effc] text-[#5f2295] [&>svg]:block [&>svg]:shrink-0">
                     <Icon size={22} strokeWidth={1.8} />
                   </span>
                 </div>
