@@ -51,13 +51,13 @@ export function AdminDeleteButton({
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Close confirmation"
-                className="rounded-full p-2 text-[#76678a] transition hover:bg-[#f3f4f6] hover:text-[#220749]"
+                className="rounded-full p-2 text-[#76678a] transition hover:bg-[#f8f3ff] hover:text-[#220749]"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <h2 id="admin-delete-title" className="editorial mt-5 text-3xl text-[#111827]">
+            <h2 id="admin-delete-title" className="editorial mt-5 text-3xl text-[#220749]">
               Confirm deletion
             </h2>
             <p id="admin-delete-description" className="mt-3 text-sm leading-6 text-[#76678a]">
