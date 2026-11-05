@@ -4,7 +4,18 @@ import { Code2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { RegistrationWorkflow } from "@/components/registration-workflow";
 
-const fallbackProfile = {
+type RegistrationProfile = {
+  full_name: string | null;
+  phone: string | null;
+  college: string | null;
+  branch: string | null;
+  study_year: string | null;
+  city: string | null;
+  github_url: string | null;
+  linkedin_url: string | null;
+};
+
+const fallbackProfile: RegistrationProfile = {
   full_name: null,
   phone: null,
   college: null,
@@ -18,7 +29,7 @@ const fallbackProfile = {
 export default async function RegisterPage() {
   const localDevBypass = process.env.LOCAL_DEV_BYPASS === "true";
 
-  let initialProfile = fallbackProfile;
+  let initialProfile: RegistrationProfile = fallbackProfile;
   let existingRegistration: { application_number: string | null } | null = null;
   let paymentOrderId: string | undefined;
 
