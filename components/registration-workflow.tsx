@@ -9,7 +9,7 @@ type Problem = { id:string; title:string; summary:string; domain:string|null; di
 type ExistingRegistration = { application_number:string|null };
 const fieldClass="mt-2 w-full rounded-xl border border-[#dfe3ea] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#1a56db] focus:ring-2 focus:ring-blue-100";
 
-export function RegistrationWorkflow({initialProfile,problems,existing}:{initialProfile:Profile;problems:Problem[];existing:ExistingRegistration|null}) {
+export function RegistrationWorkflow({initialProfile,problems,existing,paymentOrderId}:{initialProfile:Profile;problems:Problem[];existing:ExistingRegistration|null;paymentOrderId:string}) {
  const supabase=createClient(); const router=useRouter();
  const [profile,setProfile]=useState<Profile>(initialProfile); const [problemId,setProblemId]=useState(problems[0]?.id??"");
  const [saving,setSaving]=useState(false); const [error,setError]=useState(""); const [application,setApplication]=useState<string|null>(null);
@@ -21,7 +21,7 @@ export function RegistrationWorkflow({initialProfile,problems,existing}:{initial
   if(!auth.user){setSaving(false);setError("Your session expired. Please sign in again.");return;}
   const {error:profileError}=await supabase.from("profiles").update({...profile,updated_at:new Date().toISOString()}).eq("id",auth.user.id);
   if(profileError){setSaving(false);setError(profileError.message);return;}
-  const {data,error:registrationError}=await supabase.rpc("submit_hackathon_registration",{p_problem_statement_id:problemId});
+  const {data,error:registrationError}=await supabase.rpc("submit_hackathon_registration",{p_problem_statement_id:problemId,p_payment_order_id:paymentOrderId});
   setSaving(false);
   if(registrationError){setError(registrationError.message);return;}
   const result=Array.isArray(data)?data[0]:data;
@@ -29,9 +29,9 @@ export function RegistrationWorkflow({initialProfile,problems,existing}:{initial
   setApplication(result.application_number);router.refresh();
  }
  const applicationNumber=application??existing?.application_number;
- if(applicationNumber)return <section className="rounded-2xl border border-[#cfe7d5] bg-white p-7"><div className="flex items-center gap-3 text-[#1e8e3e]"><CheckCircle2 size={22}/><p className="text-sm font-bold">Hackathon application submitted</p></div><p className="editorial mt-5 text-4xl">{applicationNumber}</p><p className="mt-3 text-sm leading-6 text-[#697386]">Your application number has been generated. Continue with the mandatory Prompt Wars registration and payment steps from your dashboard.</p><button onClick={()=>router.push("/dashboard")} className="mt-7 rounded-full bg-[#1a56db] px-6 py-3 text-sm font-semibold text-white">Go to dashboard</button></section>;
+ if(applicationNumber)return <section className="rounded-2xl border border-[#cfe7d5] bg-white p-7"><div className="flex items-center gap-3 text-[#1e8e3e]"><CheckCircle2 size={22}/><p className="text-sm font-bold">Hackathon application submitted</p></div><p className="editorial mt-5 text-4xl">{applicationNumber}</p><p className="mt-3 text-sm leading-6 text-[#697386]">Your application number has been generated. Your individual hackathon registration is complete. Prompt Wars registration will be configured after the MVP.</p><button onClick={()=>router.push("/dashboard")} className="mt-7 rounded-full bg-[#1a56db] px-6 py-3 text-sm font-semibold text-white">Go to dashboard</button></section>;
  return <form onSubmit={submit} className="space-y-8">
-  <section className="rounded-2xl border border-[#e4e4dd] bg-white p-6 sm:p-8"><div className="mb-6"><p className="eyebrow">PARTICIPANT PROFILE</p><h2 className="editorial mt-2 text-3xl">Your details</h2><p className="mt-2 text-sm text-[#697386]">Complete your profile to continue with hackathon registration.</p></div><div className="grid gap-4 sm:grid-cols-2">
+  <section className="rounded-2xl border border-[#e4e4dd] bg-white p-6 sm:p-8"><div className="mb-6"><p className="eyebrow">PARTICIPANT PROFILE</p><h2 className="editorial mt-2 text-3xl">Your details</h2><p className="mt-2 text-sm text-[#697386]">Your pass payment is verified. Complete these details to finish hackathon registration.</p></div><div className="grid gap-4 sm:grid-cols-2">
    <label className="text-xs font-semibold text-[#374151]">Full name *<input required value={profile.full_name??""} onChange={e=>update("full_name",e.target.value)} className={fieldClass}/></label>
    <label className="text-xs font-semibold text-[#374151]">Phone number *<input required type="tel" value={profile.phone??""} onChange={e=>update("phone",e.target.value)} className={fieldClass} placeholder="+91"/></label>
    <label className="text-xs font-semibold text-[#374151]">College / Institution *<input required value={profile.college??""} onChange={e=>update("college",e.target.value)} className={fieldClass}/></label>
@@ -45,6 +45,6 @@ export function RegistrationWorkflow({initialProfile,problems,existing}:{initial
    {problems.length===0?<p className="rounded-xl bg-amber-50 p-4 text-sm text-amber-800">Problem statements have not been published yet. Registration will be available once the organizers publish them.</p>:<><label className="block text-xs font-semibold text-[#374151]">Problem statement *<select required value={problemId} onChange={e=>setProblemId(e.target.value)} className={fieldClass}><option value="">Choose a problem statement</option>{problems.map(p=><option key={p.id} value={p.id} disabled={p.max_slots!==null&&p.filled_slots>=p.max_slots}>{p.title}{p.max_slots!==null?` · ${Math.max(0,p.max_slots-p.filled_slots)} slots left`:""}</option>)}</select></label>{problems.find(p=>p.id===problemId)&&<div className="mt-4 rounded-xl bg-[#f6f7fa] p-4"><p className="text-sm font-semibold">{problems.find(p=>p.id===problemId)?.title}</p><p className="mt-1 text-xs leading-5 text-[#697386]">{problems.find(p=>p.id===problemId)?.summary}</p></div>}</>}
   </section>
   {error&&<p role="alert" className="rounded-xl bg-red-50 p-4 text-sm text-red-700">{error}</p>}
-  <button type="submit" disabled={saving||!profileComplete||problems.length===0||!problemId} className="flex w-full items-center justify-center gap-2 rounded-full bg-[#1a56db] px-7 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-900/15 transition hover:bg-[#1649bd] disabled:cursor-not-allowed disabled:opacity-50">{saving?<><LoaderCircle className="animate-spin" size={17}/>Saving…</>:<>Submit hackathon registration <ChevronRight size={17}/></>}</button>
+  <button type="submit" disabled={saving||!profileComplete||problems.length===0||!problemId} className="flex w-full items-center justify-center gap-2 rounded-full bg-[#1a56db] px-7 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-900/15 transition hover:bg-[#1649bd] disabled:cursor-not-allowed disabled:opacity-50">{saving?<><LoaderCircle className="animate-spin" size={17}/>Saving…</>:<>Complete registration <ChevronRight size={17}/></>}</button>
  </form>;
 }
