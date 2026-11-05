@@ -8,14 +8,16 @@ type Profile = { full_name:string|null; phone:string|null; college:string|null; 
 type ExistingRegistration = { application_number:string|null };
 const fieldClass="mt-2 w-full rounded-xl border border-[#dfe3ea] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#1a56db] focus:ring-2 focus:ring-blue-100";
 
-export function RegistrationWorkflow({initialProfile,existing,paymentOrderId}:{initialProfile:Profile;existing:ExistingRegistration|null;paymentOrderId:string}) {
+export function RegistrationWorkflow({initialProfile,existing,paymentOrderId,localPreview=false}:{initialProfile:Profile;existing:ExistingRegistration|null;paymentOrderId?:string;localPreview?:boolean}) {
  const supabase=createClient(); const router=useRouter();
  const [profile,setProfile]=useState<Profile>(initialProfile);
- const [saving,setSaving]=useState(false); const [error,setError]=useState(""); const [application,setApplication]=useState<string|null>(null);
+ const [saving,setSaving]=useState(false); const [error,setError]=useState(""); const [application,setApplication]=useState<string|null>(null); const [previewSubmitted,setPreviewSubmitted]=useState(false);
  function update<K extends keyof Profile>(key:K,value:Profile[K]){setProfile(current=>({...current,[key]:value}));}
  const profileComplete=Boolean(profile.full_name?.trim()&&profile.phone?.trim()&&profile.college?.trim()&&profile.branch?.trim()&&profile.study_year?.trim());
  async function submit(event:FormEvent<HTMLFormElement>){
   event.preventDefault();setSaving(true);setError("");
+  if(localPreview){setPreviewSubmitted(true);setSaving(false);return;}
+  if(!paymentOrderId){setSaving(false);setError("Payment reference is missing. Please refresh and try again.");return;}
   const {data:auth}=await supabase.auth.getUser();
   if(!auth.user){setSaving(false);setError("Your session expired. Please sign in again.");return;}
   const {error:profileError}=await supabase.from("profiles").update({...profile,updated_at:new Date().toISOString()}).eq("id",auth.user.id);
@@ -27,10 +29,11 @@ export function RegistrationWorkflow({initialProfile,existing,paymentOrderId}:{i
   if(!result?.application_number){setError("Application submitted but the application number could not be retrieved. Refresh the page.");return;}
   router.replace("/dashboard");
  }
+ if(localPreview&&previewSubmitted)return <section className="rounded-2xl border border-[#f1dfb8] bg-white p-7"><div className="flex items-center gap-3 text-[#b77900]"><CheckCircle2 size={22}/><p className="text-sm font-bold">Local registration preview complete</p></div><p className="mt-4 text-sm leading-6 text-[#697386]">The form was validated in your browser. No user account, payment, or registration record was created in Supabase. This is only a local UI test.</p><button type="button" onClick={()=>setPreviewSubmitted(false)} className="mt-7 rounded-full bg-[#1a56db] px-6 py-3 text-sm font-semibold text-white">Edit details</button></section>;
  const applicationNumber=application??existing?.application_number;
  if(applicationNumber)return <section className="rounded-2xl border border-[#cfe7d5] bg-white p-7"><div className="flex items-center gap-3 text-[#1e8e3e]"><CheckCircle2 size={22}/><p className="text-sm font-bold">Hackathon application submitted</p></div><p className="editorial mt-5 text-4xl">{applicationNumber}</p><p className="mt-3 text-sm leading-6 text-[#697386]">Your application number has been generated. Your individual hackathon registration is complete. Prompt Wars registration will be configured after the MVP.</p><button onClick={()=>router.push("/dashboard")} className="mt-7 rounded-full bg-[#1a56db] px-6 py-3 text-sm font-semibold text-white">Go to dashboard</button></section>;
  return <form onSubmit={submit} className="space-y-8">
-  <section className="rounded-2xl border border-[#e4e4dd] bg-white p-6 sm:p-8"><div className="mb-6"><p className="eyebrow">PARTICIPANT PROFILE</p><h2 className="editorial mt-2 text-3xl">Your details</h2><p className="mt-2 text-sm text-[#697386]">Your pass payment is verified. Complete these details to finish hackathon registration.</p></div><div className="grid gap-4 sm:grid-cols-2">
+  <section className="rounded-2xl border border-[#e4e4dd] bg-white p-6 sm:p-8"><div className="mb-6"><p className="eyebrow">PARTICIPANT PROFILE</p><h2 className="editorial mt-2 text-3xl">Your details</h2><p className="mt-2 text-sm text-[#697386]">{localPreview ? "Complete these details to preview the registration flow. Submitting will not create a real application." : "Your pass payment is verified. Complete these details to finish hackathon registration."}</p></div><div className="grid gap-4 sm:grid-cols-2">
    <label className="text-xs font-semibold text-[#374151]">Full name *<input required value={profile.full_name??""} onChange={e=>update("full_name",e.target.value)} className={fieldClass}/></label>
    <label className="text-xs font-semibold text-[#374151]">Phone number *<input required type="tel" value={profile.phone??""} onChange={e=>update("phone",e.target.value)} className={fieldClass} placeholder="+91"/></label>
    <label className="text-xs font-semibold text-[#374151]">College / Institution *<input required value={profile.college??""} onChange={e=>update("college",e.target.value)} className={fieldClass}/></label>
