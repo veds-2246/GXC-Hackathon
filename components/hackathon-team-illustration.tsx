@@ -9,8 +9,8 @@ export function HackathonTeamIllustration({ className = "" }: HackathonTeamIllus
     <Image
       src="/genxcode-hackathon-team.png"
       alt="Illustration of a hackathon team collaborating around laptops with a hackathon whiteboard"
-      width={1536}
-      height={1536}
+      width={1254}
+      height={1254}
       priority
       sizes="(max-width: 1024px) 90vw, 46vw"
       className={className}
