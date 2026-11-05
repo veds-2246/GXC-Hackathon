@@ -30,7 +30,7 @@ export function RazorpayCheckout() {
         key: order.keyId,
         amount: order.amount,
         currency: order.currency,
-        name: "GenXCode Hackathon",
+        name: "GenXCode Tech Fest",
         description: "Participant pass",
         order_id: order.orderId,
         theme: { color: "#1a56db" },
@@ -60,7 +60,7 @@ export function RazorpayCheckout() {
   return <>
     <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="afterInteractive" />
     <div className="rounded-2xl border border-[#e4e4dd] bg-white p-7">
-      <p className="eyebrow">GENXCODE HACKATHON 2026</p>
+      <p className="eyebrow">GENXCODE TECH FEST 2026</p>
       <div className="mt-5 flex items-end gap-2"><span className="editorial text-6xl">₹79</span><span className="pb-2 text-sm text-[#697386]">one-time participant pass</span></div>
       <p className="mt-4 text-sm leading-6 text-[#697386]">Complete your pass payment to unlock the participant dashboard and continue with your hackathon registration.</p>
       {error && <p role="alert" className="mt-5 rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</p>}

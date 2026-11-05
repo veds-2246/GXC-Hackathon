@@ -1,7 +1,6 @@
-import { BrandLockup } from "@/components/brand-lockup";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { LogOut, Save, Plus, CalendarDays, MessageCircle } from "lucide-react";
+import { Code2, LogOut, Save, Plus, ArrowLeft, CalendarDays, MessageCircle } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/dashboard/actions";
 import {
@@ -45,8 +44,8 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   return (
     <main className="min-h-screen bg-[#fafaf7]">
       <header className="border-b border-[#e4e4dd] bg-white"><div className="container-shell flex h-[76px] items-center justify-between">
-        <BrandLockup />
-        <div className="flex items-center gap-3"><Link href="/" className="inline-flex items-center rounded-full border border-[#e4e4dd] px-4 py-2.5 text-xs font-semibold">Website</Link><form action={signOut}><button className="inline-flex items-center gap-2 rounded-full border border-[#e4e4dd] px-4 py-2.5 text-xs font-semibold"><LogOut size={14}/> Sign out</button></form></div>
+        <Link href="/" className="flex items-center gap-3"><span className="grid size-10 place-items-center rounded-xl bg-[#1a56db] text-white"><Code2 size={21}/></span><span className="font-bold">GenXCode <span className="font-normal text-[#697386]">/ Admin</span></span></Link>
+        <div className="flex items-center gap-3"><Link href="/" className="inline-flex items-center gap-2 rounded-full border border-[#e4e4dd] px-4 py-2.5 text-xs font-semibold"><ArrowLeft size={14}/> Website</Link><form action={signOut}><button className="inline-flex items-center gap-2 rounded-full border border-[#e4e4dd] px-4 py-2.5 text-xs font-semibold"><LogOut size={14}/> Sign out</button></form></div>
       </div></header>
 
       <section className="container-shell py-12">

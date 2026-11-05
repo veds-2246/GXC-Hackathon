@@ -1,4 +1,4 @@
-import { MessageCircle } from "lucide-react";
+import { ExternalLink, MessageCircle } from "lucide-react";
 
 export function WhatsAppChannelFloat({ url }: { url: string | null }) {
   if (!url) return null;
@@ -16,6 +16,7 @@ export function WhatsAppChannelFloat({ url }: { url: string | null }) {
       <span className="hidden whitespace-nowrap text-sm font-semibold sm:inline">
         Join WhatsApp Channel
       </span>
+      <ExternalLink size={15} className="hidden shrink-0 opacity-80 sm:inline" />
     </a>
   );
 }
