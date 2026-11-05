@@ -40,83 +40,125 @@ const highlights = [
 export default function Home() {
   return (
     <main className="overflow-hidden">
-      <header className="container-shell flex h-[76px] items-center justify-between">
-        <BrandLockup />
-        <nav className="hidden items-center gap-8 text-[13px] font-medium text-[#4b5563] md:flex">
-          <a className="transition hover:text-[#1a56db]" href="#experience">The experience</a>
-          <a className="transition hover:text-[#1a56db]" href="#schedule">Schedule</a>
-          <a className="transition hover:text-[#1a56db]" href="#about">About</a>
+      <header className="container-shell surface-glass-nav sticky top-3 z-50 mt-3 flex h-[76px] items-center justify-between rounded-2xl px-4 sm:px-6">
+        <BrandLockup priority />
+        <nav className="hidden items-center gap-8 text-[13px] font-medium text-[#57436d] md:flex">
+          <a className="purple-hover" href="#experience">The experience</a>
+          <a className="purple-hover" href="#schedule">Schedule</a>
+          <a className="purple-hover" href="#about">About</a>
         </nav>
-        <a href="/auth" className="inline-flex items-center gap-2 rounded-full bg-[#1a56db] px-5 py-3 text-xs font-semibold text-white shadow-lg shadow-blue-900/15 transition hover:-translate-y-0.5 hover:bg-[#1649bd]">
+        <a href="/auth" className="btn-primary px-5 py-3 text-xs">
           Get your Pass
         </a>
       </header>
 
-      <section className="container-shell relative flex min-h-[560px] items-center py-20 lg:py-24">
-        <div className="pointer-events-none absolute -left-48 top-20 size-[440px] rounded-full bg-blue-200/30 blur-[100px]" />
-        <div className="relative z-10">
-          <h1 className="editorial max-w-[720px] text-[clamp(4rem,8vw,7.4rem)] leading-[.88] text-[#111827]">
+      <section className="container-shell relative py-16 sm:py-20 lg:py-24">
+        <div className="pointer-events-none absolute -left-48 top-8 size-[440px] rounded-full bg-[#c7a6f3]/20 blur-[110px]" />
+        <div className="pointer-events-none absolute -right-40 bottom-0 size-[380px] rounded-full bg-[#8638cd]/10 blur-[110px]" />
+
+        <div className="hero-copy-card card-hover reveal-on-scroll relative z-10 mx-auto max-w-5xl px-7 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
+          <p className="eyebrow mb-7">GENXCODE HACKATHON 2026</p>
+          <h1 className="editorial max-w-[820px] text-[clamp(3.8rem,8vw,7.6rem)] leading-[.88] text-[#220749]">
             Ideas are<br />
-            <span className="italic text-[#1a56db]">only the</span><br />
-            beginning<span className="text-[#f9ab00]">.</span>
+            <span className="text-purple-gradient italic">only the</span><br />
+            beginning<span className="text-[#8638cd]">.</span>
           </h1>
-          <p className="mt-8 max-w-[470px] text-[15px] leading-7 text-[#5b6472]">
+          <p className="mt-8 max-w-[650px] text-[15px] leading-7 text-[#76678a] sm:text-base">
             Three days to learn, build and pitch. Bring your curiosity, meet fellow builders and turn a bold idea into something real.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-4" id="register">
-            <a href="/auth" className="inline-flex items-center gap-3 rounded-full bg-[#1a56db] px-7 py-4 text-sm font-semibold text-white shadow-xl shadow-blue-900/15 transition hover:-translate-y-1 hover:bg-[#1649bd]">
+            <a href="/auth" className="btn-primary px-7 py-4 text-sm">
               Get your Pass
             </a>
-            <a href="#schedule" className="inline-flex items-center gap-2 px-3 py-4 text-sm font-semibold text-[#374151] transition hover:text-[#1a56db]">
+            <a href="#schedule" className="purple-hover rounded-full px-4 py-4 text-sm font-semibold text-[#57436d]">
               Explore the event
             </a>
           </div>
         </div>
       </section>
 
-      <section id="experience" className="border-y border-[#e4e4dd] bg-white py-20">
+      <section id="experience" className="border-y border-[#eadff5] bg-white/70 py-20 sm:py-24">
         <div className="container-shell">
-          <div className="mb-12 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
-            <div><p className="eyebrow mb-4">Why be here</p><h2 className="editorial max-w-[560px] text-5xl leading-[.98] sm:text-6xl">More than an event.<br/><span className="italic text-[#1a56db]">A place to begin.</span></h2></div>
-            <p className="max-w-[310px] text-sm leading-6 text-[#697386]">Learn from the community, make something useful and share it with the world.</p>
+          <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+            <div>
+              <p className="eyebrow mb-4">Why be here</p>
+              <h2 className="editorial max-w-[560px] text-5xl leading-[.98] sm:text-6xl">
+                More than an event.<br />
+                <span className="text-purple-gradient italic">A place to begin.</span>
+              </h2>
+            </div>
+            <p className="surface-glass-01 max-w-[340px] rounded-2xl p-5 text-sm leading-6 text-[#76678a]">
+              Learn from the community, make something useful and share it with the world.
+            </p>
           </div>
-          <div className="grid gap-4 md:grid-cols-3">
+
+          <div className="grid gap-5 md:grid-cols-3">
             {highlights.map((item, index) => {
               const Icon = item.icon;
-              return <article key={item.title} className="group rounded-2xl border border-[#e8e9e5] bg-[#fafaf7] p-7 transition hover:-translate-y-1 hover:border-[#b9caf1] hover:bg-white hover:shadow-xl hover:shadow-blue-900/5">
-                <div className="mb-12 flex items-center justify-between"><span className="text-xs text-[#9aa1ad]">0{index + 1}</span><span className="grid size-11 place-items-center rounded-xl bg-[#eaf0ff] text-[#1a56db]"><Icon size={20}/></span></div>
-                <h3 className="editorial text-3xl">{item.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-[#697386]">{item.text}</p>
-              </article>;
+              return (
+                <article key={item.title} className="card-hover reveal-on-scroll p-7 sm:p-8">
+                  <div className="mb-12 flex items-center justify-between">
+                    <span className="text-xs font-semibold tracking-[.12em] text-[#a18db8]">0{index + 1}</span>
+                    <span className="grid size-12 place-items-center rounded-2xl bg-[#f4effc] text-[#5f2295]">
+                      <Icon size={21} strokeWidth={1.8} />
+                    </span>
+                  </div>
+                  <h3 className="editorial text-3xl text-[#220749]">{item.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-[#76678a]">{item.text}</p>
+                </article>
+              );
             })}
           </div>
         </div>
       </section>
 
-      <section id="schedule" className="container-shell py-24">
-        <div className="mb-14"><p className="eyebrow mb-4">The journey</p><h2 className="editorial text-5xl sm:text-6xl">Three days. <span className="italic text-[#1a56db]">Three chapters.</span></h2></div>
-        <div className="grid gap-0 md:grid-cols-3">
-          {days.map((item, index) => {
+      <section id="schedule" className="container-shell py-20 sm:py-24">
+        <div className="mb-12">
+          <p className="eyebrow mb-4">The journey</p>
+          <h2 className="editorial text-5xl sm:text-6xl">
+            Three days. <span className="text-purple-gradient italic">Three chapters.</span>
+          </h2>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-3">
+          {days.map((item) => {
             const Icon = item.icon;
-            return <article key={item.day} className="relative border-t border-[#d9dcd7] py-8 md:border-l md:border-t-0 md:pl-8 md:pr-7">
-              <div className="mb-12 flex items-center justify-between"><span className="editorial text-6xl text-[#d4d9e2]">{item.day}</span><Icon className="text-[#1a56db]" size={23}/></div>
-              <p className="eyebrow mb-3">{item.label}</p>
-              <h3 className="editorial text-3xl">{item.title}</h3>
-              <p className="mt-4 max-w-[300px] text-sm leading-6 text-[#697386]">{item.description}</p>
-              {index < 2 && <div className="mt-8 hidden h-px w-12 bg-[#1a56db] md:block" />}
-            </article>;
+            return (
+              <article key={item.day} className="card-hover reveal-on-scroll flex min-h-[340px] flex-col p-7 sm:p-8">
+                <div className="mb-10 flex items-center justify-between">
+                  <span className="editorial text-6xl text-[#d8c5ee]">{item.day}</span>
+                  <span className="grid size-11 place-items-center rounded-xl bg-[#f4effc] text-[#5f2295]">
+                    <Icon size={22} strokeWidth={1.8} />
+                  </span>
+                </div>
+                <p className="eyebrow mb-3">{item.label}</p>
+                <h3 className="editorial text-3xl text-[#220749]">{item.title}</h3>
+                <p className="mt-4 text-sm leading-6 text-[#76678a]">{item.description}</p>
+              </article>
+            );
           })}
         </div>
       </section>
 
-      <section id="about" className="bg-[#0b0f19] py-20 text-white">
-        <div className="container-shell grid gap-10 md:grid-cols-[1fr_auto] md:items-end">
-          <div><p className="mb-5 text-[11px] font-bold tracking-[.18em] text-[#8db2ff]">YOUR MOVE</p><h2 className="editorial max-w-[650px] text-5xl leading-[.98] sm:text-7xl">The next big thing<br/><span className="italic text-[#8db2ff]">could start with you.</span></h2><p className="mt-6 max-w-[440px] text-sm leading-6 text-[#a4adbd]">Bring a question. Leave with a prototype, a new perspective or a team that keeps building.</p></div>
-          <a href="/auth" className="inline-flex items-center justify-center rounded-full bg-white px-7 py-4 text-sm font-semibold text-[#111827] transition hover:bg-[#dce7ff]">I&apos;m in</a>
+      <section id="about" className="container-shell py-12 sm:py-20">
+        <div className="cta-panel card-hover reveal-on-scroll grid gap-10 p-8 sm:p-12 md:grid-cols-[1fr_auto] md:items-end lg:p-16">
+          <div>
+            <p className="mb-5 text-[11px] font-bold tracking-[.2em] text-[#e2d1fe]">YOUR MOVE</p>
+            <h2 className="editorial max-w-[700px] text-5xl leading-[.98] sm:text-7xl">
+              The next big thing<br />
+              <span className="italic text-[#e2d1fe]">could start with you.</span>
+            </h2>
+            <p className="cta-muted mt-6 max-w-[480px] text-sm leading-6 sm:text-base">
+              Bring a question. Leave with a prototype, a new perspective or a team that keeps building.
+            </p>
+          </div>
+          <a href="/auth" className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-bold text-[#5f2295] shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+            I&apos;m in
+          </a>
         </div>
       </section>
 
-      <footer className="container-shell flex flex-col justify-between gap-4 py-8 text-xs text-[#7b8492] sm:flex-row sm:items-center">
+      <footer className="container-shell flex flex-col justify-between gap-4 py-8 text-xs text-[#8d7ba3] sm:flex-row sm:items-center">
         <span>© 2026 GenXCode. Built for the curious.</span>
         <span className="tracking-[.14em]">LEARN. BUILD. PITCH.</span>
       </footer>
