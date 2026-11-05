@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { RazorpayCheckout } from "@/components/razorpay-checkout";
 
 export default async function CheckoutPage() {
+  if (process.env.LOCAL_DEV_BYPASS === "true") redirect("/register");
   const supabase = await createClient();
   const { data: { user }, error } = await supabase.auth.getUser();
   if (error || !user) redirect("/login");
