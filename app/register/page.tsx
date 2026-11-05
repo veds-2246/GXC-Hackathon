@@ -1,6 +1,6 @@
+import { BrandLockup } from "@/components/brand-lockup";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Code2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { RegistrationWorkflow } from "@/components/registration-workflow";
 
@@ -22,7 +22,7 @@ export default async function RegisterPage() {
 
   return <main className="min-h-screen bg-[#fafaf7]">
     <header className="border-b border-[#e4e4dd] bg-white"><div className="container-shell flex h-[72px] items-center justify-between">
-      <Link href="/" className="flex items-center gap-3"><span className="grid size-9 place-items-center rounded-xl bg-[#1a56db] text-white"><Code2 size={19}/></span><span className="font-bold">GenXCode <span className="font-normal text-[#697386]">/ Registration</span></span></Link>
+      <BrandLockup />
       <span className="text-xs font-semibold text-[#1e8e3e]">Payment verified</span>
     </div></header>
     <div className="container-shell mx-auto max-w-[820px] py-12 sm:py-16">

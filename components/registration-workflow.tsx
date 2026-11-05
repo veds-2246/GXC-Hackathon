@@ -1,7 +1,7 @@
 "use client";
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { CheckCircle2, ChevronRight, LoaderCircle } from "lucide-react";
+import { CheckCircle2, LoaderCircle } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 type Profile = { full_name:string|null; phone:string|null; college:string|null; branch:string|null; study_year:string|null; city:string|null; github_url:string|null; linkedin_url:string|null };
@@ -41,6 +41,6 @@ export function RegistrationWorkflow({initialProfile,existing,paymentOrderId}:{i
    <label className="text-xs font-semibold text-[#374151]">LinkedIn profile<input type="url" value={profile.linkedin_url??""} onChange={e=>update("linkedin_url",e.target.value)} className={fieldClass} placeholder="https://linkedin.com/in/..."/></label>
   </div>{!profileComplete&&<p className="mt-4 text-xs text-[#a16207]">Required fields: name, phone, college, branch and year of study.</p>}</section>
   {error&&<p role="alert" className="rounded-xl bg-red-50 p-4 text-sm text-red-700">{error}</p>}
-  <button type="submit" disabled={saving||!profileComplete} className="flex w-full items-center justify-center gap-2 rounded-full bg-[#1a56db] px-7 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-900/15 transition hover:bg-[#1649bd] disabled:cursor-not-allowed disabled:opacity-50">{saving?<><LoaderCircle className="animate-spin" size={17}/>Saving…</>:<>Register <ChevronRight size={17}/></>}</button>
+  <button type="submit" disabled={saving||!profileComplete} className="flex w-full items-center justify-center gap-2 rounded-full bg-[#1a56db] px-7 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-900/15 transition hover:bg-[#1649bd] disabled:cursor-not-allowed disabled:opacity-50">{saving?<><LoaderCircle className="animate-spin" size={17}/>Saving…</>:"Register"}</button>
  </form>;
 }

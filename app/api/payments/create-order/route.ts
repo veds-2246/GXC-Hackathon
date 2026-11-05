@@ -32,7 +32,7 @@ export async function POST() {
         Authorization: "Basic " + Buffer.from(keyId + ":" + keySecret).toString("base64"),
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ amount: 7900, currency: "INR", receipt: "gxc_" + crypto.randomUUID().replaceAll("-", "").slice(0, 20), notes: { user_id: user.id, event: "GenXCode Tech Fest 2026" } }),
+      body: JSON.stringify({ amount: 7900, currency: "INR", receipt: "gxc_" + crypto.randomUUID().replaceAll("-", "").slice(0, 20), notes: { user_id: user.id, event: "GenXCode Hackathon 2026" } }),
       cache: "no-store",
     });
     const order = await response.json();

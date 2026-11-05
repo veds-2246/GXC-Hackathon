@@ -1,6 +1,7 @@
+import { BrandLockup } from "@/components/brand-lockup";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ArrowUpRight, Code2, LogOut, UserRound, CheckCircle2 } from "lucide-react";
+import { LogOut, UserRound, CheckCircle2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/dashboard/actions";
 import { DashboardUpdates } from "@/components/dashboard-updates";
@@ -32,15 +33,15 @@ export default async function DashboardPage() {
   const name = profile?.full_name || "Participant";
   return <main className="min-h-screen bg-[#fafaf7]">
     <header className="border-b border-[#e4e4dd] bg-white"><div className="container-shell flex h-[76px] items-center justify-between">
-      <Link href="/" className="flex items-center gap-3"><span className="grid size-10 place-items-center rounded-xl bg-[#1a56db] text-white"><Code2 size={21}/></span><span className="font-bold">GenXCode <span className="font-normal text-[#697386]">/ Dashboard</span></span></Link>
+      <BrandLockup />
       <div className="flex items-center gap-3">
-        {profile?.role === "admin" && <Link href="/admin" className="inline-flex items-center gap-1 rounded-full border border-[#e4e4dd] px-4 py-2.5 text-xs font-semibold hover:bg-[#f4f4ef]">Admin panel <ArrowUpRight size={13}/></Link>}
+        {profile?.role === "admin" && <Link href="/admin" className="inline-flex items-center gap-1 rounded-full border border-[#e4e4dd] px-4 py-2.5 text-xs font-semibold hover:bg-[#f4f4ef]">Admin panel</Link>}
         <form action={signOut}><button className="inline-flex items-center gap-2 rounded-full border border-[#e4e4dd] px-4 py-2.5 text-xs font-semibold hover:bg-[#f4f4ef]"><LogOut size={14}/> Sign out</button></form>
       </div>
     </div></header>
     <section className="container-shell py-14">
       <p className="eyebrow mb-4">PARTICIPANT SPACE</p><h1 className="editorial text-5xl sm:text-6xl">Good to have you here, {name.split(" ")[0]}.</h1>
-      <p className="mt-4 max-w-xl text-sm leading-6 text-[#697386]">Your GenXCode Tech Fest pass is active. Your registration details and event updates will appear here.</p>
+      <p className="mt-4 max-w-xl text-sm leading-6 text-[#697386]">Your GenXCode Hackathon pass is active. Your registration details and event updates will appear here.</p>
       <div className="mt-10 grid gap-5 md:grid-cols-[1.2fr_.8fr]">
         <article className="rounded-2xl border border-[#e4e4dd] bg-white p-7"><div className="mb-8 flex items-center justify-between"><span className="eyebrow">YOUR ACCOUNT</span><UserRound className="text-[#1a56db]" size={21}/></div>
           <p className="text-xs text-[#9aa1ad]">Signed in as</p><p className="mt-1 break-all text-lg font-semibold">{user.email}</p>
