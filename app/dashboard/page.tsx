@@ -7,6 +7,7 @@ import { signOut } from "@/app/dashboard/actions";
 import { DashboardUpdates } from "@/components/dashboard-updates";
 import { WhatsAppChannelFloat } from "@/components/whatsapp-channel-float";
 import { formatStaffIdentifier } from "@/lib/format-staff-identifier";
+import { PendingSubmitButton } from "@/components/pending-submit-button";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -37,7 +38,7 @@ export default async function DashboardPage() {
         {!isStaff && <><Link href="/dashboard/submission" className="inline-flex min-h-10 items-center gap-2 whitespace-nowrap rounded-full border border-[#eadff5] px-3 py-2.5 text-[11px] font-semibold text-[#5f2295] sm:px-4 sm:text-xs">Project submission</Link>
         <Link href="/dashboard/pass" className="inline-flex min-h-10 items-center gap-2 whitespace-nowrap rounded-full bg-[#f4effc] px-3 py-2.5 text-[11px] font-semibold text-[#5f2295] sm:px-4 sm:text-xs"><span aria-hidden="true">▦</span> My Pass</Link></>}
         {profile?.role === "admin" && <><Link href="/admin" className="inline-flex min-h-10 items-center gap-1 whitespace-nowrap rounded-full border border-[#e4e4dd] px-3 py-2.5 text-[11px] font-semibold sm:px-4 sm:text-xs hover:bg-[#f4f4ef]">Admin panel</Link><Link href="/admin/operations" className="inline-flex min-h-10 items-center gap-1 whitespace-nowrap rounded-full bg-[#f4effc] px-3 py-2.5 text-[11px] font-semibold text-[#5f2295] sm:px-4 sm:text-xs">Operations</Link></>}
-        <form action={signOut}><button className="inline-flex min-h-10 items-center gap-2 whitespace-nowrap rounded-full border border-[#e4e4dd] px-3 py-2.5 text-[11px] font-semibold sm:px-4 sm:text-xs hover:bg-[#f4f4ef]"><LogOut size={14}/> Sign out</button></form>
+        <form action={signOut}><PendingSubmitButton pendingLabel="Signing out…" className="min-h-10 gap-2 whitespace-nowrap rounded-full border border-[#e4e4dd] px-3 py-2.5 text-[11px] font-semibold sm:px-4 sm:text-xs hover:bg-[#f4f4ef]"><LogOut size={14}/> Sign out</PendingSubmitButton></form>
       </div>
     </div></header>
     <section className="container-shell py-14">
