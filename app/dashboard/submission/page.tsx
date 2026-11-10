@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { ArrowLeft, Lock, FileUp } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { saveProjectSubmission } from "./actions";
+import { PendingSubmitButton } from "@/components/pending-submit-button";
 
 const field = "mt-2 w-full rounded-xl border border-[#eadff5] bg-white px-4 py-3 text-sm outline-none focus:border-[#5f2295] focus:ring-2 focus:ring-purple-100";
 const label = "block text-xs font-semibold text-[#57436d]";
@@ -58,7 +59,7 @@ export default async function ProjectSubmissionPage({ searchParams }: { searchPa
         <section className="rounded-2xl border border-[#eadff5] bg-white p-5 sm:p-8">
           <p className="eyebrow">04 · DECLARATION</p><label className="mt-4 flex items-start gap-3 text-sm leading-6 text-[#57436d]"><input required type="checkbox" name="declaration" className="mt-1 size-4 accent-[#5f2295]"/><span>I confirm that this is my original project and that the GitHub repository, production link and presentation are accessible for evaluation.</span></label>
         </section>
-        <div className="flex flex-col-reverse justify-between gap-3 sm:flex-row sm:items-center"><p className="text-xs text-[#8d7ba3]">{closeLabel ? "Submission deadline: " + closeLabel + " (IST)" : "The submission window is controlled by the organizers."}</p><button className="inline-flex items-center justify-center gap-2 rounded-full bg-[#5f2295] px-7 py-3.5 text-sm font-semibold text-white"><FileUp size={16}/>{submission ? "Update submission" : "Submit project"}</button></div>
+        <div className="flex flex-col-reverse justify-between gap-3 sm:flex-row sm:items-center"><p className="text-xs text-[#8d7ba3]">{closeLabel ? "Submission deadline: " + closeLabel + " (IST)" : "The submission window is controlled by the organizers."}</p><PendingSubmitButton pendingLabel="Uploading & submitting…" className="rounded-full bg-[#5f2295] px-7 py-3.5 text-sm font-semibold text-white"><FileUp size={16}/>{submission ? "Update submission" : "Submit project"}</PendingSubmitButton></div>
       </form>}
       {submission && <div className="mt-6 rounded-2xl bg-[#f4effc] p-5 text-sm text-[#57436d]"><p className="font-semibold">Current review status: <span className="capitalize">{submission.status.replace("_"," ")}</span></p><p className="mt-1 text-xs">Submitted {new Date(submission.submitted_at).toLocaleString("en-IN")}</p></div>}
     </section>
