@@ -27,6 +27,7 @@ export function EventOperationsScanner({ dayCount, permission }: Props) {
     if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
     streamRef.current?.getTracks().forEach(track => track.stop());
     streamRef.current = null;
+    if (videoRef.current) videoRef.current.srcObject = null;
     setCameraOn(false);
   }, []);
 
@@ -113,8 +114,9 @@ export function EventOperationsScanner({ dayCount, permission }: Props) {
       <label className="mt-5 block text-xs font-semibold text-[#57436d]">Event day
         <select value={day} onChange={e => setDay(Number(e.target.value))} className="mt-2 w-full rounded-xl border border-[#eadff5] bg-white px-4 py-3 text-sm">{Array.from({length: dayCount}, (_, i) => <option key={i+1} value={i+1}>Day {i+1}</option>)}</select>
       </label>
-      <div className="mt-5 overflow-hidden rounded-2xl bg-[#170a25]">
-        {cameraOn ? <video ref={videoRef} playsInline muted className="aspect-video w-full object-cover"/> : <div className="flex aspect-video flex-col items-center justify-center gap-3 text-white/80"><ScanLine size={42}/><p className="text-sm font-semibold">Camera scanner ready</p><p className="text-xs text-white/50">Use your phone's rear camera for best results</p></div>}
+      <div className="relative mt-5 overflow-hidden rounded-2xl bg-[#170a25]">
+        <video ref={videoRef} autoPlay playsInline muted className="aspect-video w-full object-cover"/>
+        {!cameraOn && <div className="pointer-events-none absolute inset-0 flex aspect-video flex-col items-center justify-center gap-3 text-white/80"><ScanLine size={42}/><p className="text-sm font-semibold">Camera scanner ready</p><p className="text-xs text-white/50">Use your phone's rear camera for best results</p></div>}
       </div>
       <div className="mt-4 flex flex-wrap gap-3">
         {!cameraOn ? <button type="button" onClick={startCamera} className="inline-flex items-center gap-2 rounded-full bg-[#5f2295] px-5 py-3 text-sm font-semibold text-white"><Camera size={16}/> Start camera</button> : <button type="button" onClick={stopCamera} className="inline-flex items-center gap-2 rounded-full border border-[#eadff5] px-5 py-3 text-sm font-semibold text-[#5f2295]"><CameraOff size={16}/> Stop camera</button>}
