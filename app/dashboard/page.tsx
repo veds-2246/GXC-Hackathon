@@ -31,7 +31,7 @@ export default async function DashboardPage() {
       <BrandLockup />
       <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
         <Link href="/dashboard/pass" className="inline-flex min-h-10 items-center gap-2 whitespace-nowrap rounded-full bg-[#f4effc] px-3 py-2.5 text-[11px] font-semibold text-[#5f2295] sm:px-4 sm:text-xs"><span aria-hidden="true">▦</span> My Pass</Link>
-        {profile?.role === "admin" && <Link href="/admin" className="inline-flex min-h-10 items-center gap-1 whitespace-nowrap rounded-full border border-[#e4e4dd] px-3 py-2.5 text-[11px] font-semibold sm:px-4 sm:text-xs hover:bg-[#f4f4ef]">Admin panel</Link>}
+        {profile?.role === "admin" && <><Link href="/admin" className="inline-flex min-h-10 items-center gap-1 whitespace-nowrap rounded-full border border-[#e4e4dd] px-3 py-2.5 text-[11px] font-semibold sm:px-4 sm:text-xs hover:bg-[#f4f4ef]">Admin panel</Link><Link href="/admin/operations" className="inline-flex min-h-10 items-center gap-1 whitespace-nowrap rounded-full bg-[#f4effc] px-3 py-2.5 text-[11px] font-semibold text-[#5f2295] sm:px-4 sm:text-xs">Operations</Link></>}
         <form action={signOut}><button className="inline-flex min-h-10 items-center gap-2 whitespace-nowrap rounded-full border border-[#e4e4dd] px-3 py-2.5 text-[11px] font-semibold sm:px-4 sm:text-xs hover:bg-[#f4f4ef]"><LogOut size={14}/> Sign out</button></form>
       </div>
     </div></header>
