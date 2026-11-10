@@ -5,8 +5,10 @@ import { getAuthenticatedDestination } from "@/lib/auth/get-authenticated-destin
 import { HackathonTeamIllustration } from "@/components/hackathon-team-illustration";
 import {
   Code2,
+  Cpu,
   GraduationCap,
   Trophy,
+  Users,
 } from "lucide-react";
 
 const days = [
@@ -31,6 +33,12 @@ const days = [
     description: "The top 60 shortlisted students take the stage for the pitching round, judging and prizes.",
     icon: Trophy,
   },
+];
+
+const highlights = [
+  { icon: Cpu, title: "Build with AI", text: "Explore real-world problem statements and emerging technologies." },
+  { icon: Users, title: "Find your people", text: "Meet builders, mentors and students who love solving problems." },
+  { icon: Trophy, title: "Show what you can do", text: "Present your work, get feedback and compete for recognition." },
 ];
 
 
@@ -103,10 +111,10 @@ export default async function Home() {
       </section>
 
       <section
-        id="experience"
+        id="schedule"
         className="container-shell py-20 sm:py-24"
       >
-        <div id="schedule" className="mb-12 scroll-mt-28">
+        <div className="mb-12">
           <p className="eyebrow mb-4">The journey</p>
           <h2 className="editorial text-5xl sm:text-6xl">
             Three days. <span className="text-purple-gradient italic">Three chapters.</span>
@@ -136,6 +144,62 @@ export default async function Home() {
         </div>
       </section>
 
+
+      <section
+        id="experience"
+        className="relative isolate overflow-hidden py-16 sm:py-20 lg:py-24"
+      >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_22%_52%,rgba(199,166,243,0.34),transparent_38%),linear-gradient(110deg,#ffffff_0%,#fcf8ff_58%,#f3eaff_100%)]"
+        />
+
+        <div className="container-shell grid items-center gap-8 lg:grid-cols-[1fr_1fr] lg:gap-10">
+          <div className="relative mx-auto flex w-full min-w-0 items-center justify-center lg:justify-start">
+            <Image
+              src="/build-with-ai-illustration.png"
+              alt="A student thinking through ideas while working at a laptop"
+              width={980}
+              height={980}
+              sizes="(min-width: 1024px) 50vw, 90vw"
+              className="block h-auto w-full max-w-[620px] object-contain"
+            />
+          </div>
+
+          <div className="relative z-10 min-w-0">
+            <p className="eyebrow mb-4">Why be here</p>
+            <h2 className="editorial max-w-[600px] text-5xl leading-[.98] sm:text-6xl">
+              More than an event.<br />
+              <span className="text-purple-gradient italic">A place to begin.</span>
+            </h2>
+
+            <div className="mt-10 space-y-8 sm:mt-12 sm:space-y-9">
+              {highlights.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <article
+                    key={item.title}
+                    className="reveal-on-scroll flex min-w-0 items-center gap-4 sm:gap-6"
+                  >
+                    <span className="inline-flex size-[64px] shrink-0 items-center justify-center rounded-[1.35rem] bg-[#eadcfb]/80 text-[#5f2295] sm:size-[76px] [&>svg]:block [&>svg]:shrink-0">
+                      <Icon size={30} strokeWidth={1.8} />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="eyebrow mb-1">0{index + 1}</p>
+                      <h3 className="editorial text-2xl leading-tight text-[#220749] sm:text-[1.7rem]">
+                        {item.title}
+                      </h3>
+                      <p className="mt-1 max-w-[390px] text-sm leading-6 text-[#5f5271] sm:text-[15px]">
+                        {item.text}
+                      </p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
       {/* Separate light lavender CTA panel; all text stays high-contrast */}
       <section id="about" className="hero-shell py-5 sm:py-8">
         <div className="cta-panel card-hover reveal-on-scroll grid items-center gap-6 px-5 py-7 sm:gap-7 sm:px-10 sm:py-10 lg:grid-cols-[1fr_auto] lg:px-12 lg:py-11">
