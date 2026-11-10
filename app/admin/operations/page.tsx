@@ -3,6 +3,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/dashboard/actions";
 import { saveSnackPolicy, saveVolunteer, setVolunteerActive } from "@/app/admin/operations/actions";
+import { EventOperationsReports } from "@/components/event-operations-reports";
 
 type Summary = { total_registered: number; checked_in: number; snacks_distributed: number; pending_checkin: number; snack_policy: string; volunteers: Array<{user_id:string;email:string;name:string|null;permission:string;is_active:boolean}>; recent_activity: Array<{action:string;created_at:string;email:string|null;registration_id:string|null;details:Record<string,unknown>}> };
 
@@ -43,9 +44,9 @@ export default async function OperationsAdminPage({searchParams}:{searchParams:P
         <section className="rounded-2xl border border-[#eadff5] bg-white p-5 sm:p-6"><p className="eyebrow">SNACK CONFIGURATION</p><h2 className="editorial mt-2 text-3xl">Distribution rules.</h2><p className="mt-2 text-xs leading-5 text-[#76678a]">Choose how often each participant can claim snacks. The database enforces this even when multiple volunteers scan at once.</p>
           <form action={saveSnackPolicy} className="mt-5 space-y-3"><label className="block text-xs font-semibold text-[#57436d]">Snack eligibility<select name="snack_policy" defaultValue={settings?.snack_policy ?? "event"} className={field}><option value="event">Once for the entire event</option><option value="daily">Once per event day</option></select></label><button className="rounded-full bg-[#5f2295] px-5 py-3 text-sm font-semibold text-white">Save distribution rule</button></form>
           <div className="mt-7 rounded-xl bg-[#f8f2ff] p-4"><p className="text-sm font-bold text-[#32105b]">Current attendance</p><p className="mt-2 text-sm text-[#76678a]">{summary?.checked_in ?? 0} of {summary?.total_registered ?? 0} confirmed participants have checked in.</p><div className="mt-3 h-2 overflow-hidden rounded-full bg-[#e8dcf2]"><div className="h-full rounded-full bg-[#5f2295]" style={{width:`${summary?.total_registered ? Math.min(100,(summary.checked_in/summary.total_registered)*100) : 0}%`}}/></div></div>
-          <button type="button" onClick={undefined as never} className="hidden">Export</button>
         </section>
       </div>
+      <EventOperationsReports />
       <section className="mt-7 rounded-2xl border border-[#eadff5] bg-white p-5 sm:p-6"><div className="flex flex-wrap items-center justify-between gap-3"><div><p className="eyebrow">AUDIT TRAIL</p><h2 className="editorial mt-2 text-3xl">Recent activity.</h2></div><span className="text-xs text-[#8a789d]">Latest 50 actions</span></div>
         <div className="mt-5 space-y-2">{(summary?.recent_activity ?? []).length===0?<p className="py-8 text-center text-sm text-[#8a789d]">No event activity recorded yet.</p>:(summary?.recent_activity ?? []).map((item,index)=><div key={`${item.created_at}-${index}`} className="flex flex-wrap items-center justify-between gap-2 border-b border-[#f2edf6] py-3 last:border-0"><div><p className="text-sm font-semibold text-[#32105b]">{item.action.replaceAll("_"," ")}</p><p className="text-xs text-[#8a789d]">{item.email || "System"} {item.registration_id ? `· ${item.registration_id.slice(0,8)}` : ""}</p></div><time className="text-xs text-[#8a789d]">{new Date(item.created_at).toLocaleString("en-IN")}</time></div>)}</div>
       </section>
