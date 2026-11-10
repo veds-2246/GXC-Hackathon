@@ -185,7 +185,7 @@ LANGUAGE plpgsql SECURITY DEFINER SET search_path = ''
 AS $$
 DECLARE v_policy text;
 BEGIN
-  IF public.event_actor_permission() <> 'admin' THEN RAISE EXCEPTION 'Admin access required'; END IF;
+  IF public.event_actor_permission() IS DISTINCT FROM 'admin' THEN RAISE EXCEPTION 'Admin access required'; END IF;
   SELECT snack_policy INTO v_policy FROM public.event_operations_settings WHERE id = 1;
   RETURN QUERY SELECT
     (SELECT count(*) FROM public.registrations WHERE status = 'confirmed'),
