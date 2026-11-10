@@ -28,7 +28,7 @@ export default async function DashboardPage() {
   ]);
 
   const name = profile?.full_name || user.user_metadata?.full_name || "Participant";
-  const nameParts = name.trim().split(/\\s+/).filter(Boolean);
+  const nameParts = name.trim().split(/\s+/).filter(Boolean);
   const staffIdentifier = nameParts.length > 1
     ? `GXC-${nameParts[0]} ${nameParts[nameParts.length - 1][0].toUpperCase()}.`
     : `GXC-${nameParts[0] || "Staff"}`;
