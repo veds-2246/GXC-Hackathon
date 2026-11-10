@@ -112,10 +112,21 @@ export default async function Home() {
       >
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_78%_52%,rgba(199,166,243,0.34),transparent_38%),linear-gradient(110deg,#ffffff_0%,#fcf8ff_58%,#f3eaff_100%)]"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_22%_52%,rgba(199,166,243,0.34),transparent_38%),linear-gradient(110deg,#ffffff_0%,#fcf8ff_58%,#f3eaff_100%)]"
         />
 
-        <div className="container-shell grid items-center gap-10 lg:grid-cols-[1fr_1fr] lg:gap-8">
+        <div className="container-shell grid items-center gap-8 lg:grid-cols-[1fr_1fr] lg:gap-10">
+          <div className="relative mx-auto flex w-full min-w-0 items-center justify-center lg:justify-start">
+            <Image
+              src="/build-with-ai-illustration.png"
+              alt="A student thinking through ideas while working at a laptop"
+              width={980}
+              height={980}
+              sizes="(min-width: 1024px) 50vw, 90vw"
+              className="block h-auto w-full max-w-[620px] object-contain"
+            />
+          </div>
+
           <div className="relative z-10 min-w-0">
             <p className="eyebrow mb-4">Why be here</p>
             <h2 className="editorial max-w-[600px] text-5xl leading-[.98] sm:text-6xl">
@@ -147,17 +158,6 @@ export default async function Home() {
                 );
               })}
             </div>
-          </div>
-
-          <div className="relative mx-auto flex w-full min-w-0 items-center justify-center lg:justify-end">
-            <Image
-              src="/build-with-ai-illustration.webp"
-              alt="A student thinking through ideas while working at a laptop"
-              width={980}
-              height={980}
-              sizes="(min-width: 1024px) 50vw, 90vw"
-              className="block h-auto w-full max-w-[620px] object-contain"
-            />
           </div>
         </div>
       </section>
