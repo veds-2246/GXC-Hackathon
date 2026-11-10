@@ -892,3 +892,105 @@ input, select, textarea { max-width: 100%; min-width: 0; }
   .hero-layout { padding-inline: 1rem; }
 }
 @media (max-width: 350px) { .btn-primary { padding-inline: 0.85rem; } }
+
+
+/* =========================================
+   GLOBAL LOADING, REVEAL & BLUE-LAVENDER INTERACTIONS
+========================================= */
+@keyframes skeleton-sweep {
+  0% { background-position: 180% 0; }
+  100% { background-position: -180% 0; }
+}
+
+.skeleton-shimmer {
+  min-height: 0.65rem;
+  background: linear-gradient(
+    100deg,
+    rgba(226, 217, 239, 0.62) 15%,
+    rgba(246, 242, 252, 0.98) 38%,
+    rgba(205, 187, 232, 0.58) 55%,
+    rgba(226, 217, 239, 0.62) 78%
+  );
+  background-size: 220% 100%;
+  animation: skeleton-sweep 1.45s ease-in-out infinite;
+}
+
+.scroll-reveal {
+  opacity: 0;
+  filter: blur(14px);
+  transform: translate3d(0, 28px, 0) scale(.99);
+  transition:
+    opacity 720ms cubic-bezier(.16, 1, .3, 1),
+    filter 820ms cubic-bezier(.16, 1, .3, 1),
+    transform 820ms cubic-bezier(.16, 1, .3, 1);
+  will-change: opacity, filter, transform;
+}
+
+.scroll-reveal.is-revealed {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* Blue-violet light: visual feedback only, never changes layout geometry. */
+.card-hover,
+.admin-section,
+.surface-glass-01,
+.surface-glass-02,
+.surface-glass-panel {
+  transition:
+    border-color 260ms ease,
+    box-shadow 280ms ease,
+    background-color 260ms ease,
+    transform 280ms cubic-bezier(.2, .8, .2, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card-hover:hover,
+  .admin-section:hover,
+  .surface-glass-01:hover,
+  .surface-glass-02:hover,
+  .surface-glass-panel:hover {
+    border-color: rgba(91, 112, 245, .30);
+    box-shadow:
+      0 20px 48px rgba(83, 91, 190, .10),
+      0 0 0 1px rgba(110, 126, 255, .09),
+      0 0 28px rgba(167, 176, 255, .13);
+  }
+
+  main a:not(.brand-lockup):hover,
+  main button:not(:disabled):hover {
+    filter: drop-shadow(0 5px 12px rgba(103, 115, 230, .12));
+  }
+}
+
+main button:focus-visible,
+main a:focus-visible,
+main input:focus-visible,
+main select:focus-visible,
+main textarea:focus-visible {
+  outline-color: rgba(99, 117, 255, .55);
+  box-shadow: 0 0 0 4px rgba(129, 140, 248, .12);
+}
+
+/* Images that are not explicitly marked priority stay browser-lazy by default
+   through next/image; this reserves stable space and avoids layout jumps. */
+main img {
+  max-width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-shimmer {
+    animation: none !important;
+    background: rgba(226, 217, 239, .7);
+  }
+
+  .scroll-reveal,
+  .scroll-reveal.is-revealed {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    transition: none !important;
+    will-change: auto;
+  }
+}
