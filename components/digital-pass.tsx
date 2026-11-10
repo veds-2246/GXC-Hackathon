@@ -99,9 +99,9 @@ export function DigitalPass({ fullName, applicationNumber }: DigitalPassProps) {
 
   const passCard = (large = false) => (
     <article className="digital-pass-card w-full overflow-hidden rounded-[1.65rem] border border-[#d9c2f2] bg-white shadow-[0_24px_70px_rgba(54,18,92,.18)]">
-      <div className="digital-pass-header relative overflow-hidden px-5 py-7 text-center text-white sm:px-8">
-        <div className="digital-pass-orb digital-pass-orb-one" />
-        <div className="digital-pass-orb digital-pass-orb-two" />
+      <div className="relative overflow-hidden bg-gradient-to-br from-[#21083f] via-[#5f2295] to-[#9d55d2] px-5 py-7 text-center text-white sm:px-8">
+        <div aria-hidden="true" className="pointer-events-none absolute -right-12 -top-20 size-64 rounded-full border border-white/15 bg-white/5 blur-sm" />
+        <div aria-hidden="true" className="pointer-events-none absolute -bottom-28 -left-16 size-72 rounded-full border border-white/10 bg-fuchsia-300/10 blur-sm" />
         <div className="relative z-10">
           <div className="mb-3 flex items-center justify-center gap-2 text-xs font-black tracking-[.2em]">
             <span className="grid size-8 place-items-center rounded-lg border border-white/30 bg-white/10">
@@ -121,7 +121,7 @@ export function DigitalPass({ fullName, applicationNumber }: DigitalPassProps) {
         <h2 className="break-words text-xl font-extrabold tracking-tight text-[#26094a] sm:text-2xl">{fullName}</h2>
         <p className="mt-2 inline-flex rounded-full bg-[#f0e4fc] px-4 py-1 text-xs font-semibold text-[#64329a]">Individual Participant</p>
 
-        <div className={`mx-auto mt-5 flex aspect-square w-full max-w-[${large ? "300px" : "248px"}] items-center justify-center rounded-2xl border border-[#eadcf8] bg-white p-3 shadow-inner sm:p-4`}>
+        <div className="mx-auto mt-5 flex aspect-square w-full items-center justify-center rounded-2xl border border-[#eadcf8] bg-white p-3 shadow-inner sm:p-4" style={{ maxWidth: large ? 300 : 248 }}>
           {loading && !qrValue ? (
             <div className="flex flex-col items-center gap-3 text-[#76519b]">
               <LoaderCircle className="animate-spin" size={30}/>
@@ -132,7 +132,7 @@ export function DigitalPass({ fullName, applicationNumber }: DigitalPassProps) {
               value={qrValue}
               size={large ? 268 : 216}
               level="H"
-              includeMargin
+              marginSize={4}
               bgColor="#ffffff"
               fgColor="#160b20"
               title="GenXCode participant verification QR"
