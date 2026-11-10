@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { BrandLockup } from "@/components/brand-lockup";
 import { createClient } from "@/lib/supabase/server";
 import { getAuthenticatedDestination } from "@/lib/auth/get-authenticated-destination";
@@ -105,37 +106,58 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="experience" className="border-y border-[#eadff5] bg-white/70 py-20 sm:py-24">
-        <div className="container-shell">
-          <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-            <div>
-              <p className="eyebrow mb-4">Why be here</p>
-              <h2 className="editorial max-w-[560px] text-5xl leading-[.98] sm:text-6xl">
-                More than an event.<br />
-                <span className="text-purple-gradient italic">A place to begin.</span>
-              </h2>
+      <section
+        id="experience"
+        className="relative isolate overflow-hidden py-16 sm:py-20 lg:py-24"
+      >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_78%_52%,rgba(199,166,243,0.34),transparent_38%),linear-gradient(110deg,#ffffff_0%,#fcf8ff_58%,#f3eaff_100%)]"
+        />
+
+        <div className="container-shell grid items-center gap-10 lg:grid-cols-[1fr_1fr] lg:gap-8">
+          <div className="relative z-10 min-w-0">
+            <p className="eyebrow mb-4">Why be here</p>
+            <h2 className="editorial max-w-[600px] text-5xl leading-[.98] sm:text-6xl">
+              More than an event.<br />
+              <span className="text-purple-gradient italic">A place to begin.</span>
+            </h2>
+
+            <div className="mt-10 space-y-8 sm:mt-12 sm:space-y-9">
+              {highlights.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <article
+                    key={item.title}
+                    className="reveal-on-scroll flex min-w-0 items-center gap-4 sm:gap-6"
+                  >
+                    <span className="inline-flex size-[64px] shrink-0 items-center justify-center rounded-[1.35rem] bg-[#eadcfb]/80 text-[#5f2295] sm:size-[76px] [&>svg]:block [&>svg]:shrink-0">
+                      <Icon size={30} strokeWidth={1.8} />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="eyebrow mb-1">0{index + 1}</p>
+                      <h3 className="editorial text-2xl leading-tight text-[#220749] sm:text-[1.7rem]">
+                        {item.title}
+                      </h3>
+                      <p className="mt-1 max-w-[390px] text-sm leading-6 text-[#5f5271] sm:text-[15px]">
+                        {item.text}
+                      </p>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
-            <p className="surface-glass-01 max-w-[340px] rounded-2xl p-5 text-sm leading-6 text-[#76678a]">
-              Learn from the community, make something useful and share it with the world.
-            </p>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-3">
-            {highlights.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <article key={item.title} className="card-hover reveal-on-scroll p-5 sm:p-8">
-                  <div className="mb-12 flex items-center justify-between">
-                    <span className="text-xs font-semibold tracking-[.12em] text-[#a18db8]">0{index + 1}</span>
-                    <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-2xl bg-[#f4effc] text-[#5f2295] [&>svg]:block [&>svg]:shrink-0">
-                      <Icon size={21} strokeWidth={1.8} />
-                    </span>
-                  </div>
-                  <h3 className="editorial text-3xl text-[#220749]">{item.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-[#76678a]">{item.text}</p>
-                </article>
-              );
-            })}
+          <div className="relative mx-auto flex w-full min-w-0 items-center justify-center lg:justify-end">
+            <Image
+              src="/build-with-ai-illustration.webp"
+              alt="A student thinking through ideas while working at a laptop"
+              width={980}
+              height={980}
+              sizes="(min-width: 1024px) 50vw, 90vw"
+              className="block h-auto w-full max-w-[620px] object-contain"
+            />
           </div>
         </div>
       </section>
