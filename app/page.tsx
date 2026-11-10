@@ -52,7 +52,7 @@ export default async function Home() {
         ? "Go to Dashboard"
         : destination === "/register"
           ? "Complete Registration"
-          : "Get your Pass";
+          : "{ctaLabel}";
 
   return (
     <main className="overflow-hidden">
@@ -63,8 +63,8 @@ export default async function Home() {
           <a className="purple-hover" href="#schedule">Schedule</a>
           <a className="purple-hover" href="#about">About</a>
         </nav>
-        <a href="/auth" className="btn-primary px-5 py-3 text-xs">
-          Get your Pass
+        <a href={ctaHref} className="btn-primary px-5 py-3 text-xs">
+          {ctaLabel}
         </a>
       </header>
 
@@ -85,8 +85,8 @@ export default async function Home() {
               Three days to learn, build and pitch. Bring your curiosity, meet fellow builders and turn a bold idea into something real.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4" id="register">
-              <a href="/auth" className="btn-primary px-7 py-4 text-sm">
-                Get your Pass
+              <a href={ctaHref} className="btn-primary px-7 py-4 text-sm">
+                {ctaLabel}
               </a>
               <a href="#schedule" className="purple-hover rounded-full px-4 py-4 text-sm font-semibold text-[#57436d]">
                 Explore the event
@@ -180,8 +180,8 @@ export default async function Home() {
               Bring a question. Leave with a prototype, a new perspective or a team that keeps building.
             </p>
           </div>
-          <a href="/auth" className="cta-button relative z-10 inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-bold text-[#5f2295] shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl">
-            I&apos;m in
+          <a href={ctaHref} className="cta-button relative z-10 inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-bold text-[#5f2295] shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+            {ctaLabel}
           </a>
         </div>
       </section>
