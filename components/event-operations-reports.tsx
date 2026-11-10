@@ -8,8 +8,9 @@ type Participant = { registration_id: string; participant_name: string; applicat
 function formatAttendanceTime(value: string | null) {
   if (!value) return "Not checked in";
   return new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", hourCycle: "h23",
-  }).format(new Date(value));
+    timeZone: "Asia/Kolkata", day: "2-digit", month: "2-digit", year: "numeric",
+    hour: "2-digit", minute: "2-digit", hourCycle: "h23",
+  }).format(new Date(value)).replace(",", "");
 }
 
 export function EventOperationsReports({ allowExport = true }: { allowExport?: boolean }) {
