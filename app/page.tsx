@@ -52,7 +52,7 @@ export default async function Home() {
         ? "Go to Dashboard"
         : destination === "/register"
           ? "Complete Registration"
-          : "{ctaLabel}";
+          : "Get your Pass";
 
   return (
     <main className="overflow-hidden">
