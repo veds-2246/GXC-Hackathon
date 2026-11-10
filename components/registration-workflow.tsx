@@ -16,17 +16,24 @@ export function RegistrationWorkflow({initialProfile,existing}:{initialProfile:P
  const profileComplete=Boolean(profile.full_name?.trim()&&profile.phone?.trim()&&profile.college?.trim()&&profile.branch?.trim()&&profile.study_year?.trim());
  async function submit(event:FormEvent<HTMLFormElement>){
   event.preventDefault();setSaving(true);setError("");
-  const {data:auth}=await supabase.auth.getUser();
-  if(!auth.user){setSaving(false);setError("Your session expired. Please sign in again.");return;}
-  const {error:profileError}=await supabase.from("profiles").update({...profile,updated_at:new Date().toISOString()}).eq("id",auth.user.id);
-  if(profileError){setSaving(false);setError(profileError.message);return;}
-  const {data,error:registrationError}=await supabase.rpc("submit_hackathon_registration");
-  setSaving(false);
-  if(registrationError){setError(registrationError.message);return;}
-  const result=Array.isArray(data)?data[0]:data;
-  if(!result?.application_number){setError("Application submitted but the application number could not be retrieved. Refresh the page.");return;}
-  router.replace("/dashboard");
+  try {
+   const {data:auth}=await supabase.auth.getUser();
+   if(!auth.user){setError("Your session expired. Please sign in again.");return;}
+   const {error:profileError}=await supabase.from("profiles").update({...profile,updated_at:new Date().toISOString()}).eq("id",auth.user.id);
+   if(profileError){setError(profileError.message);return;}
+   const {data,error:registrationError}=await supabase.rpc("submit_hackathon_registration");
+   if(registrationError){setError(registrationError.message);return;}
+   const result=Array.isArray(data)?data[0]:data;
+   if(!result?.application_number){setError("Application submitted but the application number could not be retrieved. Refresh the page.");return;}
+   setApplication(result.application_number);
+   router.replace("/dashboard");
+  } catch {
+   setError("We couldn't complete registration. Check your connection and try again.");
+  } finally {
+   setSaving(false);
+  }
  }
+
  const applicationNumber=application??existing?.application_number;
  if(applicationNumber)return <section className="card-hover rounded-2xl border border-[#eadff5] bg-white p-5 sm:p-7"><div className="flex items-center gap-3 text-[#1e8e3e]"><CheckCircle2 size={22}/><p className="text-sm font-bold">Hackathon application submitted</p></div><p className="editorial mt-5 text-4xl">{applicationNumber}</p><p className="mt-3 text-sm leading-6 text-[#76678a]">Your application number has been generated. Your individual hackathon registration is complete. Prompt Wars registration will be configured after the MVP.</p><button onClick={()=>router.push("/dashboard")} className="mt-7 rounded-full bg-[#5f2295] px-6 py-3 text-sm font-semibold text-white">Go to dashboard</button></section>;
  return <form onSubmit={submit} className="space-y-8">
