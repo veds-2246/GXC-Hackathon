@@ -5,10 +5,8 @@ import { getAuthenticatedDestination } from "@/lib/auth/get-authenticated-destin
 import { HackathonTeamIllustration } from "@/components/hackathon-team-illustration";
 import {
   Code2,
-  Cpu,
   GraduationCap,
   Trophy,
-  Users,
 } from "lucide-react";
 
 const days = [
@@ -72,11 +70,7 @@ const days = [
   },
 ];
 
-const highlights = [
-  { icon: Cpu, title: "Build with AI", text: "Explore real-world problem statements and emerging technologies." },
-  { icon: Users, title: "Find your people", text: "Meet builders, mentors and students who love solving problems." },
-  { icon: Trophy, title: "Show what you can do", text: "Present your work, get feedback and compete for recognition." },
-];
+
 
 export default async function Home() {
   const supabase = await createClient();
