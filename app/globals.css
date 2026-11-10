@@ -916,6 +916,7 @@ input, select, textarea { max-width: 100%; min-width: 0; }
 }
 
 .scroll-reveal {
+  animation: none !important;
   opacity: 0;
   filter: blur(14px);
   transform: translate3d(0, 28px, 0) scale(.99);
