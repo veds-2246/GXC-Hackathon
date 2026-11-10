@@ -8,7 +8,7 @@ type Profile = { full_name:string|null; phone:string|null; college:string|null; 
 type ExistingRegistration = { application_number:string|null };
 const fieldClass="mt-2 block min-w-0 w-full max-w-full rounded-xl border border-[#eadff5] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#5f2295] focus:ring-2 focus:ring-purple-100";
 
-export function RegistrationWorkflow({initialProfile,existing,paymentOrderId}:{initialProfile:Profile;existing:ExistingRegistration|null;paymentOrderId:string}) {
+export function RegistrationWorkflow({initialProfile,existing}:{initialProfile:Profile;existing:ExistingRegistration|null}) {
  const supabase=createClient(); const router=useRouter();
  const [profile,setProfile]=useState<Profile>(initialProfile);
  const [saving,setSaving]=useState(false); const [error,setError]=useState(""); const [application,setApplication]=useState<string|null>(null);
@@ -20,7 +20,7 @@ export function RegistrationWorkflow({initialProfile,existing,paymentOrderId}:{i
   if(!auth.user){setSaving(false);setError("Your session expired. Please sign in again.");return;}
   const {error:profileError}=await supabase.from("profiles").update({...profile,updated_at:new Date().toISOString()}).eq("id",auth.user.id);
   if(profileError){setSaving(false);setError(profileError.message);return;}
-  const {data,error:registrationError}=await supabase.rpc("submit_hackathon_registration",{p_payment_order_id:paymentOrderId});
+  const {data,error:registrationError}=await supabase.rpc("submit_hackathon_registration");
   setSaving(false);
   if(registrationError){setError(registrationError.message);return;}
   const result=Array.isArray(data)?data[0]:data;
@@ -30,7 +30,7 @@ export function RegistrationWorkflow({initialProfile,existing,paymentOrderId}:{i
  const applicationNumber=application??existing?.application_number;
  if(applicationNumber)return <section className="card-hover rounded-2xl border border-[#eadff5] bg-white p-5 sm:p-7"><div className="flex items-center gap-3 text-[#1e8e3e]"><CheckCircle2 size={22}/><p className="text-sm font-bold">Hackathon application submitted</p></div><p className="editorial mt-5 text-4xl">{applicationNumber}</p><p className="mt-3 text-sm leading-6 text-[#76678a]">Your application number has been generated. Your individual hackathon registration is complete. Prompt Wars registration will be configured after the MVP.</p><button onClick={()=>router.push("/dashboard")} className="mt-7 rounded-full bg-[#5f2295] px-6 py-3 text-sm font-semibold text-white">Go to dashboard</button></section>;
  return <form onSubmit={submit} className="space-y-8">
-  <section className="card-hover reveal-on-scroll min-w-0 rounded-2xl border border-[#eadff5] bg-white p-5 sm:p-8"><div className="mb-6"><p className="eyebrow">PARTICIPANT PROFILE</p><h2 className="editorial mt-2 text-3xl">Your details</h2><p className="mt-2 text-sm text-[#76678a]">Your pass payment is verified. Complete these details to finish hackathon registration.</p></div><div className="grid min-w-0 gap-4 sm:grid-cols-2">
+  <section className="card-hover reveal-on-scroll min-w-0 rounded-2xl border border-[#eadff5] bg-white p-5 sm:p-8"><div className="mb-6"><p className="eyebrow">PARTICIPANT PROFILE</p><h2 className="editorial mt-2 text-3xl">Your details</h2><p className="mt-2 text-sm text-[#76678a]">Complete these details to finish your free hackathon registration.</p></div><div className="grid min-w-0 gap-4 sm:grid-cols-2">
    <label className="block min-w-0 text-xs font-semibold text-[#57436d]">Full name *<input required value={profile.full_name??""} onChange={e=>update("full_name",e.target.value)} className={fieldClass}/></label>
    <label className="block min-w-0 text-xs font-semibold text-[#57436d]">Phone number *<input required type="tel" value={profile.phone??""} onChange={e=>update("phone",e.target.value)} className={fieldClass} placeholder="+91"/></label>
    <label className="block min-w-0 text-xs font-semibold text-[#57436d]">College / Institution *<input required value={profile.college??""} onChange={e=>update("college",e.target.value)} className={fieldClass}/></label>

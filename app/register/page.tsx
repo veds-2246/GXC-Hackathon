@@ -8,11 +8,6 @@ export default async function RegisterPage() {
   const { data: { user }, error } = await supabase.auth.getUser();
   if (error || !user) redirect("/login");
 
-  const { data: payment } = await supabase.from("payment_orders")
-    .select("id").eq("user_id", user.id).eq("status", "paid")
-    .order("paid_at", { ascending: false }).limit(1).maybeSingle();
-  if (!payment) redirect("/checkout");
-
   const [{ data: profile }, { data: registration }] = await Promise.all([
     supabase.from("profiles").select("full_name,phone,college,branch,study_year,city,github_url,linkedin_url").eq("id", user.id).maybeSingle(),
     supabase.from("registrations").select("application_number").eq("created_by", user.id).neq("status", "cancelled").maybeSingle(),
@@ -22,13 +17,13 @@ export default async function RegisterPage() {
   return <main className="min-h-screen bg-[#fcfaff]">
     <header className="container-shell pt-3"><div className="surface-glass-nav flex min-h-[64px] flex-wrap items-center justify-between gap-2 rounded-2xl px-3 py-3 sm:h-[72px] sm:flex-nowrap sm:px-6">
       <BrandLockup />
-      <span className="rounded-full bg-[#f4effc] px-3 py-2 text-xs font-semibold text-[#5f2295]">Payment verified</span>
+      <span className="rounded-full bg-[#f4effc] px-3 py-2 text-xs font-semibold text-[#5f2295]">Free registration</span>
     </div></header>
     <div className="container-shell mx-auto max-w-[820px] py-8 sm:py-16">
       <p className="eyebrow mb-4">HACKATHON REGISTRATION</p>
       <h1 className="editorial text-4xl leading-[1] sm:text-6xl">One step closer.<br/><span className="italic text-[#5f2295]">Let’s get you registered.</span></h1>
-      <p className="mt-4 mb-8 max-w-xl sm:mt-5 sm:mb-10 text-sm leading-6 text-[#76678a]">Your pass payment is verified. Complete your participant profile. We’ll submit your individual hackathon registration automatically.</p>
-      <RegistrationWorkflow initialProfile={profile ?? fallbackProfile} existing={registration ?? null} paymentOrderId={payment.id}/>
+      <p className="mt-4 mb-8 max-w-xl sm:mt-5 sm:mb-10 text-sm leading-6 text-[#76678a]">Complete your participant profile. We’ll submit your individual hackathon registration automatically.</p>
+      <RegistrationWorkflow initialProfile={profile ?? fallbackProfile} existing={registration ?? null}/>
     </div>
   </main>;
 }

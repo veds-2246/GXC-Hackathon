@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 
 type AuthFormProps = { mode: "login" | "signup"; nextPath?: string };
 
-export function AuthForm({ mode, nextPath = "/checkout" }: AuthFormProps) {
+export function AuthForm({ mode, nextPath = "/register" }: AuthFormProps) {
   const router = useRouter();
   const supabase = createClient();
   const [email, setEmail] = useState("");
@@ -31,7 +31,7 @@ export function AuthForm({ mode, nextPath = "/checkout" }: AuthFormProps) {
           password,
           options: {
             data: { full_name: fullName.trim() },
-            emailRedirectTo: `${window.location.origin}/auth/callback?next=/checkout`,
+            emailRedirectTo: `${window.location.origin}/auth/callback?next=/register`,
           },
         })
       : await supabase.auth.signInWithPassword({ email, password });
@@ -47,7 +47,7 @@ export function AuthForm({ mode, nextPath = "/checkout" }: AuthFormProps) {
       return;
     }
 
-    router.replace(isSignup ? "/checkout" : nextPath);
+    router.replace(isSignup ? "/register" : nextPath);
     router.refresh();
   }
 
@@ -56,7 +56,7 @@ export function AuthForm({ mode, nextPath = "/checkout" }: AuthFormProps) {
     setError("");
     const { error: oauthError } = await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(isSignup ? "/checkout" : nextPath)}` },
+      options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(isSignup ? "/register" : nextPath)}` },
     });
     if (oauthError) {
       setBusy(null);
