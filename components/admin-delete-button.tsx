@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from "react";
 import { AlertTriangle, Trash2, X } from "lucide-react";
+import { PendingSubmitButton } from "@/components/pending-submit-button";
 
 type DeleteAction = (formData: FormData) => void | Promise<void>;
 
@@ -74,13 +75,13 @@ export function AdminDeleteButton({
               </button>
               <form action={action}>
                 {children}
-                <button
-                  type="submit"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#d93025] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#b3261e] sm:w-auto"
+                <PendingSubmitButton
+                  pendingLabel="Deleting…"
+                  className="w-full rounded-full bg-[#d93025] px-5 py-3 text-sm font-semibold text-white hover:bg-[#b3261e] sm:w-auto"
                 >
                   <Trash2 size={15} />
                   Yes, delete
-                </button>
+                </PendingSubmitButton>
               </form>
             </div>
           </section>
