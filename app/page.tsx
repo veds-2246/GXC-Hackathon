@@ -33,42 +33,7 @@ const days = [
   },
 ];
 
-port Image from "next/image";
-import { BrandLockup } from "@/components/brand-lockup";
-import { createClient } from "@/lib/supabase/server";
-import { getAuthenticatedDestination } from "@/lib/auth/get-authenticated-destination";
-import { HackathonTeamIllustration } from "@/components/hackathon-team-illustration";
-import {
-  Code2,
-  Cpu,
-  GraduationCap,
-  Trophy,
-  Users,
-} from "lucide-react";
 
-const days = [
-  {
-    day: "01",
-    label: "Learn",
-    title: "Start with the why.",
-    description: "An AI-focused workshop with Google for Developers. Learn the tools and ideas that will power your build.",
-    icon: GraduationCap,
-  },
-  {
-    day: "02",
-    label: "Build",
-    title: "Turn ideas into impact.",
-    description: "An intense 8–12 hour hackathon. Experiment and ship something that matters.",
-    icon: Code2,
-  },
-  {
-    day: "03",
-    label: "Pitch",
-    title: "Make your work count.",
-    description: "The top 60 shortlisted students take the stage for the pitching round, judging and prizes.",
-    icon: Trophy,
-  },
-];
 
 
 
