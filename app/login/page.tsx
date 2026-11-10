@@ -6,10 +6,10 @@ export default async function LoginPage({
   searchParams: Promise<{ next?: string }>;
 }) {
   const params = await searchParams;
-  const requested = params.next ?? "/checkout";
+  const requested = params.next ?? "/register";
   const nextPath = requested.startsWith("/") && !requested.startsWith("//")
     ? requested
-    : "/checkout";
+    : "/register";
 
   redirect(`/auth?next=${encodeURIComponent(nextPath)}`);
 }

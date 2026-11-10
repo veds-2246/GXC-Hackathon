@@ -7,10 +7,10 @@ export default async function AuthPage({
   searchParams: Promise<{ next?: string }>;
 }) {
   const params = await searchParams;
-  const requested = params.next ?? "/checkout";
+  const requested = params.next ?? "/register";
   const nextPath = requested.startsWith("/") && !requested.startsWith("//")
     ? requested
-    : "/checkout";
+    : "/register";
 
   return (
     <main className="grid min-h-screen place-items-center bg-[#fcfaff] px-4 py-8 sm:px-5 sm:py-12">
