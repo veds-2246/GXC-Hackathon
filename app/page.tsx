@@ -35,6 +35,43 @@ const days = [
   },
 ];
 
+port Image from "next/image";
+import { BrandLockup } from "@/components/brand-lockup";
+import { createClient } from "@/lib/supabase/server";
+import { getAuthenticatedDestination } from "@/lib/auth/get-authenticated-destination";
+import { HackathonTeamIllustration } from "@/components/hackathon-team-illustration";
+import {
+  Code2,
+  Cpu,
+  GraduationCap,
+  Trophy,
+  Users,
+} from "lucide-react";
+
+const days = [
+  {
+    day: "01",
+    label: "Learn",
+    title: "Start with the why.",
+    description: "An AI-focused workshop with Google for Developers. Learn the tools and ideas that will power your build.",
+    icon: GraduationCap,
+  },
+  {
+    day: "02",
+    label: "Build",
+    title: "Turn ideas into impact.",
+    description: "An intense 8–12 hour hackathon. Experiment and ship something that matters.",
+    icon: Code2,
+  },
+  {
+    day: "03",
+    label: "Pitch",
+    title: "Make your work count.",
+    description: "The top 60 shortlisted students take the stage for the pitching round, judging and prizes.",
+    icon: Trophy,
+  },
+];
+
 const highlights = [
   { icon: Cpu, title: "Build with AI", text: "Explore real-world problem statements and emerging technologies." },
   { icon: Users, title: "Find your people", text: "Meet builders, mentors and students who love solving problems." },
@@ -108,73 +145,23 @@ export default async function Home() {
 
       <section
         id="experience"
-        className="relative isolate overflow-hidden py-16 sm:py-20 lg:py-24"
+        className="container-shell py-20 sm:py-24"
       >
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_22%_52%,rgba(199,166,243,0.34),transparent_38%),linear-gradient(110deg,#ffffff_0%,#fcf8ff_58%,#f3eaff_100%)]"
-        />
-
-        <div className="container-shell grid items-center gap-8 lg:grid-cols-[1fr_1fr] lg:gap-10">
-          <div className="relative mx-auto flex w-full min-w-0 items-center justify-center lg:justify-start">
-            <Image
-              src="/build-with-ai-illustration.png"
-              alt="A student thinking through ideas while working at a laptop"
-              width={980}
-              height={980}
-              sizes="(min-width: 1024px) 50vw, 90vw"
-              className="block h-auto w-full max-w-[620px] object-contain"
-            />
-          </div>
-
-          <div className="relative z-10 min-w-0">
-            <p className="eyebrow mb-4">Why be here</p>
-            <h2 className="editorial max-w-[600px] text-5xl leading-[.98] sm:text-6xl">
-              More than an event.<br />
-              <span className="text-purple-gradient italic">A place to begin.</span>
-            </h2>
-
-            <div className="mt-10 space-y-8 sm:mt-12 sm:space-y-9">
-              {highlights.map((item, index) => {
-                const Icon = item.icon;
-                return (
-                  <article
-                    key={item.title}
-                    className="reveal-on-scroll flex min-w-0 items-center gap-4 sm:gap-6"
-                  >
-                    <span className="inline-flex size-[64px] shrink-0 items-center justify-center rounded-[1.35rem] bg-[#eadcfb]/80 text-[#5f2295] sm:size-[76px] [&>svg]:block [&>svg]:shrink-0">
-                      <Icon size={30} strokeWidth={1.8} />
-                    </span>
-                    <div className="min-w-0">
-                      <p className="eyebrow mb-1">0{index + 1}</p>
-                      <h3 className="editorial text-2xl leading-tight text-[#220749] sm:text-[1.7rem]">
-                        {item.title}
-                      </h3>
-                      <p className="mt-1 max-w-[390px] text-sm leading-6 text-[#5f5271] sm:text-[15px]">
-                        {item.text}
-                      </p>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="schedule" className="container-shell py-20 sm:py-24">
-        <div className="mb-12">
+        <div id="schedule" className="mb-12 scroll-mt-28">
           <p className="eyebrow mb-4">The journey</p>
           <h2 className="editorial text-5xl sm:text-6xl">
             Three days. <span className="text-purple-gradient italic">Three chapters.</span>
           </h2>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid items-stretch gap-5 md:grid-cols-3">
           {days.map((item) => {
             const Icon = item.icon;
             return (
-              <article key={item.day} className="card-hover reveal-on-scroll flex min-h-[300px] flex-col p-5 sm:min-h-[340px] sm:p-8">
+              <article
+                key={item.day}
+                className="card-hover reveal-on-scroll flex h-full min-h-[300px] flex-col p-5 sm:min-h-[340px] sm:p-8"
+              >
                 <div className="mb-10 flex items-center justify-between">
                   <span className="editorial text-6xl text-[#d8c5ee]">{item.day}</span>
                   <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-[#f4effc] text-[#5f2295] [&>svg]:block [&>svg]:shrink-0">
