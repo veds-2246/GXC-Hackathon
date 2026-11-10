@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ArrowLeft, Download, ExternalLink, FileText, Lock, Unlock } from "lucide-react";
+import { ArrowLeft, ExternalLink, FileText, Lock, Unlock } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/dashboard/actions";
 import { reviewSubmission, updateSubmissionWindow } from "./actions";
@@ -28,8 +28,6 @@ export default async function AdminSubmissionsPage({searchParams}:{searchParams:
     registrationIds.length ? supabase.from("registrations").select("id,name,email,application_number").in("id",registrationIds) : Promise.resolve({data:[]}),
     problemIds.length ? supabase.from("problem_statements").select("id,title").in("id",problemIds) : Promise.resolve({data:[]}),
   ]);
-  const registrationMap = new Map((registrations ?? []).map(r=>[r.id,r]));
-  const problemMap = new Map((problems ?? []).map(p=>[p.id,p.title]));
   const closeValue = window?.closes_at ? new Date(new Date(window.closes_at).getTime() + 330*60000).toISOString().slice(0,16) : "";
   const effectiveOpen = Boolean(window?.is_open && (!window.closes_at || new Date(window.closes_at).getTime() > Date.now()));
   const signed = await Promise.all(rows.map(s=>supabase.storage.from("project-presentations").createSignedUrl(s.presentation_path,600)));
@@ -53,11 +51,11 @@ export default async function AdminSubmissionsPage({searchParams}:{searchParams:
       <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">{[["Total",counts.total],["Pending",counts.pending],["Shortlisted",counts.shortlisted],["Winners",counts.winners]].map(([k,v])=><div key={k} className="rounded-xl border border-[#eadff5] bg-white p-4"><p className="text-xs text-[#8d7ba3]">{k}</p><p className="editorial mt-1 text-3xl">{v}</p></div>)}</div>
       <div className="mt-8 space-y-5">
         {rows.map((s,index)=>{
-          const reg = registrationMap.get(s.registration_id);
+          const reg = (registrations ?? []).find(r=>r.id===s.registration_id);
           const signedUrl = signed[index]?.data?.signedUrl;
           return <article key={s.id} className="rounded-2xl border border-[#eadff5] bg-white p-5 sm:p-7">
             <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="eyebrow">{reg?.application_number ?? "APPLICATION"}</p><h2 className="editorial mt-2 text-2xl">{s.project_title}</h2><p className="mt-1 text-xs text-[#8d7ba3]">{reg?.name ?? "Student"} · {reg?.email ?? ""}</p></div><span className="rounded-full bg-[#f4effc] px-3 py-1.5 text-xs font-semibold capitalize text-[#5f2295]">{s.status.replace("_"," ")}</span></div>
-            <p className="mt-4 text-sm font-semibold text-[#57436d]">Problem statement: {problemMap.get(s.problem_statement_id) ?? "Unavailable"}</p>
+            <p className="mt-4 text-sm font-semibold text-[#57436d]">Problem statement: {(problems ?? []).find(p=>p.id===s.problem_statement_id)?.title ?? "Unavailable"}</p>
             <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-[#76678a]">{s.description}</p><p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-[#57436d]">{s.solution_features}</p>
             <div className="mt-4 flex flex-wrap gap-3 text-xs font-semibold"><a className="inline-flex items-center gap-1 text-[#5f2295]" href={s.github_url} target="_blank" rel="noreferrer">GitHub <ExternalLink size={13}/></a><a className="inline-flex items-center gap-1 text-[#5f2295]" href={s.production_url} target="_blank" rel="noreferrer">Production <ExternalLink size={13}/></a>{signedUrl && <a className="inline-flex items-center gap-1 text-[#5f2295]" href={signedUrl} target="_blank" rel="noreferrer"><FileText size={13}/> Download PPT</a>}</div>
             <form action={reviewSubmission} className="mt-6 grid gap-3 rounded-xl bg-[#f8f3ff] p-4 sm:grid-cols-3">

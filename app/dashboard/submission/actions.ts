@@ -32,6 +32,9 @@ export async function saveProjectSubmission(formData: FormData) {
     redirect("/dashboard/submission?error=validation");
   }
 
+  const { data: activeProblem } = await supabase.from("problem_statements").select("id").eq("id", problemStatementId).eq("is_active", true).maybeSingle();
+  if (!activeProblem) redirect("/dashboard/submission?error=validation");
+
   const { data: existing } = await supabase.from("project_submissions").select("id,presentation_path").eq("registration_id", registration.id).maybeSingle();
   const file = formData.get("presentation");
   let presentationPath = existing?.presentation_path ?? "";

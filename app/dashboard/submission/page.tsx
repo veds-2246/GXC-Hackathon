@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ArrowLeft, Lock, FileUp, ExternalLink } from "lucide-react";
+import { ArrowLeft, Lock, FileUp } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { saveProjectSubmission } from "./actions";
 
