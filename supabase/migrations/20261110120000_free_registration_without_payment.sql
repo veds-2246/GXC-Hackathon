@@ -3,6 +3,12 @@
 DROP FUNCTION IF EXISTS public.submit_hackathon_registration(uuid);
 DROP FUNCTION IF EXISTS public.submit_hackathon_registration(uuid, uuid);
 
+-- Make the database defaults match the new free event policy.
+-- Existing registrations keep their historical fee values.
+ALTER TABLE public.registrations
+  ALTER COLUMN base_fee_paise SET DEFAULT 0,
+  ALTER COLUMN amount_due_paise SET DEFAULT 0;
+
 CREATE OR REPLACE FUNCTION public.submit_hackathon_registration()
 RETURNS TABLE(registration_id uuid, application_number text)
 LANGUAGE plpgsql
