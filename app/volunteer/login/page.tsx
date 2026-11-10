@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { volunteerSignIn } from "@/app/volunteer/actions";
+import { PendingSubmitButton } from "@/components/pending-submit-button";
 
 export default async function VolunteerLoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const supabase = await createClient();
@@ -24,7 +25,7 @@ export default async function VolunteerLoginPage({ searchParams }: { searchParam
       <form action={volunteerSignIn} className="mt-7 space-y-4">
         <label className="block text-xs font-semibold text-[#57436d]">Email<input required name="email" type="email" autoComplete="username" className="mt-2 w-full rounded-xl border border-[#eadff5] px-4 py-3 text-sm outline-none focus:border-[#5f2295]" /></label>
         <label className="block text-xs font-semibold text-[#57436d]">Password<input required name="password" type="password" autoComplete="current-password" className="mt-2 w-full rounded-xl border border-[#eadff5] px-4 py-3 text-sm outline-none focus:border-[#5f2295]" /></label>
-        <button className="w-full rounded-full bg-[#5f2295] px-6 py-3 text-sm font-semibold text-white">Sign in to operations</button>
+        <PendingSubmitButton pendingLabel="Signing in…" className="w-full rounded-full bg-[#5f2295] px-6 py-3 text-sm font-semibold text-white">Sign in to operations</PendingSubmitButton>
       </form>
       <a href="/login" className="mt-6 inline-block text-xs font-semibold text-[#69408e]">Participant login</a>
     </section>
