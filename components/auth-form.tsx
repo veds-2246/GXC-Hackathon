@@ -26,42 +26,50 @@ export function AuthForm({ mode, nextPath = "/register" }: AuthFormProps) {
     setError("");
     setMessage("");
 
-    const result = isSignup
-      ? await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            data: { full_name: fullName.trim() },
-            emailRedirectTo: `${window.location.origin}/auth/callback?next=/register`,
-          },
-        })
-      : await supabase.auth.signInWithPassword({ email, password });
+    try {
+      const result = isSignup
+        ? await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+              data: { full_name: fullName.trim() },
+              emailRedirectTo: `${window.location.origin}/auth/callback?next=/register`,
+            },
+          })
+        : await supabase.auth.signInWithPassword({ email, password });
 
-    setBusy(null);
-    if (result.error) {
-      setError(result.error.message);
-      return;
+      if (result.error) {
+        setError(result.error.message);
+        return;
+      }
+
+      if (isSignup && !result.data.session) {
+        setMessage("Account created. Check your email and confirm your address before signing in.");
+        return;
+      }
+
+      router.replace(isSignup ? "/register" : nextPath);
+      router.refresh();
+    } catch {
+      setError("We couldn't complete your request. Check your connection and try again.");
+    } finally {
+      setBusy(null);
     }
-
-    if (isSignup && !result.data.session) {
-      setMessage("Account created. Check your email and confirm your address before signing in.");
-      return;
-    }
-
-    router.replace(isSignup ? "/register" : nextPath);
-    router.refresh();
   }
 
   async function handleGoogle() {
     setBusy("google");
     setError("");
-    const { error: oauthError } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(isSignup ? "/register" : nextPath)}` },
-    });
-    if (oauthError) {
+    try {
+      const { error: oauthError } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(isSignup ? "/register" : nextPath)}` },
+      });
+      if (oauthError) setError(oauthError.message);
+    } catch {
+      setError("Google sign-in couldn't start. Check your connection and try again.");
+    } finally {
       setBusy(null);
-      setError(oauthError.message);
     }
   }
 
