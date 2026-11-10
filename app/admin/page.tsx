@@ -8,6 +8,7 @@ import {
   deleteEventDetail, deleteProblemStatement, saveEventDayCount, saveEventDetail, saveProblemStatement, saveWhatsappChannelLink,
 } from "@/app/admin/actions";
 import { AdminDeleteButton } from "@/components/admin-delete-button";
+import { formatStaffIdentifier } from "@/lib/format-staff-identifier";
 
 const fieldClass = "mt-2 w-full rounded-xl border border-[#eadff5] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#5f2295] focus:ring-2 focus:ring-purple-100";
 const labelClass = "block text-xs font-semibold text-[#57436d]";
@@ -17,7 +18,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   const supabase = await createClient();
   const { data: { user }, error } = await supabase.auth.getUser();
   if (error || !user) redirect("/login?next=/admin");
-  const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
+  const { data: profile } = await supabase.from("profiles").select("role,full_name").eq("id", user.id).maybeSingle();
   if (profile?.role !== "admin") redirect("/");
 
   const [{ data: scheduleSettings }, { data: events }, { data: problems }] = await Promise.all([
@@ -50,7 +51,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
       </div></header>
 
       <section className="container-shell py-12">
-        <p className="eyebrow mb-3">ORGANIZER CONTROL ROOM</p>
+        <p className="eyebrow mb-3">ORGANIZER CONTROL ROOM</p><p className="mb-3 text-xs font-semibold text-[#5f2295]">Staff ID: {formatStaffIdentifier(profile?.full_name)}</p>
         <h1 className="editorial text-4xl leading-tight sm:text-6xl">Event management.</h1>
         <p className="mt-4 max-w-2xl text-sm leading-6 text-[#76678a]">Choose the event duration and create event entries for each day. Participants see published details grouped by day on their dashboards.</p>
         {params.saved && <p role="status" className="mt-6 rounded-xl bg-green-50 px-4 py-3 text-sm text-green-800">{savedMessages[params.saved] ?? "Changes saved successfully."}</p>}
