@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { ArrowLeft, ExternalLink, FileText, Lock, Unlock } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/dashboard/actions";
+import { PendingSubmitButton } from "@/components/pending-submit-button";
 import { reviewSubmission, updateSubmissionWindow } from "./actions";
 
 const field = "mt-2 w-full rounded-xl border border-[#eadff5] bg-white px-3 py-2.5 text-sm outline-none focus:border-[#5f2295]";
@@ -34,7 +35,7 @@ export default async function AdminSubmissionsPage({searchParams}:{searchParams:
   const params = await searchParams;
   const counts = {total:rows.length,pending:rows.filter(s=>s.status==="pending").length,shortlisted:rows.filter(s=>s.status==="shortlisted").length,winners:rows.filter(s=>s.status==="winner").length};
   return <main className="min-h-screen bg-[#fcfaff]">
-    <header className="container-shell pt-4"><div className="surface-glass-nav flex items-center justify-between rounded-2xl px-4 py-4 sm:px-6"><Link href="/admin" className="inline-flex items-center gap-2 text-xs font-semibold text-[#69408e]"><ArrowLeft size={15}/> Admin panel</Link><form action={signOut}><button className="text-xs font-semibold">Sign out</button></form></div></header>
+    <header className="container-shell pt-4"><div className="surface-glass-nav flex items-center justify-between rounded-2xl px-4 py-4 sm:px-6"><Link href="/admin" className="inline-flex items-center gap-2 text-xs font-semibold text-[#69408e]"><ArrowLeft size={15}/> Admin panel</Link><form action={signOut}><PendingSubmitButton pendingLabel="Signing out…" className="text-xs font-semibold">Sign out</PendingSubmitButton></form></div></header>
     <section className="container-shell py-10">
       <p className="eyebrow">ORGANIZER CONTROL ROOM</p><h1 className="editorial mt-3 text-4xl text-[#220749] sm:text-6xl">Project submissions.</h1><p className="mt-3 text-sm text-[#76678a]">Control the submission window and review every solo project.</p>
       {params.saved && <p role="status" className="mt-5 rounded-xl bg-green-50 p-3 text-sm text-green-800">Changes saved successfully.</p>}
@@ -44,7 +45,7 @@ export default async function AdminSubmissionsPage({searchParams}:{searchParams:
         <form action={updateSubmissionWindow} className="mt-6 grid gap-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
           <label className="flex items-center gap-3 rounded-xl bg-[#f8f3ff] p-4 text-sm font-semibold text-[#57436d]"><input type="checkbox" name="is_open" defaultChecked={effectiveOpen} className="size-4 accent-[#5f2295]"/> Open submissions</label>
           <label className={label}>Optional closing date and time (IST)<input type="datetime-local" name="closes_at" defaultValue={closeValue} className={field}/></label>
-          <button className="rounded-full bg-[#5f2295] px-6 py-3 text-sm font-semibold text-white">Save window</button>
+          <PendingSubmitButton pendingLabel="Saving window…" className="rounded-full bg-[#5f2295] px-6 py-3 text-sm font-semibold text-white">Save window</PendingSubmitButton>
         </form>
         <p className="mt-3 text-xs text-[#8d7ba3]">The window is closed by default. A passed deadline locks submissions. Reopening requires an admin to turn this switch on and save again.</p>
       </section>
@@ -63,7 +64,7 @@ export default async function AdminSubmissionsPage({searchParams}:{searchParams:
               <label className={label}>Review status<select name="status" defaultValue={s.status} className={field}>{statuses.map(st=><option key={st} value={st}>{st.replace("_"," ")}</option>)}</select></label>
               <label className={label}>Score / 100<input name="score" type="number" min="0" max="100" step="0.01" defaultValue={s.score ?? ""} className={field}/></label>
               <label className={label+" sm:col-span-3"}>Private judge remarks<textarea name="judge_remarks" rows={2} defaultValue={s.judge_remarks ?? ""} className={field}/></label>
-              <div className="sm:col-span-3"><button className="rounded-full border border-[#5f2295] px-5 py-2.5 text-xs font-semibold text-[#5f2295]">Save review</button></div>
+              <div className="sm:col-span-3"><PendingSubmitButton pendingLabel="Saving review…" className="rounded-full border border-[#5f2295] px-5 py-2.5 text-xs font-semibold text-[#5f2295]">Save review</PendingSubmitButton></div>
             </form>
             <p className="mt-3 text-[11px] text-[#9a8ba9]">Submitted {new Date(s.submitted_at).toLocaleString("en-IN")}</p>
           </article>;
