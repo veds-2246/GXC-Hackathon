@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/dashboard/actions";
 import { DashboardUpdates } from "@/components/dashboard-updates";
 import { WhatsAppChannelFloat } from "@/components/whatsapp-channel-float";
+import { formatStaffIdentifier } from "@/lib/format-staff-identifier";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -28,10 +29,7 @@ export default async function DashboardPage() {
   ]);
 
   const name = profile?.full_name || user.user_metadata?.full_name || "Participant";
-  const nameParts = name.trim().split(/\s+/).filter(Boolean);
-  const staffIdentifier = nameParts.length > 1
-    ? `GXC-${nameParts[0]} ${nameParts[nameParts.length - 1][0].toUpperCase()}.`
-    : `GXC-${nameParts[0] || "Staff"}`;
+  const staffIdentifier = formatStaffIdentifier(name);
   return <main className="min-h-screen bg-[#fcfaff]">
     <header className="container-shell pt-3"><div className="surface-glass-nav flex min-h-[68px] flex-wrap items-center justify-between gap-3 rounded-2xl px-3 py-3 sm:min-h-[76px] sm:flex-nowrap sm:px-6">
       <BrandLockup />
