@@ -1,4 +1,7 @@
+import { redirect } from "next/navigation";
 import { BrandLockup } from "@/components/brand-lockup";
+import { createClient } from "@/lib/supabase/server";
+import { getAuthenticatedDestination } from "@/lib/auth/get-authenticated-destination";
 import { GoogleAuthButton } from "@/components/google-auth-button";
 
 export default async function AuthPage({
@@ -11,6 +14,10 @@ export default async function AuthPage({
   const nextPath = requested.startsWith("/") && !requested.startsWith("//")
     ? requested
     : "/register";
+
+  const supabase = await createClient();
+  const destination = await getAuthenticatedDestination(supabase, nextPath);
+  if (destination) redirect(destination);
 
   return (
     <main className="grid min-h-screen place-items-center bg-[#fcfaff] px-4 py-8 sm:px-5 sm:py-12">
