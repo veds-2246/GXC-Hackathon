@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { getAuthenticatedDestination } from "@/lib/auth/get-authenticated-destination";
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
@@ -11,7 +12,8 @@ export async function GET(request: NextRequest) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
       const safeNext = next.startsWith("/") && !next.startsWith("//") ? next : "/register";
-      return NextResponse.redirect(new URL(safeNext, origin));
+      const destination = await getAuthenticatedDestination(supabase, safeNext);
+      return NextResponse.redirect(new URL(destination ?? safeNext, origin));
     }
   }
 

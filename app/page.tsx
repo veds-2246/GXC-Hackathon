@@ -1,4 +1,6 @@
 import { BrandLockup } from "@/components/brand-lockup";
+import { createClient } from "@/lib/supabase/server";
+import { getAuthenticatedDestination } from "@/lib/auth/get-authenticated-destination";
 import { HackathonTeamIllustration } from "@/components/hackathon-team-illustration";
 import {
   Code2,
@@ -38,7 +40,20 @@ const highlights = [
   { icon: Trophy, title: "Show what you can do", text: "Present your work, get feedback and compete for recognition." },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient();
+  const destination = await getAuthenticatedDestination(supabase);
+  const ctaHref = destination ?? "/auth";
+  const ctaLabel = destination === "/admin"
+    ? "Admin Dashboard"
+    : destination === "/volunteer/dashboard"
+      ? "Volunteer Dashboard"
+      : destination === "/dashboard"
+        ? "Go to Dashboard"
+        : destination === "/register"
+          ? "Complete Registration"
+          : "Get your Pass";
+
   return (
     <main className="overflow-hidden">
       <header className="container-shell surface-glass-nav sticky top-2 z-50 mt-2 flex min-h-[68px] items-center justify-between gap-2 rounded-2xl px-3 py-3 sm:top-3 sm:mt-3 sm:h-[76px] sm:px-6">
@@ -48,8 +63,8 @@ export default function Home() {
           <a className="purple-hover" href="#schedule">Schedule</a>
           <a className="purple-hover" href="#about">About</a>
         </nav>
-        <a href="/auth" className="btn-primary px-5 py-3 text-xs">
-          Get your Pass
+        <a href={ctaHref} className="btn-primary px-5 py-3 text-xs">
+          {ctaLabel}
         </a>
       </header>
 
@@ -70,8 +85,8 @@ export default function Home() {
               Three days to learn, build and pitch. Bring your curiosity, meet fellow builders and turn a bold idea into something real.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4" id="register">
-              <a href="/auth" className="btn-primary px-7 py-4 text-sm">
-                Get your Pass
+              <a href={ctaHref} className="btn-primary px-7 py-4 text-sm">
+                {ctaLabel}
               </a>
               <a href="#schedule" className="purple-hover rounded-full px-4 py-4 text-sm font-semibold text-[#57436d]">
                 Explore the event
@@ -165,8 +180,8 @@ export default function Home() {
               Bring a question. Leave with a prototype, a new perspective or a team that keeps building.
             </p>
           </div>
-          <a href="/auth" className="cta-button relative z-10 inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-bold text-[#5f2295] shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl">
-            I&apos;m in
+          <a href={ctaHref} className="cta-button relative z-10 inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-bold text-[#5f2295] shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+            {ctaLabel}
           </a>
         </div>
       </section>
