@@ -9,6 +9,7 @@ import {
 } from "@/app/admin/actions";
 import { AdminDeleteButton } from "@/components/admin-delete-button";
 import { formatStaffIdentifier } from "@/lib/format-staff-identifier";
+import { PendingSubmitButton } from "@/components/pending-submit-button";
 
 const fieldClass = "mt-2 w-full rounded-xl border border-[#eadff5] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#5f2295] focus:ring-2 focus:ring-purple-100";
 const labelClass = "block text-xs font-semibold text-[#57436d]";
@@ -47,7 +48,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
     <main className="min-h-screen bg-[#fcfaff]">
       <header className="container-shell pt-3"><div className="surface-glass-nav flex min-h-[68px] flex-wrap items-center justify-between gap-3 rounded-2xl px-3 py-3 sm:min-h-[76px] sm:flex-nowrap sm:px-6">
         <BrandLockup />
-        <div className="flex flex-wrap items-center justify-end gap-2"><Link href="/admin/submissions" className="inline-flex min-h-10 items-center whitespace-nowrap rounded-full bg-[#f4effc] px-3 py-2.5 text-[11px] font-semibold text-[#5f2295] sm:px-4 sm:text-xs">Submissions</Link><Link href="/admin/operations" className="inline-flex min-h-10 items-center whitespace-nowrap rounded-full bg-[#f4effc] px-3 py-2.5 text-[11px] font-semibold text-[#5f2295] sm:px-4 sm:text-xs">Event operations</Link><Link href="/" className="inline-flex min-h-10 items-center whitespace-nowrap rounded-full border border-[#eadff5] px-3 py-2.5 text-[11px] font-semibold sm:px-4 sm:text-xs">Website</Link><form action={signOut}><button className="inline-flex min-h-10 items-center gap-2 whitespace-nowrap rounded-full border border-[#eadff5] px-3 py-2.5 text-[11px] font-semibold sm:px-4 sm:text-xs"><LogOut size={14}/> Sign out</button></form></div>
+        <div className="flex flex-wrap items-center justify-end gap-2"><Link href="/admin/submissions" className="inline-flex min-h-10 items-center whitespace-nowrap rounded-full bg-[#f4effc] px-3 py-2.5 text-[11px] font-semibold text-[#5f2295] sm:px-4 sm:text-xs">Submissions</Link><Link href="/admin/operations" className="inline-flex min-h-10 items-center whitespace-nowrap rounded-full bg-[#f4effc] px-3 py-2.5 text-[11px] font-semibold text-[#5f2295] sm:px-4 sm:text-xs">Event operations</Link><Link href="/" className="inline-flex min-h-10 items-center whitespace-nowrap rounded-full border border-[#eadff5] px-3 py-2.5 text-[11px] font-semibold sm:px-4 sm:text-xs">Website</Link><form action={signOut}><PendingSubmitButton pendingLabel="Signing out…" className="min-h-10 gap-2 whitespace-nowrap rounded-full border border-[#eadff5] px-3 py-2.5 text-[11px] font-semibold sm:px-4 sm:text-xs"><LogOut size={14}/> Sign out</PendingSubmitButton></form></div>
       </div></header>
 
       <section className="container-shell py-12">
@@ -63,7 +64,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
             <label className={labelClass + " flex-1"}>Number of event days
               <select name="day_count" defaultValue={String(dayCount)} className={fieldClass}>{dayOptions.map((day) => <option key={day} value={day}>{day} {day === 1 ? "day" : "days"}</option>)}</select>
             </label>
-            <button className="inline-flex items-center justify-center gap-2 rounded-full bg-[#5f2295] px-6 py-3 text-sm font-semibold text-white"><Save size={16}/> Save day count</button>
+            <PendingSubmitButton pendingLabel="Saving day count…" className="rounded-full bg-[#5f2295] px-6 py-3 text-sm font-semibold text-white"><Save size={16}/> Save day count</PendingSubmitButton>
           </form>
           <p className="mt-3 text-xs text-[#8d7ba3]">Current schedule: {dayCount} {dayCount === 1 ? "day" : "days"}. You cannot reduce the count below a day that already contains an event entry.</p>
         </section>
@@ -77,7 +78,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
             <label className={labelClass + " flex-1"}>WhatsApp Channel URL
               <input name="whatsapp_channel_url" type="url" defaultValue={scheduleSettings?.whatsapp_channel_url ?? ""} className={fieldClass} placeholder="https://whatsapp.com/channel/..." />
             </label>
-            <button className="inline-flex items-center justify-center gap-2 rounded-full bg-[#168a45] px-6 py-3 text-sm font-semibold text-white"><Save size={16}/> Save channel link</button>
+            <PendingSubmitButton pendingLabel="Saving channel…" className="rounded-full bg-[#168a45] px-6 py-3 text-sm font-semibold text-white"><Save size={16}/> Save channel link</PendingSubmitButton>
           </form>
           <p className="mt-3 text-xs text-[#8d7ba3]">Leave the field empty and save to hide the floating button. Only WhatsApp Channel links are accepted.</p>
         </section>
@@ -94,7 +95,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
             </div>
             <label className={labelClass + " min-w-0"}>Pre-instructions<textarea name="pre_instructions" rows={4} className={fieldClass} placeholder="Add instructions participants should know before arriving."/></label>
             <label className="flex items-center gap-2 text-sm font-medium text-[#57436d]"><input type="checkbox" name="is_published" defaultChecked className="size-4 accent-[#5f2295]"/> Publish on participant dashboards</label>
-            <button className="inline-flex items-center gap-2 rounded-full bg-[#5f2295] px-6 py-3 text-sm font-semibold text-white"><Plus size={16}/> Add event details</button>
+            <PendingSubmitButton pendingLabel="Adding event…" className="rounded-full bg-[#5f2295] px-6 py-3 text-sm font-semibold text-white"><Plus size={16}/> Add event details</PendingSubmitButton>
           </form>
 
           <div className="mt-8 space-y-5">
@@ -111,7 +112,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
                   </div>
                   <label className={labelClass + " min-w-0"}>Pre-instructions<textarea name="pre_instructions" rows={3} defaultValue={event.pre_instructions ?? ""} className={fieldClass}/></label>
                   <label className="flex items-center gap-2 text-sm font-medium text-[#57436d]"><input type="checkbox" name="is_published" defaultChecked={event.is_published} className="size-4 accent-[#5f2295]"/> Published on participant dashboards</label>
-                  <button className="inline-flex items-center gap-2 rounded-full border border-[#5f2295] px-5 py-2.5 text-sm font-semibold text-[#5f2295]"><Save size={15}/> Save event</button>
+                  <PendingSubmitButton pendingLabel="Saving event…" className="rounded-full border border-[#5f2295] px-5 py-2.5 text-sm font-semibold text-[#5f2295]"><Save size={15}/> Save event</PendingSubmitButton>
                 </form>
                 <div className="mt-4 flex justify-end">
                   <AdminDeleteButton action={deleteEventDetail} confirmMessage={`Delete "${event.title}" from Day ${event.day_number}? It will be removed from participant dashboards.`} label="Delete event">
@@ -141,7 +142,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
               <label className={labelClass + " min-w-0"}>Full description<textarea name="description" rows={4} className={fieldClass}/></label>
               <label className={labelClass + " min-w-0"}>Technology hints<textarea name="tech_hints" rows={2} className={fieldClass}/></label>
               <label className="flex items-center gap-2 text-sm font-medium text-[#57436d]"><input type="checkbox" name="is_active" defaultChecked className="size-4 accent-[#5f2295]"/> Publish immediately</label>
-              <button className="inline-flex items-center gap-2 rounded-full bg-[#5f2295] px-6 py-3 text-sm font-semibold text-white"><Plus size={16}/> Add problem statement</button>
+              <PendingSubmitButton pendingLabel="Adding problem…" className="rounded-full bg-[#5f2295] px-6 py-3 text-sm font-semibold text-white"><Plus size={16}/> Add problem statement</PendingSubmitButton>
             </form>
           </div>
           <div className="space-y-5">
@@ -162,7 +163,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
                   <label className={labelClass + " mt-4"}>Full description<textarea name="description" rows={3} defaultValue={problem.description ?? ""} className={fieldClass}/></label>
                   <label className={labelClass + " mt-4"}>Technology hints<textarea name="tech_hints" rows={2} defaultValue={problem.tech_hints ?? ""} className={fieldClass}/></label>
                   <label className="mt-4 flex items-center gap-2 text-sm font-medium text-[#57436d]"><input type="checkbox" name="is_active" defaultChecked={problem.is_active} className="size-4 accent-[#5f2295]"/> Published and visible to participants</label>
-                  <button className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#5f2295] px-5 py-2.5 text-sm font-semibold text-[#5f2295]"><Save size={15}/> Save changes</button>
+                  <PendingSubmitButton pendingLabel="Saving changes…" className="mt-5 rounded-full border border-[#5f2295] px-5 py-2.5 text-sm font-semibold text-[#5f2295]"><Save size={15}/> Save changes</PendingSubmitButton>
                 </form>
                 <div className="mt-4 flex justify-end"><AdminDeleteButton action={deleteProblemStatement} confirmMessage={`Delete "${problem.title}"? This is allowed only when no participant has selected it.`} label="Delete problem statement"><input type="hidden" name="id" value={problem.id}/></AdminDeleteButton></div>
               </article>
