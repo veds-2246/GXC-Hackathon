@@ -1,7 +1,8 @@
--- Make participant registration free without removing historical payment data.
+-- Make new participant registrations free while preserving historical payment data.
+-- Keep the legacy payment RPC overload during rollout so the currently deployed
+-- app remains compatible if this migration is applied before the new app version.
+-- The free-registration app calls the zero-argument overload defined below.
 -- Existing payment_orders and payments rows remain available for audit/history.
-DROP FUNCTION IF EXISTS public.submit_hackathon_registration(uuid);
-DROP FUNCTION IF EXISTS public.submit_hackathon_registration(uuid, uuid);
 
 -- Make the database defaults match the new free event policy.
 -- Existing registrations keep their historical fee values.
