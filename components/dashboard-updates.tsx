@@ -48,17 +48,22 @@ export function DashboardUpdates({
     setSaving(true);
     setError("");
     setSaved(false);
-    const { error: selectionError } = await supabase.rpc(
-      "select_registration_problem_statement",
-      { p_problem_statement_id: selectedId },
-    );
-    setSaving(false);
-    if (selectionError) {
-      setError(selectionError.message);
-      return;
+    try {
+      const { error: selectionError } = await supabase.rpc(
+        "select_registration_problem_statement",
+        { p_problem_statement_id: selectedId },
+      );
+      if (selectionError) {
+        setError("Your selection couldn't be saved. Please try again.");
+        return;
+      }
+      setSaved(true);
+      router.refresh();
+    } catch {
+      setError("We couldn't reach the server. Check your connection and try again.");
+    } finally {
+      setSaving(false);
     }
-    setSaved(true);
-    router.refresh();
   }
 
   const selectedProblem = problems.find((problem) => problem.id === selectedId);
